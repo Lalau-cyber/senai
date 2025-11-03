@@ -1,17 +1,24 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Você é Aluno?</Text>
-      <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
-      <Button title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+      
+    <Text>Você é Aluno?</Text>
+    <View style={styles.rowContainer}>
+      <View style={styles.buttonWrapper}>
+        <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
+      </View>
+      <View style={styles.buttonWrapper}>
+        <Button title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+      </View>
     </View>
+  </View>
   );
 }
 
@@ -34,8 +41,8 @@ function NaoScreen() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="inicio">
+        <Stack.Screen name="inicio" component={HomeScreen} />
         <Stack.Screen name="SimScreen" component={SimScreen} />
         <Stack.Screen name="NaoScreen" component={NaoScreen} />
       </Stack.Navigator>
@@ -50,4 +57,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  rowContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonWrapper: {
+    marginVertical:10,
+    width:'12%',
+    flexDirection:'row',
+    alignItems: 'center',
+
+  }
 });
