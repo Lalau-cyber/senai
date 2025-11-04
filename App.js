@@ -1,27 +1,46 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { useContext, useState } from 'react';
+import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator()
 
 function HomeScreen({ navigation }) {
+
+  const [matricula, setMatricula] = useState("");
+  const [nome, setNome] = useState("");
+
+  const validaMatricula = (matricula) => {
+    return matricula.length == 8;
+    }
+  const validarNomeUsuario = (nome) => {
+    return nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*');
+  };
+  
   return (
     <View style={styles.container}>
-      
-    <Text>Você é Aluno?</Text>
-    <View style={styles.rowContainer}>
-      <View style={styles.buttonWrapper}>
-        <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Button title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+      <TextInput style={styles.input}
+        placeholder='nome de usuario'
+        value={nome}
+        onChangeText={setNome}
+      />
+      <TextInput style={styles.input}
+        placeholder='matricula'
+        value={matricula}
+        onChangeText={setMatricula}
+      />
+      <Text>Você é Aluno?</Text>
+      <View style={styles.rowContainer}>
+        <View style={styles.buttonWrapper}>
+          <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+        </View>
       </View>
     </View>
-  </View>
   );
-}
-
+};
 function SimScreen() {
   return (
     <View style={styles.container}>
@@ -33,7 +52,7 @@ function SimScreen() {
 function NaoScreen() {
   return (
     <View style={styles.container}>
-      <Text>Você é o administrador?</Text>
+      <Text >Você é o administrador?</Text>
     </View>
   );
 }
@@ -58,16 +77,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rowContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 10,
   },
   buttonWrapper: {
-    marginVertical:10,
-    width:'12%',
-    flexDirection:'row',
+    marginVertical: 10,
+    width: '12%',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
 
-  }
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '80%',
+    borderRadius: 5,
+  },
 });
