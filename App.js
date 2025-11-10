@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { Touchable } from 'react-native';
@@ -33,11 +33,16 @@ function HomeScreen({ navigation }) {
       <Text>Você é Aluno?</Text>
       <View style={styles.rowContainer}>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity title="Sim" onPress={() => navigation.navigate('SimScreen')} />
-        </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacityton title="Não" onPress={() => navigation.navigate('NaoScreen')} />
-        </View>
+  <TouchableOpacity onPress={() => navigation.navigate('SimScreen')} style={styles.button}>
+    <Text style={styles.buttonText}>Sim</Text>
+  </TouchableOpacity>
+</View>
+
+<View style={styles.buttonWrapper}>
+  <TouchableOpacity onPress={() => navigation.navigate('NaoScreen')} style={styles.button}>
+    <Text style={styles.buttonText}>Não</Text>
+  </TouchableOpacity>
+</View>
       </View>
     </View>
   );
@@ -89,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-
+    border: '1px solid black',
   },
   input: {
     height: 40,
