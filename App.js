@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import { Touchable } from 'react-native';
 
 const Stack = createNativeStackNavigator()
 
@@ -32,10 +33,10 @@ function HomeScreen({ navigation }) {
       <Text>Você é Aluno?</Text>
       <View style={styles.rowContainer}>
         <View style={styles.buttonWrapper}>
-          <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
+          <TouchableOpacity title="Sim" onPress={() => navigation.navigate('SimScreen')} />
         </View>
         <View style={styles.buttonWrapper}>
-          <Button title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+          <TouchableOpacityton title="Não" onPress={() => navigation.navigate('NaoScreen')} />
         </View>
       </View>
     </View>
