@@ -30,7 +30,7 @@ function HomeScreen({ navigation }) {
         value={matricula}
         onChangeText={setMatricula}
       />
-      <Text>Você é Aluno?</Text>
+      <Text style={styles.TextStyle}>Você é Aluno?</Text>
       <View style={styles.rowContainer}>
         <View style={styles.buttonWrapper}>
   <TouchableOpacity onPress={() => navigation.navigate('SimScreen')} style={styles.button}>
@@ -104,5 +104,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '80%',
     borderRadius: 5,
+  },
+    
+
+  roundContainer: {
+    width: 150, 
+    height: 100, 
+    borderRadius: 50, 
+    backgroundColor: '#3498db',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10, 
+  },
+  TextStyle: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
