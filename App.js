@@ -13,9 +13,17 @@ function HomeScreen({ navigation }) {
 
   const validaMatricula = (matricula) => {
     return matricula.length == 8;
-    }
+    if(!validaMatricula(matricula)){
+      alert("Matrícula inválida. Deve conter 8 caracteres.");
+      return;
+    }}
   const validarNomeUsuario = (nome) => {
     return nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*');
+    
+    if (validarNomeUsuario(nome)) {
+      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+      return;
+    }
   };
   
   return (
@@ -95,7 +103,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     border: '1px solid black',
+    width: 50,
+    padding: 5,
+    margin: 5,
   },
+
   input: {
     height: 40,
     borderColor: 'gray',
