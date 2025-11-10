@@ -8,8 +8,9 @@ const Stack = createNativeStackNavigator()
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      
-    <Text>Você é Aluno?</Text>
+      <View style={styles.roundContainer}>
+    <Text>Você é um Aluno?</Text>
+    </View>
     <View style={styles.rowContainer}>
       <View style={styles.buttonWrapper}>
         <Button title="Sim" onPress={() => navigation.navigate('SimScreen')} />
@@ -68,6 +69,20 @@ const styles = StyleSheet.create({
     width:'12%',
     flexDirection:'row',
     alignItems: 'center',
+    
 
+  },
+  roundContainer: {
+    width: 150, 
+    height: 100, 
+    borderRadius: 50, 
+    backgroundColor: '#3498db',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10, 
+  },
+  text: {
+    color: 'white',
+    fontSize: 16,
   }
 });
