@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { Touchable } from 'react-native';
@@ -30,13 +30,13 @@ function HomeScreen({ navigation }) {
         value={matricula}
         onChangeText={setMatricula}
       />
-      <Text>Você é Aluno?</Text>
+      <Text style={styles.TextStyle}>Você é Aluno?</Text>
       <View style={styles.rowContainer}>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity title="Sim" onPress={() => navigation.navigate('SimScreen')} />
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacityton title="Não" onPress={() => navigation.navigate('NaoScreen')} />
+          <TouchableOpacity title="Não" onPress={() => navigation.navigate('NaoScreen')} />
         </View>
       </View>
     </View>
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10, 
   },
-  text: {
-    color: 'white',
-    fontSize: 16,
-  }
+  TextStyle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
