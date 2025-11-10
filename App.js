@@ -12,19 +12,27 @@ function HomeScreen({ navigation }) {
   const [nome, setNome] = useState("");
 
   const validaMatricula = (matricula) => {
-    return matricula.length == 8;
-    if(!validaMatricula(matricula)){
-      alert("Matrícula inválida. Deve conter 8 caracteres.");
-      return;
-    }}
-  const validarNomeUsuario = (nome) => {
-    return nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*');
     
-    if (validarNomeUsuario(nome)) {
-      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
-      return;
+    if(matricula.length != 8){
+      alert("Matrícula inválida. Deve conter 8 caracteres.");
+      return false;
     }
+    return true;
+  }
+  const validarNomeUsuario = (nome) => {
+    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*');
+    if (!temCaracteresEspeciais) {
+      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+      return false;
+    }
+    return true;
   };
+
+  const validaFormulario = (aluno) => {
+    if(validarNomeUsuario(nome) && validaMatricula(matricula)){
+      aluno ? navigation.navigate('SimScreen') : navigation.navigate('NaoScreen');
+    }
+  }
   
   return (
     <View style={styles.container}>
@@ -41,13 +49,13 @@ function HomeScreen({ navigation }) {
       <Text style={styles.TextStyle}>Você é Aluno?</Text>
       <View style={styles.rowContainer}>
         <View style={styles.buttonWrapper}>
-  <TouchableOpacity onPress={() => navigation.navigate('SimScreen')} style={styles.button}>
+  <TouchableOpacity onPress={()=> validaFormulario(true)} style={styles.button}>
     <Text style={styles.buttonText}>Sim</Text>
   </TouchableOpacity>
 </View>
 
 <View style={styles.buttonWrapper}>
-  <TouchableOpacity onPress={() => navigation.navigate('NaoScreen')} style={styles.button}>
+  <TouchableOpacity onPress={() => validaFormulario(false)} style={styles.button}>
     <Text style={styles.buttonText}>Não</Text>
   </TouchableOpacity>
 </View>
