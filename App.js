@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AppProvider } from './AppContext';
 
 const Stack = createNativeStackNavigator()
 
@@ -42,6 +43,11 @@ function HomeScreen({ navigation }) {
   );
 };
 function SimScreen() {
+  const { userType, setUserType } = useContext(AppProvider);
+
+   React.useEffect(() => {
+    setUserType('aluno');
+  }, []);
   return (
     <View style={styles.container}>
       <Text>Bem-vindo, Aluno!</Text>
