@@ -4,7 +4,7 @@ export default function NaoScreen() {
   return (
     <View style={styles.container}>
       <Text>Você é o administrador?</Text>
-     <TouchableOpacity style={styles.touch} onPress={()}>
+     <TouchableOpacity style={styles.touch} onPress={() => alert('Acesso negado')}>
 
      </TouchableOpacity>
     </View>
