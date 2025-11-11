@@ -2,25 +2,22 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
     return (
-      
+    <View style={styles.ok}>
+      <Text style={styles.titulo}>Bem vindo(a)!</Text>
+      <Text style={styles.texto}>Você é aluno ou administrador?</Text>
     <View style={styles.rowContainer}>
     <View style={styles.buttonWrapper}>
        <TouchableOpacity onPress={()=> AlunoScreen() } style={styles.button}>
-           <Text style={styles.buttonText}>aluno</Text>
+           <Text style={styles.buttonText}> Sou aluno</Text>
       </TouchableOpacity>
-    </View>
-
-    <View>
-         <Text>ou</Text>
-    </View>
-
+    </View> 
    <View style={styles.buttonWrapper}>
        <TouchableOpacity onPress={() => AdministradorsScreen()} style={styles.button}>
-          <Text style={styles.buttonText}>Administrador</Text>
+          <Text style={styles.buttonText}>Sou Administrador</Text>
       </TouchableOpacity>
     </View>
     </View>
-      
+    </View>
     );
   };
   const styles = StyleSheet.create({
@@ -59,8 +56,26 @@ export default function HomeScreen({ navigation }) {
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'black',
-    width: 50,
+    width: 140,
     padding: 5,
-    margin: 5,
+    margin: 10,
+    backgroundColor: '#2196F3',
+  },
+  titulo: {
+    marginTop: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  texto: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+  },
+  ok: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
   },
 });
