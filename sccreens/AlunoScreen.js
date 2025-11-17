@@ -2,7 +2,8 @@ import  { useContext, useEffect, useState} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { AppContext } from '../AppContext';
 
-export default function SimScreen() {
+
+export default function SimScreen({ navigation }) {
 
    const [matricula, setMatricula] = useState("");
    const [nome, setNome] = useState("");
@@ -45,6 +46,7 @@ export default function SimScreen() {
   return (
 
     <View style={styles.container}>
+      
       <TextInput
         style={styles.input}
         placeholder="Matrícula" 
@@ -58,7 +60,7 @@ export default function SimScreen() {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.touch} onPress={Entrar}>
+      <TouchableOpacity style={styles.touch} onPress={() => navigate. navigate(Entart)}>
       <Text>Entrar</Text>
       </TouchableOpacity>
     </View>

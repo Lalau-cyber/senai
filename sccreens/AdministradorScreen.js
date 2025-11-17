@@ -1,23 +1,32 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { AppContext } from '../AppContext';
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 
-export default function NaoScreen() {
+export default function NaoScreen({ navigation }) {
 
    const [senha, setSenha] = useState("");
    const [nome, setNome] = useState("");
-   
+   const { userType, setUserType } = useContext(AppContext);
+      useEffect(() => {
+        setUserType('administrador');
+      }, []);
+
   const validaSenha = (senha) => {
     if(senha.length != 8){
       alert("Seha inválida. Deve conter 8 caracteres.");
    return false;
    }
-   return true;
-  }
+   if (nome.trim().length === 0) {
+      alert("Informe um nome válido.");
+      console.log("Nome inválido");
+      return false;
+    }
+    return true;
+  };
+  
 
   const validarNomeUsuario = (nome) => {
       const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
-       
       if (!temCaracteresEspeciais) {
       alert("Nome de usuário inválido. Deve conter caracteres especiais.");
       return false;
@@ -32,15 +41,10 @@ export default function NaoScreen() {
         administrador ? navigation.navigate('SimScreen', { nome, senha }) : navigation.navigate('NaoScreen', { nome, senha });
       }
     }
-     const { userType, setUserType } = useContext(AppContext);
-      useEffect(() => {
-        setUserType('aluno');
-      }, []);
-      eturn (
+     
+   return (
       
   <View style={styles.container}>
-      
-            
          <TextInput
               style={styles.input}
               placeholder="Senha" 
@@ -54,19 +58,20 @@ export default function NaoScreen() {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.touch} onPress={Entrar()}>
+         <TouchableOpacity style={styles.touch} onPress={() => navigate. navigate("Entrar")}>
             <Text>Entrar</Text>
          </TouchableOpacity>
   </View>
         );
       
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 
+  const styles = StyleSheet.create({
+
+  container: {
+     flex: 1,
+      paddingTop: 40, 
+      alignItems: 'center', 
+      backgroundColor: '#fff' 
+    },
 });

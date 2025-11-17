@@ -23,7 +23,7 @@ export default function HomeScreen({ navigation }) {
        </TouchableOpacity>
     </View>
     </View>
-    </View>
+      </View>
     );
   };
   const styles = StyleSheet.create({
