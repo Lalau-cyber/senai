@@ -51,6 +51,7 @@ export default function HomeScreen({ navigation }) {
       justifyContent: 'center',
       textAlign: 'center',
       fontWeight: 'bold',
+      width: 300,
 
  },
  buttonWrapper: {
