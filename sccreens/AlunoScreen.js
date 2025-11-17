@@ -46,20 +46,24 @@ export default function SimScreen() {
 
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={styles.text}
+        placeholder="Complete os campos abaixo:" 
+      />
+      <TextInput
+        style={styles.matri}
         placeholder="Matrícula" 
         value={matricula}
         onChangeText={setMatricula}
       />
       <TextInput
-        style={styles.input}
+        style={styles.nome}
         placeholder="Nome"    
         value={nome}
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.touch} onPress={Entrar}>
-      <Text>Entrar</Text>
+      <TouchableOpacity style={styles.entrar} onPress={Entrar}>
+      <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -68,8 +72,48 @@ export default function SimScreen() {
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
   },
+  matri: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '80%',
+    borderRadius: 5,
+    backgroundColor: '#F1DAFF',
+    
+  },
+  nome: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '80%',
+    borderRadius: 5,
+    backgroundColor: '#F1DAFF',
+  },
+  entrar: {
+    backgroundColor: '#B862F2',
+    padding: 10,
+    borderRadius: 5,
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  text: {
+    fontWeight: 'bold',
+    marginTop: 50,
+    fontSize: 20,
+    marginBottom: 20,
+    width: '80%',
+  },
+  textoBotao: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
 
 });

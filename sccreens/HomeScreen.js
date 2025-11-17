@@ -66,7 +66,7 @@ export default function HomeScreen({ navigation }) {
     width: 140,
     padding: 5,
     margin: 10,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#B862F2',
   },
   titulo: {
     marginTop: 60,
