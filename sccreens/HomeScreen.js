@@ -1,22 +1,26 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import AlunoScreen from './AlunoScreen';
-import AdministradorsScreen from './AdministradorScreen';
+import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 export default function HomeScreen({ navigation }) {
+    const navigate = navigation;
     return (
     <View style={styles.ok}>
-      <Text style={styles.titulo}>Bem vindo(a)!</Text>
-      <Text style={styles.texto}>Você é aluno ou administrador?</Text>
-    <View style={styles.rowContainer}>
-    <View style={styles.buttonWrapper}>
-       <TouchableOpacity onPress={()=> AlunoScreen() } style={styles.button}>
+
+        <Text style={styles.titulo}>Bem vindo(a)!</Text>
+        <Text style={styles.texto}>Você é aluno ou administrador?</Text>
+
+     <View style={styles.rowContainer}>
+
+     <View style={styles.buttonWrapper}>
+
+        <TouchableOpacity onPress={()=> navigate.navigate('SimScreen') } style={styles.button}>
            <Text style={styles.buttonText}> Sou aluno</Text>
-      </TouchableOpacity>
-    </View> 
-   <View style={styles.buttonWrapper}>
-       <TouchableOpacity onPress={() => AdministradorsScreen()} style={styles.button}>
-          <Text style={styles.buttonText}>Sou Administrador</Text>
-      </TouchableOpacity>
+       </TouchableOpacity>
+     </View> 
+
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => navigate.navigate('NaoScreen')} style={styles.button}>
+           <Text style={styles.buttonText}>Sou Administrador</Text>
+       </TouchableOpacity>
     </View>
     </View>
     </View>

@@ -1,20 +1,28 @@
 import  { useContext, useEffect, useState} from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import { AppContext } from '../AppContext';
-import { TextInput } from "react-native-web";
 
 export default function SimScreen() {
 
    const [matricula, setMatricula] = useState("");
    const [nome, setNome] = useState("");
-   
+   const { userType, setUserType } = useContext(AppContext);
+  useEffect(() => {
+    setUserType('aluno');
+  }, []);
+  
   const validaMatricula = (matricula) => {
     if(matricula.length != 8){
       alert("Matrícula inválida. Deve conter 8 caracteres.");
    return false;
    }
-   return true;
-  }
+   if (nome.trim().length === 0) {
+      alert("Informe um nome válido.");
+      return false;
+    }
+    return true;
+  };
+
   const validarNomeUsuario = (nome) => {
       const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
          if (!temCaracteresEspeciais) {
@@ -29,19 +37,14 @@ export default function SimScreen() {
   
   const validarFormulario = (aluno) => {
     if(validarNomeUsuario(nome) && validaMatricula(matricula)){
-        aluno ? navigation.navigate('SimScreen', { nome, matricula }) : navigation.navigate('NaoScreen');
+        aluno ? navigation.navigate('SimScreen', { nome, matricula }) : navigation.navigate('NaoScreen', { nome, matricula });
       }
     }
     
-  const { userType, setUserType } = useContext(AppContext);
-  useEffect(() => {
-    setUserType('aluno');
-  }, []);
+  
   return (
 
     <View style={styles.container}>
-
-      
       <TextInput
         style={styles.input}
         placeholder="Matrícula" 
@@ -55,7 +58,7 @@ export default function SimScreen() {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.touch} onPress={Entrar()}>
+      <TouchableOpacity style={styles.touch} onPress={Entrar}>
       <Text>Entrar</Text>
       </TouchableOpacity>
     </View>
