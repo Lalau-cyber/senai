@@ -55,7 +55,7 @@ export default function SimScreen() {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.touch} onPress={(Entrar())}>
+      <TouchableOpacity style={styles.touch} onPress={Entrar()}>
       <Text>Entrar</Text>
       </TouchableOpacity>
     </View>
