@@ -1,4 +1,4 @@
-import React, { useContext, useEffect} from "react";
+import  { useContext, useEffect, useState} from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import { AppContext } from '../AppContext';
 import { TextInput } from "react-native-web";
@@ -23,6 +23,9 @@ export default function SimScreen() {
       }
       return true;
     };
+    function Entrar() {
+      return validarFormulario(true);
+    } 
   
   const validarFormulario = (aluno) => {
     if(validarNomeUsuario(nome) && validaMatricula(matricula)){
@@ -38,7 +41,7 @@ export default function SimScreen() {
 
     <View style={styles.container}>
 
-      <TouchableOpacity style={styles.touch} onPress={(Entrar)}>
+      
       <TextInput
         style={styles.input}
         placeholder="Matrícula" 
@@ -51,9 +54,10 @@ export default function SimScreen() {
         value={nome}
         onChangeText={setNome}
       />
+
+      <TouchableOpacity style={styles.touch} onPress={(Entrar())}>
       <Text>Entrar</Text>
       </TouchableOpacity>
-      <Text>Bem-vindo, Aluno!</Text>
     </View>
   );
 }

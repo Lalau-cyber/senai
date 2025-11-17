@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import AlunoScreen from './AlunoScreen';
+import AdministradorsScreen from './AdministradorScreen';
 
 export default function HomeScreen({ navigation }) {
     return (
