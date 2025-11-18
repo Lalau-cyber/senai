@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import HomeScreen from './sccreens/HomeScreen';
 import SimScreen from './sccreens/AlunoScreen';
 import NaoScreen from './sccreens/AdministradorScreen';
+import EntrarSaldo from './sccreens/EntrarSaldo';
 
 const Stack = createNativeStackNavigator()
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="inicio" component={HomeScreen} />
         <Stack.Screen name="SimScreen" component={SimScreen} />
         <Stack.Screen name="NaoScreen" component={NaoScreen} />
+        <Stack.Screen name="EntrarSaldo" component={EntrarSaldo} />
       </Stack.Navigator>
     </NavigationContainer>
      </AppProvider>

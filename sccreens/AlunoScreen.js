@@ -8,22 +8,24 @@ export default function SimScreen({ navigation }) {
    const [matricula, setMatricula] = useState("");
    const [nome, setNome] = useState("");
    const { userType, setUserType } = useContext(AppContext);
+
   useEffect(() => {
     setUserType('aluno');
   }, []);
   
   const validaMatricula = (matricula) => {
+
     if(matricula.length != 8){
       alert("Matrícula inválida. Deve conter 8 caracteres.");
    return false;
    }
    if (nome.trim().length === 0) {
       alert("Informe um nome válido.");
-      console.log("Nome inválido");
       return false;
-    }
-    return true;
+    } 
+ navigation.navigate('EntrarSaldo');
   };
+
 
   const validarNomeUsuario = (nome) => {
       const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
@@ -62,7 +64,7 @@ export default function SimScreen({ navigation }) {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={Entrar}>
+      <TouchableOpacity style={styles.entrar} onPress={() => navigate.navigate('EntrarSaldo') }>
       <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>

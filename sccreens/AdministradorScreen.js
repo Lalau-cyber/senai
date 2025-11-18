@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { AppContext } from '../AppContext';
 import { useState, useContext, useEffect } from "react";
-import { EntrarSaldo } from '../EntrarSaldo';
+import {navigate} from 'react';
 
 export default function NaoScreen({ navigation }) {
 
@@ -19,7 +19,6 @@ export default function NaoScreen({ navigation }) {
    }
    if (nome.trim().length === 0) {
       alert("Informe um nome válido.");
-      console.log("Nome inválido");
       return false;
     }
     return true;
@@ -46,14 +45,15 @@ export default function NaoScreen({ navigation }) {
    return (
       
   <View style={styles.container}>
+        <Text style={styles.text}>Complete os campos abaixo:</Text>
          <TextInput
-              style={styles.input}
+              style={styles.senha}
               placeholder="Senha" 
               value={senha}
               onChangeText={setSenha}
             />
           <TextInput
-              style={styles.input}
+              style={styles.nome}
               placeholder="Nome"    
               value={nome}
               onChangeText={setNome}
@@ -71,8 +71,47 @@ export default function NaoScreen({ navigation }) {
 
   container: {
      flex: 1,
-      paddingTop: 40, 
-      alignItems: 'center', 
-      backgroundColor: '#fff' 
+     alignItems: 'center', 
+     backgroundColor: '#fff' 
+    },
+    senha: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+      width: '80%',
+      borderRadius: 5,
+      backgroundColor: '#F1DAFF',
+      
+    },
+    nome: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+      width: '80%',
+      borderRadius: 5,
+      backgroundColor: '#F1DAFF',
+    },
+    entrar: {
+      backgroundColor: '#B862F2',
+      padding: 10,
+      borderRadius: 5,
+      borderColor: 'black',
+      borderWidth: 1,
+    },
+    text: {
+      fontWeight: 'bold',
+      marginTop: 50,
+      fontSize: 20,
+      marginBottom: 20,
+      width: '80%',
+    },
+    textoBotao: {
+      color: 'black',
+      fontWeight: 'bold',
+      fontSize: 16,
     },
 });
