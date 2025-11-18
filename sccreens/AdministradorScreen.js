@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { AppContext } from '../AppContext';
 import { useState, useContext, useEffect } from "react";
+import { EntrarSaldo } from '../EntrarSaldo';
 
 export default function NaoScreen({ navigation }) {
 
@@ -58,7 +59,7 @@ export default function NaoScreen({ navigation }) {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.touch} onPress={() => navigate. navigate("Entrar")}>
+         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate('EntrarSaldo')}>
             <Text>Entrar</Text>
          </TouchableOpacity>
   </View>

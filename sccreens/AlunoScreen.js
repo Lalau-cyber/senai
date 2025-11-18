@@ -19,6 +19,7 @@ export default function SimScreen({ navigation }) {
    }
    if (nome.trim().length === 0) {
       alert("Informe um nome válido.");
+      console.log("Nome inválido");
       return false;
     }
     return true;
