@@ -1,13 +1,16 @@
 // ...existing code...
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Saldo({ route }) {
+export default function EntrarSaldoScreen({ navigate }) {
   // recebe saldo via params: navigation.navigate('Saldo', { saldo: 12.5 })
-  const saldoParam = route?.params?.saldo;
-  const saldo = typeof saldoParam === 'number' ? saldoParam : parseFloat(saldoParam) || 0;
+  // const saldoParam = route?.params?.saldo;
+  // const saldo = typeof saldoParam === 'number' ? saldoParam : parseFloat(saldoParam) || 0;
 
   return (
     <View style={styles.container}>
+      <View style ={styles.histo}>
+        <Button title="📒" onPress={(sa)} />
+      </View>
       <Text style={styles.title}>Saldo do Ticket</Text>
       <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
       <Text style={styles.note}>Última atualização: agora</Text>

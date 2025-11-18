@@ -1,7 +1,8 @@
+import  React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { AppContext } from '../AppContext';
-import { useState, useContext, useEffect } from "react";
+import { AppContext } from '../context/UserContext';
 import {navigate} from 'react';
+
 
 export default function NaoScreen({ navigation }) {
 
@@ -23,23 +24,19 @@ export default function NaoScreen({ navigation }) {
     }
     return true;
   };
-  
 
-  const validarNomeUsuario = (nome) => {
-      const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
-      if (!temCaracteresEspeciais) {
-      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
-      return false;
-       }
-      }
-       function Entrar() {
-      return validarFormulario(true);
-    } 
-  
-  const validarFormulario = (administrador) => {
-    if(validarNomeUsuario(nome) && validaSenha(senha)){
-        administrador ? navigation.navigate('SimScreen', { nome, senha }) : navigation.navigate('NaoScreen', { nome, senha });
-      }
+  const validarNomeUsuario = (n) => n.trim().length > 0;
+
+  const Entrar = () => {
+    if (!validaMatricula(matricula)) {
+      alert('Matrícula inválida. Use 8 dígitos.');
+      return;
+    }
+    if (!validarNomeUsuario(nome)) {
+      alert('Informe o nome.');
+      return;
+    }
+    navigation.navigate('EntrarSaldo', { nome, matricula, saldo: 0.0 })
     }
      
    return (
@@ -59,7 +56,7 @@ export default function NaoScreen({ navigation }) {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate('EntrarSaldo')}>
+         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate(AdScreen)}>
             <Text>Entrar</Text>
          </TouchableOpacity>
   </View>

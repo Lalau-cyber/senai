@@ -1,6 +1,6 @@
 import  { useContext, useEffect, useState} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../context/UserContext';
 
 
 export default function SimScreen({ navigation }) {
@@ -36,7 +36,9 @@ export default function SimScreen({ navigation }) {
       return true;
     };
     function Entrar() {
-      return validarFormulario(true);
+     if (validarFormulario(true)) {
+        navigation.navigate('EntrarSaldo', { nome, matricula } );
+      }
     } 
   
   const validarFormulario = (aluno) => {
@@ -64,7 +66,7 @@ export default function SimScreen({ navigation }) {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={() => navigate.navigate('EntrarSaldo') }>
+      <TouchableOpacity style={styles.entrar} onPress={() => navigation.navigate(Entrar)}>
       <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
