@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native
 import { AppContext } from '../context/UserContext';
 
 
-export default function SimScreen({ navigation }) {
+export default function SimScreen({ navigation, route }) {
 
    const [matricula, setMatricula] = useState("");
    const [nome, setNome] = useState("");
@@ -66,7 +66,7 @@ export default function SimScreen({ navigation }) {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={() => navigation.navigate(Entrar)}>
+      <TouchableOpacity style={styles.entrar} onPress={() => navigation.navigate('EntrarSaldoScreen') }>
       <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
