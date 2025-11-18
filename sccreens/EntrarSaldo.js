@@ -1,7 +1,7 @@
 // ...existing code...
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Saldo({ route }) {
+export default function EntrarSaldoScreen({ navigation, route }) {
   // recebe saldo via params: navigation.navigate('Saldo', { saldo: 12.5 })
   const saldoParam = route?.params?.saldo;
   const saldo = typeof saldoParam === 'number' ? saldoParam : parseFloat(saldoParam) || 0;
@@ -18,7 +18,7 @@ export default function Saldo({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,

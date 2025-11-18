@@ -59,7 +59,7 @@ export default function NaoScreen({ navigation }) {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate('EntrarSaldo')}>
+         <TouchableOpacity style={styles.entrar}onPress={() => navigation.navigate('EntrarSaldoScreen')}>
             <Text>Entrar</Text>
          </TouchableOpacity>
   </View>

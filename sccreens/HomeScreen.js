@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
     const navigate = navigation;
     return (
     <View style={styles.ok}>
