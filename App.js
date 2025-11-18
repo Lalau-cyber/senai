@@ -13,10 +13,10 @@ export default function App() {
   return (
      <AppProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="inicio">
-        <Stack.Screen name="inicio" component={HomeScreen} />
-        <Stack.Screen name="SimScreen" component={SimScreen} />
-        <Stack.Screen name="NaoScreen" component={NaoScreen} />
+      <Stack.Navigator initialRouteName="Koado">
+        <Stack.Screen name="Koado" component={HomeScreen} />
+        <Stack.Screen name="Aluno" component={SimScreen} />
+        <Stack.Screen name="Administrador" component={NaoScreen} />
         <Stack.Screen name="EntrarSaldo" component={EntrarSaldo} />
       </Stack.Navigator>
     </NavigationContainer>

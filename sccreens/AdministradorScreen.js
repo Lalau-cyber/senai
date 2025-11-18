@@ -44,7 +44,11 @@ export default function NaoScreen({ navigation }) {
      
    return (
       
+  
+
   <View style={styles.container}>
+    <View style={styles.conter}>
+    </View>
         <Text style={styles.text}>Complete os campos abaixo:</Text>
          <TextInput
               style={styles.senha}
@@ -60,7 +64,7 @@ export default function NaoScreen({ navigation }) {
             />
       
          <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate('EntrarSaldo')}>
-            <Text>Entrar</Text>
+            <Text style={styles.textoBotao}>Entrar</Text>
          </TouchableOpacity>
   </View>
         );
@@ -75,7 +79,7 @@ export default function NaoScreen({ navigation }) {
      backgroundColor: '#fff' 
     },
     senha: {
-      height: 40,
+      height: 60,
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 10,
@@ -86,7 +90,7 @@ export default function NaoScreen({ navigation }) {
       
     },
     nome: {
-      height: 40,
+      height: 60,
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 10,
@@ -104,8 +108,8 @@ export default function NaoScreen({ navigation }) {
     },
     text: {
       fontWeight: 'bold',
-      marginTop: 50,
-      fontSize: 20,
+      marginTop: 10,
+      fontSize: 25,
       marginBottom: 20,
       width: '80%',
     },
@@ -113,5 +117,10 @@ export default function NaoScreen({ navigation }) {
       color: 'black',
       fontWeight: 'bold',
       fontSize: 16,
+    },
+    conter: {
+      width: '100%',
+      height: 50,
+      backgroundColor: '#B862F2',
     },
 });

@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 export default function HomeScreen({ navigation }) {
     const navigate = navigation;
     return (
-    <View style={styles.ok}>
-
+    <View style={styles.container}>
+      <View style={styles.coner}>
+      </View>
+      <View style={styles.centro}>
         <Text style={styles.titulo}>Bem vindo(a)!</Text>
         <Text style={styles.texto}>Você é aluno ou administrador?</Text>
 
@@ -12,26 +14,32 @@ export default function HomeScreen({ navigation }) {
 
      <View style={styles.buttonWrapper}>
 
-        <TouchableOpacity onPress={()=> navigate.navigate('SimScreen') } style={styles.button}>
+        <TouchableOpacity onPress={()=> navigate.navigate('Aluno') } style={styles.button}>
            <Text style={styles.buttonText}> Sou aluno</Text>
        </TouchableOpacity>
      </View> 
 
       <View style={styles.buttonWrapper}>
-        <TouchableOpacity onPress={() => navigate.navigate('NaoScreen')} style={styles.button}>
+        <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
            <Text style={styles.buttonText}>Sou Administrador</Text>
        </TouchableOpacity>
     </View>
     </View>
       </View>
+    </View>
     );
   };
   const styles = StyleSheet.create({
-  container: {
+    
+   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
+    },
+
+  centro: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   input: {
     height: 40,
@@ -69,7 +77,7 @@ export default function HomeScreen({ navigation }) {
     backgroundColor: '#B862F2',
   },
   titulo: {
-    marginTop: 60,
+    marginTop: 15,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 30,
@@ -80,9 +88,15 @@ export default function HomeScreen({ navigation }) {
     justifyContent: 'center',
     fontSize: 18,
   },
-  ok: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+  conter: {
+    width: '100%',
+    height: 150,
+    backgroundColor: 'black',
   },
+  coner: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+  
 });
