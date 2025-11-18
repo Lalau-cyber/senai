@@ -45,21 +45,22 @@ export default function NaoScreen({ navigation }) {
    return (
       
   <View style={styles.container}>
+        <Text style={styles.text}>Complete os campos abaixo:</Text>
          <TextInput
-              style={styles.input}
+              style={styles.senha}
               placeholder="Senha" 
               value={senha}
               onChangeText={setSenha}
             />
           <TextInput
-              style={styles.input}
+              style={styles.nome}
               placeholder="Nome"    
               value={nome}
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.touch} onPress={() => navigate. navigate("Entrar")}>
-            <Text>Entrar</Text>
+         <TouchableOpacity style={styles.entrar} onPress={() => navigate. navigate("Entrar")}>
+            <Text style={styles.textoBotao}>Entrar</Text>
          </TouchableOpacity>
   </View>
         );
@@ -70,8 +71,47 @@ export default function NaoScreen({ navigation }) {
 
   container: {
      flex: 1,
-      paddingTop: 40, 
-      alignItems: 'center', 
-      backgroundColor: '#fff' 
+     alignItems: 'center', 
+     backgroundColor: '#fff' 
+    },
+    senha: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+      width: '80%',
+      borderRadius: 5,
+      backgroundColor: '#F1DAFF',
+      
+    },
+    nome: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+      width: '80%',
+      borderRadius: 5,
+      backgroundColor: '#F1DAFF',
+    },
+    entrar: {
+      backgroundColor: '#B862F2',
+      padding: 10,
+      borderRadius: 5,
+      borderColor: 'black',
+      borderWidth: 1,
+    },
+    text: {
+      fontWeight: 'bold',
+      marginTop: 50,
+      fontSize: 20,
+      marginBottom: 20,
+      width: '80%',
+    },
+    textoBotao: {
+      color: 'black',
+      fontWeight: 'bold',
+      fontSize: 16,
     },
 });
