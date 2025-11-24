@@ -66,7 +66,7 @@ export default function SimScreen({ navigation, route }) {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={() => navigation.navigate('EntrarSaldoScreen') }>
+      <TouchableOpacity style={styles.entrar} onPress={() => navigate.navigate('EntrarSaldoScreen') }>
       <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
