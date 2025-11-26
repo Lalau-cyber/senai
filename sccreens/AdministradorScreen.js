@@ -1,7 +1,7 @@
-import  React, { useState, useContext, useEffect } from "react";
+
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { AppContext } from '../context/UserContext';
-import {navigate} from 'react';
 
 
 export default function NaoScreen({ navigation }) {
@@ -14,30 +14,31 @@ export default function NaoScreen({ navigation }) {
       }, []);
 
   const validaSenha = (senha) => {
-    if(senha.length != 8){
+    if(senha.length !== 8){
       alert("Seha inválida. Deve conter 8 caracteres.");
    return false;
    }
-   if (nome.trim().length === 0) {
-      alert("Informe um nome válido.");
-      return false;
-    }
-    return true;
+  return true;
   };
-
-  const validarNomeUsuario = (n) => n.trim().length > 0;
-
-  const Entrar = () => {
-    if (!validaMatricula(matricula)) {
-      alert('Matrícula inválida. Use 8 dígitos.');
-      return;
-    }
-    if (!validarNomeUsuario(nome)) {
-      alert('Informe o nome.');
-      return;
-    }
-    navigation.navigate('EntrarSaldo', { nome, matricula, saldo: 0.0 })
-    }
+ 
+const validarNomeUsuario = (nome)=> {
+  if (!nome.trim()) {
+        alert("informe um nome válido");
+    return false;
+  }
+  const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
+  if (!temCaracteresEspeciais ) {
+      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+ return false;
+  };
+  return true;
+  };
+    function Entrar() {
+      if (validarNomeUsuario(nome)) return;
+        if( validaSenha(senha)) return;
+        navigation.navigate('EntrarSaldo', { nome, matricula, saldo: 0.0 })
+      }
+    
      
    return (
       
@@ -56,7 +57,7 @@ export default function NaoScreen({ navigation }) {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate(AdScreen)}>
+         <TouchableOpacity style={styles.entrar}onPress={Entrar }>
             <Text>Entrar</Text>
          </TouchableOpacity>
   </View>

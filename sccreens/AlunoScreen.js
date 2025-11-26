@@ -1,9 +1,9 @@
 import  { useContext, useEffect, useState} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert} from 'react-native';
 import { AppContext } from '../context/UserContext';
 
 
-export default function SimScreen({ navigation, route }) {
+export default function SimScreen({ navigation }) {
 
    const [matricula, setMatricula] = useState("");
    const [nome, setNome] = useState("");
@@ -30,7 +30,7 @@ export default function SimScreen({ navigation, route }) {
   const validarNomeUsuario = (nome) => {
       const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
          if (!temCaracteresEspeciais) {
-          alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+        alert("Nome de usuário inválido. Deve conter caracteres especiais.");
         return false;
       }
       return true;
@@ -43,7 +43,7 @@ export default function SimScreen({ navigation, route }) {
   
   const validarFormulario = (aluno) => {
     if(validarNomeUsuario(nome) && validaMatricula(matricula)){
-        aluno ? navigation.navigate('SimScreen', { nome, matricula }) : navigation.navigate('NaoScreen', { nome, matricula });
+        aluno ? navigation.navigate('EntrarSaldoScreen', { nome, matricula }) : navigation.navigate('NaoScreen', { nome, matricula });
       }
     }
     
@@ -66,7 +66,7 @@ export default function SimScreen({ navigation, route }) {
         onChangeText={setNome}
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={() => navigate.navigate('EntrarSaldoScreen') }>
+      <TouchableOpacity style={styles.entrar} onPress={Entrar }>
       <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>

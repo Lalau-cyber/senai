@@ -1,7 +1,8 @@
-// ...existing code...
-import { View, Text, StyleSheet } from 'react-native';
 
-export default function EntrarSaldoScreen({ navigate, route }) {
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+
+export default function EntrarSaldoScreen({ navigation, route }) {
   // recebe saldo via params: navigation.navigate('Saldo', { saldo: 12.5 })
    const saldoParam = route?.params?.saldo;
   const saldo = typeof saldoParam === 'number' ? saldoParam : parseFloat(saldoParam) || 0;
@@ -9,11 +10,18 @@ export default function EntrarSaldoScreen({ navigate, route }) {
   return (
     <View style={styles.container}>
       <View style ={styles.histo}>
-        <Button title="📒" onPress={(sa)} />
+        
+        <Text style={styles.title}>Saldo do Ticket</Text>
+        <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+        <Text style={styles.note}>Última atualização: agora</Text>
+
+       <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+      <Text>regarregar</Text>
+       </TouchableOpacity>
+         <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+      <Text>comprar</Text>
+       </TouchableOpacity>
       </View>
-      <Text style={styles.title}>Saldo do Ticket</Text>
-      <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
-      <Text style={styles.note}>Última atualização: agora</Text>
     </View>
   );
 }
@@ -40,8 +48,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#666',
   },
+  voltar: {
+    marginTop: 20,
+    backgroundColor: '#B862F2', 
+    borderWidth: 1,
+  },
 });
-// ...existing code...
+
 
 
 //Para mostrar o saldo a partir de outra tela, navegue assim:
