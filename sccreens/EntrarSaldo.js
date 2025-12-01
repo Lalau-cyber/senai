@@ -18,7 +18,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
        <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
       <Text>regarregar</Text>
        </TouchableOpacity>
-         <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('cardapio')}>
       <Text>comprar</Text>
        </TouchableOpacity>
       </View>
