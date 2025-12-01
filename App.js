@@ -6,6 +6,7 @@ import HomeScreen from './sccreens/HomeScreen';
 import SimScreen from './sccreens/AlunoScreen';
 import NaoScreen from './sccreens/AdministradorScreen';
 import EntrarSaldoScreen from './sccreens/EntrarSaldo';
+import RecarregarScreen from './sccreens/RecarregarScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="SimScreen" component={SimScreen} />
         <Stack.Screen name="NaoScreen" component={NaoScreen} />
         <Stack.Screen name="EntrarSaldo" component={EntrarSaldoScreen} />
+        <Stack.Screen name="Recarregar" component={RecarregarScreen} />
       </Stack.Navigator>
     </NavigationContainer>
      </AppProvider>
