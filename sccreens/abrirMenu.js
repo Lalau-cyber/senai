@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,21 +13,22 @@ export default function AbrirMenu({ visible = false, onClose }) {
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.backdrop}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => {}}>
             <View style={styles.menu}>
               <Text style={styles.title}>Escolha</Text>
 
-              <TouchableOpacity style={styles.item} onPress={() => go('Historico')}>
+              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Historico')}>
                 <Text style={styles.itemText}>Histórico</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.item} onPress={() => go('Perfil')}>
+              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Perfil')}>
                 <Text style={styles.itemText}>Perfil</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.item} onPress={() => go('Compras')}>
+              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Compras')}>
                 <Text style={styles.itemText}>Compras feitas</Text>
               </TouchableOpacity>
 
@@ -35,7 +36,7 @@ export default function AbrirMenu({ visible = false, onClose }) {
                 <Text style={styles.closeText}>Fechar</Text>
               </TouchableOpacity>
             </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
