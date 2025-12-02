@@ -1,7 +1,8 @@
+
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { AppContext } from '../AppContext';
-import { useState, useContext, useEffect } from "react";
-import {navigate} from 'react';
+import { AppContext } from '../context/UserContext';
+
 
 export default function NaoScreen({ navigation }) {
 
@@ -13,39 +14,34 @@ export default function NaoScreen({ navigation }) {
       }, []);
 
   const validaSenha = (senha) => {
-    if(senha.length != 8){
+    if(senha.length !== 8){
       alert("Seha inválida. Deve conter 8 caracteres.");
    return false;
    }
-   if (nome.trim().length === 0) {
-      alert("Informe um nome válido.");
-      return false;
-    }
-    return true;
+  return true;
   };
-  
-
-  const validarNomeUsuario = (nome) => {
-      const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
-      if (!temCaracteresEspeciais) {
+ 
+const validarNomeUsuario = (nome)=> {
+  if (!nome.trim()) {
+        alert("informe um nome válido");
+    return false;
+  }
+  const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*')|| nome.includes('!');
+  if (!temCaracteresEspeciais ) {
       alert("Nome de usuário inválido. Deve conter caracteres especiais.");
-      return false;
-       }
+ return false;
+  };
+  return true;
+  };
+    function Entrar() {
+      if (validarNomeUsuario(nome)) return;
+        if( validaSenha(senha)) return;
+        navigation.navigate('EntrarSaldo', { nome, matricula, saldo: 0.0 })
       }
-       function Entrar() {
-      return validarFormulario(true);
-    } 
-  
-  const validarFormulario = (administrador) => {
-    if(validarNomeUsuario(nome) && validaSenha(senha)){
-        administrador ? navigation.navigate('SimScreen', { nome, senha }) : navigation.navigate('NaoScreen', { nome, senha });
-      }
-    }
+    
      
    return (
       
-  
-
   <View style={styles.container}>
     <View style={styles.conter}>
     </View>
@@ -63,8 +59,8 @@ export default function NaoScreen({ navigation }) {
               onChangeText={setNome}
             />
       
-         <TouchableOpacity style={styles.entrar}onPress={() => navigate.navigate('EntrarSaldo')}>
-            <Text style={styles.textoBotao}>Entrar</Text>
+         <TouchableOpacity style={styles.entrar}onPress={Entrar }>
+            <Text>Entrar</Text>
          </TouchableOpacity>
   </View>
         );

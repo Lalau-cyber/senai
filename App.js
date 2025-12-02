@@ -1,11 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AppProvider } from './AppContext';
+import { AppProvider } from './context/UserContext';
 import { StyleSheet } from 'react-native';
 import HomeScreen from './sccreens/HomeScreen';
 import SimScreen from './sccreens/AlunoScreen';
 import NaoScreen from './sccreens/AdministradorScreen';
 import EntrarSaldoScreen from './sccreens/EntrarSaldo';
+import RecarregarScreen from './sccreens/RecarregarScreen';
 
 const Stack = createNativeStackNavigator()
 
