@@ -21,12 +21,9 @@ export default function App() {
         <Stack.Screen name="Aluno" component={SimScreen} />
         <Stack.Screen name="Administrador" component={NaoScreen} />
         <Stack.Screen name="EntrarSaldo" component={EntrarSaldoScreen} />
-<<<<<<< HEAD
         <Stack.Screen name="Recarregar" component={RecarregarScreen} />
         <Stack.Screen name ="Cardapio" component={CardapioScreen} />
        
-=======
->>>>>>> 8ec44f526c25ba126f419db10ed843a514120ac0
       </Stack.Navigator>
     </NavigationContainer>
      </AppProvider>
