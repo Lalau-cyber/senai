@@ -1,7 +1,7 @@
 // ...existing code...
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import AbrirMenu from './abrirMenu';
+
 
 export default function EntrarSaldoScreen({ navigation, route }) {
   const saldoParam = route?.params?.saldo ?? 0;
@@ -14,9 +14,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
     if (novoSaldo !== undefined) setSaldo(Number(saldo));
   }, [route?.params?.saldo]);
 
-  const abrirRecarregar = () => {
-    navigation.navigate('Recarregar', { saldo }); 
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -28,27 +26,16 @@ export default function EntrarSaldoScreen({ navigation, route }) {
         <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>
 
-<<<<<<< HEAD
-       <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+       <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Recarregar', { saldo })}>
       <Text>regarregar</Text>
        </TouchableOpacity>
-         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('cardapio')}>
+         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('cardapioScreen', {CardapioScreen})}>
       <Text>comprar</Text>
        </TouchableOpacity>
-=======
-        <TouchableOpacity style={styles.voltar} onPress={abrirRecarregar}>
-          <Text style={{ color: '#fff', padding: 8 }}>Recarregar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.voltar, { marginTop: 10 }]} onPress={() => navigation.navigate()}>
-          <Text style={{ color: '#fff', padding: 8 }}>comprar</Text>
-        </TouchableOpacity>
->>>>>>> d23908286dbc9f0bf5404d653d03b795386a555d
       </View>
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
