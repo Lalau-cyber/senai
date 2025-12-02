@@ -1,6 +1,7 @@
-import React from 'react';
+
 import { Modal, View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 
 export default function AbrirMenu({ visible = false, onClose }) {
   const navigation = useNavigation();

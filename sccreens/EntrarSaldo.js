@@ -14,22 +14,24 @@ export default function EntrarSaldoScreen({ navigation, route }) {
     if (novoSaldo !== undefined) setSaldo(Number(saldo));
   }, [route?.params?.saldo]);
 
-  
 
   return (
     <View style={styles.container}>
       <View style={styles.histo}>
-        <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('abrirMenu' )}>
+
+        <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('AbrirMenu' )}>
       <Text style={styles.tmenu}>Configurações</Text>
        </TouchableOpacity> 
+
         <Text style={styles.title}>Saldo do Ticket</Text>
         <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>
 
        <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Recarregar', { saldo })}>
-      <Text>regarregar</Text>
+      <Text>recarregar</Text>
        </TouchableOpacity>
-         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('cardapioScreen', {CardapioScreen})}>
+
+         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Cardapio' )}>
       <Text>comprar</Text>
        </TouchableOpacity>
       </View>
