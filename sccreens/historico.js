@@ -29,11 +29,11 @@ export default function Historico({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex:1, padding:16, backgroundColor:'#fff' },
-  title: { fontSize:18, fontWeight:'700', marginBottom:12 },
-  item: { paddingVertical:12, borderBottomWidth:1, borderColor:'#eee' },
-  itemTitle: { fontSize:16, fontWeight:'600' },
-  itemSub: { color:'#666' },
-  button: { marginTop:12, backgroundColor:'#B862F2', padding:10, borderRadius:6, alignItems:'center' },
-  buttonText: { color:'#fff' },
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  title: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+  item: { paddingVertical: 12, borderBottomWidth: 1, borderColor: '#eee' },
+  itemTitle: { fontSize: 16, fontWeight: '600' },
+  itemSub: { color: '#666' },
+  button: { marginTop: 12, backgroundColor: '#B862F2', padding: 10, borderRadius: 6, alignItems: 'center' },
+  buttonText: { color: '#fff' },
 });

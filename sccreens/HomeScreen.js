@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen({ navigation, route }) {
-    const navigate = navigation;
-    return (
+  const navigate = navigation;
+  return (
     <View style={styles.container}>
       <View style={styles.coner}>
       </View>
@@ -10,32 +10,32 @@ export default function HomeScreen({ navigation, route }) {
         <Text style={styles.titulo}>Bem vindo(a)!</Text>
         <Text style={styles.texto}>Você é aluno ou administrador?</Text>
 
-     <View style={styles.rowContainer}>
+        <View style={styles.rowContainer}>
 
-     <View style={styles.buttonWrapper}>
+          <View style={styles.buttonWrapper}>
 
-        <TouchableOpacity onPress={()=> navigate.navigate('Aluno') } style={styles.button}>
-           <Text style={styles.buttonText}> Sou aluno</Text>
-       </TouchableOpacity>
-     </View> 
+            <TouchableOpacity onPress={() => navigate.navigate('Aluno')} style={styles.button}>
+              <Text style={styles.buttonText}> Sou aluno</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.buttonWrapper}>
-        <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
-           <Text style={styles.buttonText}>Sou Administrador</Text>
-       </TouchableOpacity>
-    </View>
-    </View>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
+              <Text style={styles.buttonText}>Sou Administrador</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
-    );
-  };
-  const styles = StyleSheet.create({
-    
-   container: {
+  );
+};
+const styles = StyleSheet.create({
+
+  container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    },
+  },
 
   centro: {
     alignItems: 'center',
@@ -57,13 +57,13 @@ export default function HomeScreen({ navigation, route }) {
     marginTop: 10,
   },
   buttonText: {
-      justifyContent: 'center',
-      textAlign: 'center',
-      fontWeight: 'bold',
-      width: 300,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: 300,
 
- },
- buttonWrapper: {
+  },
+  buttonWrapper: {
     marginVertical: 10,
     width: '12%',
     flexDirection: 'row',
@@ -101,5 +101,5 @@ export default function HomeScreen({ navigation, route }) {
     height: 20,
     backgroundColor: '#B862F2',
   },
-  
+
 });

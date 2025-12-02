@@ -18,27 +18,28 @@ export default function EntrarSaldoScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <View style={styles.conter}>
-         </View>
+      </View>
       <View style={styles.histo}>
 
-        <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('AbrirMenu' )}>
-      <Text style={styles.tmenu}>Configurações</Text>
-       </TouchableOpacity> 
+        <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('AbrirMenu')}>
+          <Text style={styles.tmenu}>⚙️</Text>
+        </TouchableOpacity>
 
         <Text style={styles.title}>Saldo do Ticket</Text>
         <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>
 
-       <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Recarregar', { saldo })}>
-      <Text>recarregar</Text>
-       </TouchableOpacity>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('Recarregar', { saldo })}>
+            <Text style={styles.textbotoes}>Recarregar</Text>
+          </TouchableOpacity>
 
-         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Cardapio' )}>
-      <Text>comprar</Text>
-       </TouchableOpacity>
+          <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('Cardapio')}>
+            <Text style={styles.textbotoes}>Comprar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      </View>
-  
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -77,14 +78,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: 'black',
   },
-  menu:{
+  menu: {
     backgroundColor: 'invisible',
     padding: 10,
     alignSelf: 'flex-end',
     borderColor: 'black',
     borderWidth: 0,
   },
-  tmenu:{
+  tmenu: {
     fontSize: 30,
   },
   conter: {
@@ -92,10 +93,10 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#B862F2',
   },
-  botoesContainer:{
-    flexDirection: 'row', 
+  botoesContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   textbotoes: {
     color: 'black',
