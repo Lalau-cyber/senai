@@ -18,20 +18,24 @@ export default function EntrarSaldoScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.conter}>
+         </View>
       <View style={styles.histo}>
         <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('abrirMenu' )}>
-      <Text style={styles.tmenu}>Configurações</Text>
+      <Text style={styles.tmenu}>⚙️</Text>
        </TouchableOpacity> 
         <Text style={styles.title}>Saldo do Ticket</Text>
         <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>
 
-       <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('Recarregar', { saldo })}>
-      <Text>regarregar</Text>
+      <View style={styles.botoesContainer}>
+       <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('Recarregar', { saldo })}>
+      <Text style={styles.textbotoes}>Recarregar</Text>
        </TouchableOpacity>
-         <TouchableOpacity style={styles.voltar} onPress={() => navigation.navigate('cardapioScreen', {CardapioScreen})}>
-      <Text>comprar</Text>
+         <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('cardapioScreen', {CardapioScreen})}>
+      <Text style={styles.textbotoes}>Comprar</Text>
        </TouchableOpacity>
+      </View>
       </View>
     </View>
   );
@@ -40,17 +44,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
   histo: {
     alignItems: 'center',
   },
   title: {
-    fontSize: 22,
+    fontSize: 30,
     marginBottom: 12,
     fontWeight: '600',
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
   },
   balance: {
     fontSize: 36,
@@ -58,27 +61,45 @@ const styles = StyleSheet.create({
     color: '#2a9d8f',
   },
   note: {
+    fontStyle: 'italic',
     marginTop: 10,
     color: '#666',
   },
-  voltar: {
+  botoes: {
     marginTop: 20,
     backgroundColor: '#B862F2',
     paddingHorizontal: 16,
-    borderRadius: 6,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
+    marginRight: 10,
+    padding: 10,
+    borderColor: 'black',
   },
   menu:{
-    backgroundColor: '#B862F2',
+    backgroundColor: 'invisible',
     padding: 10,
-    borderRadius: 100,  
+    alignSelf: 'flex-end',
     borderColor: 'black',
-    borderWidth: 1,
-    alignItems: 'flex-start'
+    borderWidth: 0,
   },
   tmenu:{
-    color: '#fff', 
+    fontSize: 30,
+  },
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+  botoesContainer:{
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  textbotoes: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 
 });

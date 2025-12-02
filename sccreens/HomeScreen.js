@@ -77,13 +77,16 @@ export default function HomeScreen({ navigation, route }) {
     backgroundColor: '#B862F2',
   },
   titulo: {
-    marginTop: 15,
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
+    margin: 15,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 30,
     fontWeight: 'bold',
   },
   texto: {
+    fontFamily: 'Georgia',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 18,

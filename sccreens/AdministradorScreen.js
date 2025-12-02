@@ -103,9 +103,11 @@ const validarNomeUsuario = (nome)=> {
       borderWidth: 1,
     },
     text: {
+      fontFamily: 'Georgia',
+      fontStyle: 'italic',
       fontWeight: 'bold',
       marginTop: 10,
-      fontSize: 25,
+      fontSize: 26,
       marginBottom: 20,
       width: '80%',
     },
@@ -116,7 +118,7 @@ const validarNomeUsuario = (nome)=> {
     },
     conter: {
       width: '100%',
-      height: 50,
+      height: 20,
       backgroundColor: '#B862F2',
     },
 });
