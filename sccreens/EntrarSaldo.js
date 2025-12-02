@@ -17,6 +17,8 @@ export default function EntrarSaldoScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.conter}>
+         </View>
       <View style={styles.histo}>
 
         <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('AbrirMenu' )}>
@@ -35,24 +37,24 @@ export default function EntrarSaldoScreen({ navigation, route }) {
       <Text>comprar</Text>
        </TouchableOpacity>
       </View>
-    </View>
+      </View>
+  
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
   histo: {
     alignItems: 'center',
   },
   title: {
-    fontSize: 22,
+    fontSize: 30,
     marginBottom: 12,
     fontWeight: '600',
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
   },
   balance: {
     fontSize: 36,
@@ -60,27 +62,45 @@ const styles = StyleSheet.create({
     color: '#2a9d8f',
   },
   note: {
+    fontStyle: 'italic',
     marginTop: 10,
     color: '#666',
   },
-  voltar: {
+  botoes: {
     marginTop: 20,
     backgroundColor: '#B862F2',
     paddingHorizontal: 16,
-    borderRadius: 6,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
+    marginRight: 10,
+    padding: 10,
+    borderColor: 'black',
   },
   menu:{
-    backgroundColor: '#B862F2',
+    backgroundColor: 'invisible',
     padding: 10,
-    borderRadius: 100,  
+    alignSelf: 'flex-end',
     borderColor: 'black',
-    borderWidth: 1,
-    alignItems: 'flex-start'
+    borderWidth: 0,
   },
   tmenu:{
-    color: '#fff', 
+    fontSize: 30,
+  },
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+  botoesContainer:{
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  textbotoes: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 
 });

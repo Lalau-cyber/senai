@@ -51,6 +51,8 @@ export default function SimScreen({ navigation }) {
   return (
 
     <View style={styles.container}>
+      <View style={styles.conter}>
+          </View>
       <Text style={styles.text}>Complete os campos abaixo:</Text>
       
       <TextInput
@@ -79,7 +81,7 @@ export default function SimScreen({ navigation }) {
     alignItems: 'center',
   },
   matri: {
-    height: 40,
+    height: 60,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
@@ -90,7 +92,7 @@ export default function SimScreen({ navigation }) {
     
   },
   nome: {
-    height: 40,
+    height: 60,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
@@ -107,16 +109,23 @@ export default function SimScreen({ navigation }) {
     borderWidth: 1,
   },
   text: {
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
     fontWeight: 'bold',
-    marginTop: 50,
-    fontSize: 20,
-    marginBottom: 20,
+    marginTop: 10,
+    fontSize: 26,
+    marginBottom: 25,
     width: '80%',
   },
   textoBotao: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
   },
 
 

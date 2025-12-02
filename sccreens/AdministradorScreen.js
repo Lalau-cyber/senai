@@ -43,6 +43,8 @@ const validarNomeUsuario = (nome)=> {
    return (
       
   <View style={styles.container}>
+    <View style={styles.conter}>
+    </View>
         <Text style={styles.text}>Complete os campos abaixo:</Text>
          <TextInput
               style={styles.senha}
@@ -73,7 +75,7 @@ const validarNomeUsuario = (nome)=> {
      backgroundColor: '#fff' 
     },
     senha: {
-      height: 40,
+      height: 60,
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 10,
@@ -84,7 +86,7 @@ const validarNomeUsuario = (nome)=> {
       
     },
     nome: {
-      height: 40,
+      height: 60,
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 10,
@@ -101,9 +103,11 @@ const validarNomeUsuario = (nome)=> {
       borderWidth: 1,
     },
     text: {
+      fontFamily: 'Georgia',
+      fontStyle: 'italic',
       fontWeight: 'bold',
-      marginTop: 50,
-      fontSize: 20,
+      marginTop: 10,
+      fontSize: 26,
       marginBottom: 20,
       width: '80%',
     },
@@ -111,5 +115,10 @@ const validarNomeUsuario = (nome)=> {
       color: 'black',
       fontWeight: 'bold',
       fontSize: 16,
+    },
+    conter: {
+      width: '100%',
+      height: 20,
+      backgroundColor: '#B862F2',
     },
 });
