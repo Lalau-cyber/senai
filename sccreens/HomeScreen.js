@@ -1,37 +1,45 @@
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen({ navigation, route }) {
-    const navigate = navigation;
-    return (
-    <View style={styles.ok}>
-
+  const navigate = navigation;
+  return (
+    <View style={styles.container}>
+      <View style={styles.coner}>
+      </View>
+      <View style={styles.centro}>
         <Text style={styles.titulo}>Bem vindo(a)!</Text>
         <Text style={styles.texto}>Você é aluno ou administrador?</Text>
 
-     <View style={styles.rowContainer}>
+        <View style={styles.rowContainer}>
 
-     <View style={styles.buttonWrapper}>
+          <View style={styles.buttonWrapper}>
 
-        <TouchableOpacity onPress={()=> navigate.navigate('SimScreen') } style={styles.button}>
-           <Text style={styles.buttonText}> Sou aluno</Text>
-       </TouchableOpacity>
-     </View> 
+            <TouchableOpacity onPress={() => navigate.navigate('Aluno')} style={styles.button}>
+              <Text style={styles.buttonText}> Sou aluno</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.buttonWrapper}>
-        <TouchableOpacity onPress={() => navigate.navigate('NaoScreen')} style={styles.button}>
-           <Text style={styles.buttonText}>Sou Administrador</Text>
-       </TouchableOpacity>
-    </View>
-    </View>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
+              <Text style={styles.buttonText}>Sou Administrador</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
-    );
-  };
-  const styles = StyleSheet.create({
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  centro: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   input: {
     height: 40,
@@ -49,13 +57,13 @@ export default function HomeScreen({ navigation, route }) {
     marginTop: 10,
   },
   buttonText: {
-      justifyContent: 'center',
-      textAlign: 'center',
-      fontWeight: 'bold',
-      width: 300,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: 300,
 
- },
- buttonWrapper: {
+  },
+  buttonWrapper: {
     marginVertical: 10,
     width: '12%',
     flexDirection: 'row',
@@ -69,20 +77,29 @@ export default function HomeScreen({ navigation, route }) {
     backgroundColor: '#B862F2',
   },
   titulo: {
-    marginTop: 60,
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
+    margin: 15,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 30,
     fontWeight: 'bold',
   },
   texto: {
+    fontFamily: 'Georgia',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 18,
   },
-  ok: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+  conter: {
+    width: '100%',
+    height: 150,
+    backgroundColor: 'black',
   },
+  coner: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+
 });

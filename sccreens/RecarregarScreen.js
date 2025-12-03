@@ -35,41 +35,42 @@ export default function RecarregarScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+      <View style={styles.conter}>
+            </View>
+      <Text style={styles.R$}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
 
       <TextInput
-        style={styles.input}
-        placeholder="Valor para recarregar (ex: 10,50)"
+        style={styles.recarregar}
+        placeholder="Digite o valor para recarregar (ex: 10,50)"
         keyboardType="numeric"
         value={valor}
         onChangeText={setValor}
       />
 
-      {/* Accordion / selector de forma de pagamento */}
       <TouchableOpacity
-        style={styles.paymentHeader}
+        style={styles.formaPagamento}
         onPress={() => setPaymentOpen(!paymentOpen)}
         activeOpacity={0.8}
       >
-        <Text style={styles.paymentHeaderText}>Escolha a forma de pagamento</Text>
-        <Text style={styles.paymentHeaderArrow}>{paymentOpen ? '▲' : '▼'}</Text>
+        <Text style={styles.textoEscolherPagamento}>Escolha a forma de pagamento</Text>
+        <Text style={styles.setinha}>{paymentOpen ? '▲' : '▼'}</Text>
       </TouchableOpacity>
 
       {paymentOpen && (
-        <View style={styles.paymentList}>
+        <View style={styles.tabela}>
           {methods.map((m) => {
             const selected = paymentMethod === m.key;
             return (
               <TouchableOpacity
                 key={m.key}
-                style={[styles.paymentItem, selected && styles.paymentItemSelected]}
+                style={[styles.alinhar, selected && styles.selecionar]}
                 onPress={() => setPaymentMethod(m.key)}
                 activeOpacity={0.8}
               >
-                <View style={[styles.checkbox, selected && styles.checkboxSelected]}>
-                  {selected && <View style={styles.checkboxDot} />}
+                <View style={[styles.quadrado, selected && styles.quadradoSelecionado]}>
+                  {selected}
                 </View>
-                <View style={styles.paymentTexts}>
+                <View>
                   <Text style={styles.paymentLabel}>{m.label}</Text>
                   {m.subtitle ? <Text style={styles.paymentSub}>{m.subtitle}</Text> : null}
                 </View>
@@ -78,44 +79,49 @@ export default function RecarregarScreen({ navigation, route }) {
           })}
         </View>
       )}
-
-      <TouchableOpacity style={styles.button} onPress={handleRecarregar}>
-        <Text style={styles.buttonText}>Recarregar</Text>
+      
+      <View style={styles.botoesContainer}>
+      <TouchableOpacity style={styles.botaoRecarregar} onPress={handleRecarregar}>
+        <Text style={styles.recarregarTexto}>Recarregar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, styles.cancel]} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>Cancelar</Text>
+      <TouchableOpacity style={[styles.botaoCancelar]} onPress={() => navigation.goBack()}>
+        <Text style={styles.cancelarTexto}>Cancelar</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: 
-  { flex: 1,
-    padding: 20,
+  container: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff' 
-    },
-  label: {
-    fontSize: 18,
-    marginBottom: 16
-     },
-  input: {
+    backgroundColor: '#fff'
+  },
+
+  R$: {
+    marginTop: 32,
+    marginBottom: 32,
+    fontSize: 36,
+    fontWeight: '700',
+    color: '#2a9d8f',
+  },
+
+  recarregar: {
     width: '90%',
-    height: 44,
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     paddingHorizontal: 10,
-    borderRadius: 6, 
+    borderRadius: 6,
     backgroundColor: '#F1DAFF',
-    marginBottom: 12 
-        },
+    marginBottom: 12
+  },
 
-  paymentHeader: {
+  formaPagamento: {
     width: '90%',
-    backgroundColor: '#FAF6FF',
+    backgroundColor: '#F1DAFF',
     paddingHorizontal: 12,
     paddingVertical: 12,
     borderRadius: 8,
@@ -123,73 +129,103 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F0E6FF',
+    borderColor: '#ccc',
     marginBottom: 8,
   },
   paymentHeaderText: {
     fontSize: 16,
-    color: '#333' 
-    },
-  paymentHeaderArrow: {
-     color: '#666' 
-    },
+    color: '#333'
+  },
+  setinha: {
+    color: '#B862F2'
+  },
 
-  paymentList: {
-    width: '90%', 
+  tabela: {
+    width: '90%',
     backgroundColor: '#fff',
-    borderRadius: 8, 
+    borderRadius: 8,
     paddingVertical: 8,
     borderWidth: 1,
     borderColor: '#F0E6FF',
     marginBottom: 12
-},
-  paymentItem: {
-     flexDirection: 'row',
-      alignItems: 'center',
-       paddingVertical: 10,
-        paddingHorizontal: 12
-     },
-  
-  paymentItemSelected: { backgroundColor: '#F7ECFF' },
-  
-  checkbox: { width: 20, 
-     height: 20,
-     borderRadius: 4,
-     borderWidth: 1,
-     borderColor: '#999',
-     justifyContent: 'center',
-    zalignItems: 'center',
-    marginRight: 12 },
-  
-  checkboxSelected: { borderColor: '#6F2BD9', backgroundColor: '#6F2BD9' },
- 
-  checkboxDot: { width: 8, 
-    height: 8, 
-    backgroundColor: '#fff',
-     borderRadius: 2 
-    },
- 
-  paymentTexts: { flex: 1 },
- 
-  paymentLabel: { fontSize: 15,
-     color: '#222' 
-    },
- 
-  paymentSub: { fontSize: 12,
-     color: '#666' 
-    },
+  },
+  alinhar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
 
- 
-  button: { backgroundColor: '#B862F2',
-     paddingVertical: 12, 
-     paddingHorizontal: 24,
-      borderRadius: 6,
-       marginTop: 8 
-    },
- 
-  cancel: { backgroundColor: '#999' },
- 
-  buttonText: { color: '#fff',
-     fontWeight: '600' 
-    },
+  selecionar:{ 
+    backgroundColor: '#F0E6FF' },
+
+  quadrado: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#999',
+    justifyContent: 'center',
+    zalignItems: 'center',
+    marginRight: 12
+  },
+
+  quadradoSelecionado: {
+    borderColor: '#6F2BD9', 
+    backgroundColor: '#6F2BD9' 
+  },
+  paymentLabel: {
+    fontSize: 15,
+    color: '#222'
+  },
+
+  paymentSub: {
+    fontSize: 12,
+    color: '#666'
+  },
+  
+  botaoRecarregar: {
+    backgroundColor: '#B862F2',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 6,
+    marginTop: 8,
+    color: 'black',
+    marginRight: 10,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
+
+  botaoCancelar: {
+    backgroundColor: '#db0921',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 6,
+    marginTop: 8,
+    color: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600'
+  },
+
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+
+  textoEscolherPagamento: {
+    fontSize: 14,
+    color: 'black'
+  },
+
+  botoesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
