@@ -2,15 +2,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppProvider } from './context/UserContext';
 import { StyleSheet } from 'react-native';
-import HomeScreen from './sccreens/HomeScreen';
-import SimScreen from './sccreens/AlunoScreen';
-import NaoScreen from './sccreens/AdministradorScreen';
-import EntrarSaldoScreen from './sccreens/EntrarSaldo';
-import RecarregarScreen from './sccreens/RecarregarScreen';
-import CardapioScreen from './sccreens/Cardapio';
-import Perfil from './sccreens/perfil';
-import Compras from './sccreens/compras'; 
-import Historico from './sccreens/historico';
+import HomeScreen from './screens/HomeScreen';
+import SimScreen from './screens/AlunoScreen';
+import NaoScreen from './screens/AdministradorScreen';
+import EntrarSaldoScreen from './screens/EntrarSaldo';
+import RecarregarScreen from './screens/RecarregarScreen';
+import CardapioScreen from './screens/Cardapio';
+import Compras from './screens/compras'; 
+import Historico from './screens/historico';
+import Perfil from './screens/Perfil';
 
 const Stack = createNativeStackNavigator()
 
@@ -26,7 +26,7 @@ export default function App() {
         <Stack.Screen name="Recarregar" component={RecarregarScreen} />
         <Stack.Screen name = "Cardapio" component={CardapioScreen} />
        <Stack.Screen name="historico" component={Historico} />
-        <Stack.Screen name="perfil" component={Perfil} />
+        <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="compras" component={Compras} />
 
       </Stack.Navigator>

@@ -19,7 +19,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
       <View style={styles.histo}>
   
         <TouchableOpacity style={styles.menu} onPress={() => setMenuVisible(true)}>
-          <Text style={styles.tmenu}>Configurações</Text>
+          <Text style={styles.tmenu}>⚙️</Text>
         </TouchableOpacity>
 
         <Text style={styles.title}>Saldo do Ticket</Text>
@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: '#000',
+    flexboxDirection: 'row',
+    
   },
   textbotoes: {
     color: 'black',
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     padding: 8,
     zIndex: 10,
+    bordeRadius: 5,
   },
   tmenu: {
     fontSize: 24,
