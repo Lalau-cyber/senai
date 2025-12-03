@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#B862F2',
     paddingHorizontal: 16,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#000',
     marginRight: 10,
     padding: 10,
     borderColor: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   menu: {
     backgroundColor: 'invisible',
