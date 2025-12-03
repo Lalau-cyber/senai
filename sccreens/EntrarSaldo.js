@@ -1,74 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
-import AbrirMenu from './abrirMenu'; // Certifique-se de que este caminho está correto
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import AbrirMenu from './abrirMenu';
 
-// Renomeando para seguir o padrão de nomenclatura (e removendo o typo 'Scrseen' do App.js)
 export default function EntrarSaldoScreen({ navigation, route }) {
-    // Inicializa o saldo, garantindo que seja um número ou 0
-    const saldoParam = route?.params?.saldo ?? 0;
-    const [saldo, setSaldo] = useState(Number(saldoParam) || 0);
-    const [menuVisible, setMenuVisible] = useState(false);
+  const saldoParam = route?.params?.saldo ?? 0;
+  const [saldo, setSaldo] = useState(Number(saldoParam) || 0);
+  const [menuVisible, setMenuVisible] = useState(false);
 
-    // Efeito para atualizar o saldo sempre que um novo parâmetro for recebido
-    useEffect(() => {
-        const novoSaldo = route?.params?.saldo;
-        if (novoSaldo !== undefined) {
-            setSaldo(Number(novoSaldo));
-        }
-    }, [route?.params?.saldo]);
 
-    // Função para formatar o saldo no padrão R$ X,XX
-    const formatarSaldo = (valor) => {
-        return `R$ ${valor.toFixed(2).replace('.', ',')}`;
-    };
+  useEffect(() => {
+    const novoSaldo = route?.params?.saldo;
+    if (novoSaldo !== undefined) setSaldo(Number(novoSaldo));
+  }, [route?.params?.saldo]);
 
-    return (
-        // Usando SafeAreaView e configurando a cor da barra de status
-        <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor="#B862F2" barStyle="light-content" />
+  return (
+    <View style={styles.container}>
+      <View style={styles.conter} />
+      <View style={styles.histo}>
+  
+        <TouchableOpacity style={styles.menu} onPress={() => setMenuVisible(true)}>
+          <Text style={styles.tmenu}>Configurações</Text>
+        </TouchableOpacity>
 
-            <View style={styles.contentContainer}>
+        <Text style={styles.title}>Saldo do Ticket</Text>
+        <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+        <Text style={styles.note}>Última atualização: agora</Text>
 
-                {/* Botão de Menu/Configurações, posicionado no canto superior direito */}
-                <TouchableOpacity style={styles.menuButton} onPress={() => setMenuVisible(true)}>
-                    <Text style={styles.menuText}>Configurações</Text>
-                </TouchableOpacity>
+        <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('Recarregar', { saldo })}>
+          <Text style = {styles.textbotoes}>recarregar</Text>
+        </TouchableOpacity>
 
-                <Text style={styles.title}>Saldo do Ticket</Text>
-                
-                {/* Exibição do saldo novo*/}
-                <Text style={styles.balance}>{formatarSaldo(saldo)}</Text>
-                
-                <Text style={styles.note}>Última atualização: agora</Text>
+        <TouchableOpacity style={[styles.botoes, { marginTop: 10 }]} onPress={() => navigation.navigate('Cardapio')}>
+          <Text style = {styles.textbotoes}>comprar</Text>
+        </TouchableOpacity>
+      </View>
 
-                {/* Botão para Recarregar */}
-                <TouchableOpacity 
-                    style={styles.actionButton} 
-                    onPress={() => navigation.navigate('Recarregar', { saldo })}
-                >
-                    <Text style={styles.actionButtonText}>RECARREGAR</Text>
-                </TouchableOpacity>
-
-                {/* Botão para Cardápio (Comprar) */}
-                <TouchableOpacity 
-                    style={styles.actionButton} 
-                    onPress={() => navigation.navigate('Cardapio')}
-                >
-                    <Text style={styles.actionButtonText}>COMPRAR</Text>
-                </TouchableOpacity>
-
-            </View>
-
-            
-            <AbrirMenu 
-                visible={menuVisible} 
-                onClose={() => setMenuVisible(false)} 
-            />
-        </SafeAreaView>
-    );
+      <AbrirMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
+    </View>
+  );
 }
-
 const styles = StyleSheet.create({
+<<<<<<< HEAD
 <<<<<<< HEAD
     container: {
         flex: 1,
@@ -122,18 +94,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
+=======
+>>>>>>> 1357d49201ee47a20cc80667646d2ed806325c9c
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
   histo: {
     alignItems: 'center',
+    
   },
   title: {
     fontSize: 30,
     marginBottom: 12,
     fontWeight: '600',
-    fontFamily: 'Georgia',
+    fontFamily: 'geoegia',
     fontStyle: 'italic',
   },
   balance: {
@@ -146,58 +121,38 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#666',
   },
+  
   botoes: {
-    marginTop: 20,
+    marginTop: 20,  
     backgroundColor: '#B862F2',
     paddingHorizontal: 16,
     borderRadius: 5,
-    marginRight: 10,
-    padding: 10,
-    borderColor: 'black',
-    borderBottomColor: 'black',
-    borderBottomWidth: 2,
-  },
-  menu: {
-    backgroundColor: 'invisible',
-    padding: 10,
-    alignSelf: 'flex-end',
-    borderColor: 'black',
-    borderWidth: 0,
-  },
-  tmenu: {
-    fontSize: 30,
-  },
-  conter: {
-    width: '100%',
-    height: 20,
-    backgroundColor: '#B862F2',
-  },
-  botoesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#000',
   },
   textbotoes: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 14,
   },
->>>>>>> 7d002b603d29c611fc9952fcc205c7821f58734e
-
-    // Estilo do Botão de Menu (Configurações)
-    menuButton: {
-        position: 'absolute',
-        top: 0, 
-        right: 15,
-        zIndex: 10,
-        padding: 10,
-        backgroundColor: '#B862F2',
-        borderRadius: 5,
-        elevation: 2,
-    },
-    menuText: {
-        fontSize: 14,
-        color: '#fff',
-        fontWeight: 'bold',
-    },
+  menu: {
+    position: 'absolute',
+    top: 8,
+    right: 12,
+    backgroundColor: 'transparent',
+    padding: 8,
+    zIndex: 10,
+  },
+  tmenu: {
+    fontSize: 24,
+    color: '#fff',
+    backgroundColor: '#B862F2',
+  },
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+  
 });
