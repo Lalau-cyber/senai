@@ -21,10 +21,10 @@ export default function Perfil({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex:1, padding:16, backgroundColor:'#fff' },
-  title: { fontSize:18, fontWeight:'700', marginBottom:12 },
-  label: { marginTop:8, color:'#666' },
-  value: { fontSize:16, marginBottom:6 },
-  button: { marginTop:20, backgroundColor:'#B862F2', padding:10, borderRadius:6, alignItems:'center' },
-  buttonText: { color:'#fff' },
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  title: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+  label: { marginTop: 8, color: '#666' },
+  value: { fontSize: 16, marginBottom: 6 },
+  button: { marginTop: 20, backgroundColor: '#B862F2', padding: 10, borderRadius: 6, alignItems: 'center' },
+  buttonText: { color: '#fff' },
 });
