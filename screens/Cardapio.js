@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 export default function CardapioScreen() {
   const cardapio = [
@@ -30,6 +31,27 @@ export default function CardapioScreen() {
   );
 }
 
+return (
+  <View style={styles.container}>
+    <View style={styles.conter}></View>
+    <Text style={styles.titulo}>Cardápio</Text>
+    <FlatList
+      data={cardapio}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.item}>
+          <Text style={styles.itens}>{item.nome}</Text>
+          <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
+        </View>
+      )}
+    />
+
+    <TouchableOpacity style={styles.botaoComprar} onPress={() => console.log('Comprar')}>
+      <Text style={styles.textoBotao}>Comprar</Text>
+    </TouchableOpacity>
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -44,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 25,
     width: '80%',
-    margin: 'auto',
+    alingSelf: 'center',
   },
   item: {
     flexDirection: 'row',
@@ -65,5 +87,20 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 20,
     backgroundColor: '#B862F2',
+  },
+  botaoComprar: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: '#B862F2',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  textoBotao: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold,'
   },
 });

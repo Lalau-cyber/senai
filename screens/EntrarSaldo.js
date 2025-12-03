@@ -40,6 +40,62 @@ export default function EntrarSaldoScreen({ navigation, route }) {
   );
 }
 const styles = StyleSheet.create({
+<<<<<<< HEAD
+<<<<<<< HEAD
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    contentContainer: {
+        alignItems: 'center',
+        // O padding top lida com o espaço da StatusBar (se necessário)
+        paddingTop: 40, 
+    },
+    title: {
+        fontSize: 24, // Tamanho ligeiramente reduzido para melhor equilíbrio
+        marginBottom: 12,
+        fontWeight: '600',
+        fontStyle: 'italic',
+        color: '#333',
+    },
+    balance: {
+        fontSize: 48, // Tamanho aumentado para destaque
+        fontWeight: '800',
+        color: '#2a9d8f', // Cor verde-água vibrante
+        marginBottom: 20,
+    },
+    note: {
+        fontStyle: 'italic',
+        marginTop: 10,
+        marginBottom: 30, // Adicionando margem inferior antes dos botões
+        color: '#666',
+    },
+    
+    // Estilo dos Botões de Ação (Recarregar/Comprar)
+    actionButton: {
+        backgroundColor: '#B862F2',
+        width: '80%', // Definindo uma largura padrão
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#9B50D8', // Borda sutilmente mais escura
+        marginVertical: 10, // Espaçamento vertical entre os botões
+        elevation: 3, // Sombra Android
+        shadowColor: '#000', // Sombra iOS
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+    },
+    actionButtonText: {
+        color: 'white', // Texto branco para contraste
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+
+=======
+>>>>>>> 1357d49201ee47a20cc80667646d2ed806325c9c
   container: {
     flex: 1,
     backgroundColor: '#fff',
