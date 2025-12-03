@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
     color: 'black',
     borderBottomColor: 'black',
     borderBottomWidth: 2,
+    
   },
 
   buttonText: {
