@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {historico} from './historico';
 
 export default function AbrirMenu({ visible = false, onClose }) {
   const navigation = useNavigation();
@@ -20,15 +20,15 @@ export default function AbrirMenu({ visible = false, onClose }) {
             <View style={styles.menu}>
               <Text style={styles.title}>Escolha</Text>
 
-              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Historico')}>
+              <TouchableOpacity style={styles.item} onPress={() => go('historico')}>
                 <Text style={styles.itemText}>Histórico</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Perfil')}>
+              <TouchableOpacity style={styles.item} onPress={() => go('Perfil')}>
                 <Text style={styles.itemText}>Perfil</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.item} onPress={() => navigation.go('Compras')}>
+              <TouchableOpacity style={styles.item} onPress={() => go('Compras')}>
                 <Text style={styles.itemText}>Compras feitas</Text>
               </TouchableOpacity>
 
