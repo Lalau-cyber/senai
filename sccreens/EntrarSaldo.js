@@ -69,6 +69,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -120,6 +121,68 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
+=======
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  histo: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 12,
+    fontWeight: '600',
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
+  },
+  balance: {
+    fontSize: 36,
+    fontWeight: '700',
+    color: '#2a9d8f',
+  },
+  note: {
+    fontStyle: 'italic',
+    marginTop: 10,
+    color: '#666',
+  },
+  botoes: {
+    marginTop: 20,
+    backgroundColor: '#B862F2',
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    marginRight: 10,
+    padding: 10,
+    borderColor: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
+  menu: {
+    backgroundColor: 'invisible',
+    padding: 10,
+    alignSelf: 'flex-end',
+    borderColor: 'black',
+    borderWidth: 0,
+  },
+  tmenu: {
+    fontSize: 30,
+  },
+  conter: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#B862F2',
+  },
+  botoesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textbotoes: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+>>>>>>> 7d002b603d29c611fc9952fcc205c7821f58734e
 
     // Estilo do Botão de Menu (Configurações)
     menuButton: {

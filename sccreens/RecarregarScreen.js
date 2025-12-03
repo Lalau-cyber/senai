@@ -52,8 +52,8 @@ export default function RecarregarScreen({ navigation, route }) {
         onPress={() => setPaymentOpen(!paymentOpen)}
         activeOpacity={0.8}
       >
-        <Text style={styles.escolherPagamento}>Escolha a forma de pagamento</Text>
-        <Text style={styles.paymentHeaderArrow}>{paymentOpen ? '▲' : '▼'}</Text>
+        <Text style={styles.textoEscolherPagamento}>Escolha a forma de pagamento</Text>
+        <Text style={styles.setinha}>{paymentOpen ? '▲' : '▼'}</Text>
       </TouchableOpacity>
 
       {paymentOpen && (
@@ -79,14 +79,16 @@ export default function RecarregarScreen({ navigation, route }) {
           })}
         </View>
       )}
-
-      <TouchableOpacity style={styles.button} onPress={handleRecarregar}>
-        <Text style={styles.buttonText}>Recarregar</Text>
+      
+      <View style={styles.botoesContainer}>
+      <TouchableOpacity style={styles.botaoRecarregar} onPress={handleRecarregar}>
+        <Text style={styles.recarregarTexto}>Recarregar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, styles.cancel]} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>Cancelar</Text>
+      <TouchableOpacity style={[styles.botaoCancelar]} onPress={() => navigation.goBack()}>
+        <Text style={styles.cancelarTexto}>Cancelar</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 }
@@ -127,14 +129,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F0E6FF',
+    borderColor: '#ccc',
     marginBottom: 8,
   },
   paymentHeaderText: {
     fontSize: 16,
     color: '#333'
   },
-  paymentHeaderArrow: {
+  setinha: {
     color: '#B862F2'
   },
 
@@ -182,16 +184,28 @@ const styles = StyleSheet.create({
     color: '#666'
   },
   
-  button: {
+  botaoRecarregar: {
     backgroundColor: '#B862F2',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 6,
     marginTop: 8,
-    color: 'black'
+    color: 'black',
+    marginRight: 10,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
 
-  cancel: { backgroundColor: '#999' },
+  botaoCancelar: {
+    backgroundColor: '#db0921',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 6,
+    marginTop: 8,
+    color: 'black',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
 
   buttonText: {
     color: '#fff',
@@ -204,8 +218,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#B862F2',
   },
 
-  escolherPagamento: {
-    fontSize: 16,
+  textoEscolherPagamento: {
+    fontSize: 14,
     color: 'black'
+  },
+
+  botoesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

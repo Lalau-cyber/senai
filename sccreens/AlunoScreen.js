@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#B862F2',
     padding: 10,
     borderRadius: 5,
-    borderColor: 'black',
-    borderWidth: 1,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   text: {
     fontFamily: 'Georgia',
