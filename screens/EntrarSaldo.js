@@ -40,8 +40,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
   );
 }
 const styles = StyleSheet.create({
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -94,8 +93,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-=======
->>>>>>> 1357d49201ee47a20cc80667646d2ed806325c9c
+
   container: {
     flex: 1,
     backgroundColor: '#fff',

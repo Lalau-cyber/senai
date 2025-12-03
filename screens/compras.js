@@ -1,6 +1,6 @@
-// ./screens/compras.js
 
-import React from 'react';
+
+
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 // 1. Importar o UserContext (assumindo que ele está em './context/UserContext')
 import { useUserContext } from '../context/UserContext'; 

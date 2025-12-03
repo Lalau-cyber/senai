@@ -24,15 +24,7 @@ export default function CardapioScreen() {
           <View style={styles.item}>
             <Text style={styles.itens}>{item.nome}</Text>
             <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
-}
-
-return (
-  <View style={styles.container}>
+            <View style={styles.container}>
     <View style={styles.conter}></View>
     <Text style={styles.titulo}>Cardápio</Text>
     <FlatList
@@ -50,7 +42,14 @@ return (
       <Text style={styles.textoBotao}>Comprar</Text>
     </TouchableOpacity>
   </View>
-);
+
+          </View>
+        )}
+      />
+    </View>
+  
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

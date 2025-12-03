@@ -12,6 +12,7 @@ import Compras from './screens/compras';
 import Historico from './screens/historico';
 import Perfil from './screens/Perfil';
 
+
 const Stack = createNativeStackNavigator()
 
 export default function App() {
