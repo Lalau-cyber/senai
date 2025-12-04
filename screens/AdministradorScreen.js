@@ -1,6 +1,6 @@
 
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
 
 
@@ -14,8 +14,8 @@ export default function NaoScreen({ navigation }) {
   }, []);
 
   const validaSenha = (senha) => {
-    if (senha.length !== 8) {
-      alert("Seha inválida. Deve conter 8 caracteres.");
+    if (senha.length !== 4) {
+      Alert.alert("Erro de Senha" ,"Senha inválida. Deve conter 4 caracteres.");
       return false;
     }
     return true;
@@ -23,20 +23,24 @@ export default function NaoScreen({ navigation }) {
 
   const validarNomeUsuario = (nome) => {
     if (!nome.trim()) {
-      alert("informe um nome válido");
+      Alert.alert("Erro de Nome" ,"informe um nome válido");
       return false;
     }
     const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
     if (!temCaracteresEspeciais) {
-      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+      Alert.alert("Erro de Nome" ,"Nome de usuário inválido. Deve conter caracteres especiais.");
       return false;
     };
     return true;
   };
   function Entrar() {
-    if (validarNomeUsuario(nome)) return;
-    if (validaSenha(senha)) return;
-    navigation.navigate('EntrarSaldo', { nome, matricula, saldo: 0.0 })
+      if (!validarNomeUsuario(nome)){
+      return;
+} 
+      if (!validaSenha(senha)){
+       return;
+   }
+    navigation.navigate('Gestao')
   }
 
 
@@ -51,6 +55,9 @@ export default function NaoScreen({ navigation }) {
         placeholder="Senha"
         value={senha}
         onChangeText={setSenha}
+        secureTextEntry={true} 
+        keyboardType="numeric" // Adicionado para senhas numéricas 
+        maxLength={4} // Limita a 4
       />
       <TextInput
         style={styles.nome}

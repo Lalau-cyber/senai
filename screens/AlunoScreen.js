@@ -60,6 +60,7 @@ export default function SimScreen({ navigation }) {
         placeholder="Matrícula"
         value={matricula}
         onChangeText={setMatricula}
+        secureTextEntry={true} 
       />
       <TextInput
         style={styles.nome}

@@ -1,6 +1,12 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 
+const handleComprar = (item) => {
+  Alert.alert("Compra realizada", 'Você comprour: ${item.nome} por R$ ${item.preco.toFixed(2).replace('.', ',')}');
+  console.log('Comprar item:', item);
+}
+
+
 export default function CardapioScreen() {
   const cardapio = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
@@ -14,8 +20,7 @@ export default function CardapioScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.conter}>
-            </View>
+      <View style={styles.conter}/>
       <Text style={styles.titulo}>Cardápio</Text>
       <FlatList
         data={cardapio}
@@ -24,17 +29,7 @@ export default function CardapioScreen() {
           <View style={styles.item}>
             <Text style={styles.itens}>{item.nome}</Text>
             <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
-            <View style={styles.container}>
-    <View style={styles.conter}></View>
-    <Text style={styles.titulo}>Cardápio</Text>
-    <FlatList
-      data={cardapio}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.item}>
-          <Text style={styles.itens}>{item.nome}</Text>
-          <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
-        </View>
+           </View>
       )}
     />
 
@@ -42,11 +37,7 @@ export default function CardapioScreen() {
       <Text style={styles.textoBotao}>Comprar</Text>
     </TouchableOpacity>
   </View>
-
-          </View>
-        )}
-      />
-    </View>
+   
   
   );
 }
