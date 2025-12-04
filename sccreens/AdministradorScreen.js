@@ -60,7 +60,7 @@ export default function NaoScreen({ navigation }) {
       />
 
       <TouchableOpacity style={styles.entrar} onPress={Entrar}>
-        <Text>Entrar</Text>
+        <Text style={styles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     borderColor: 'black',
-    borderWidth: 1,
+    borderBottomWidth: 2,
   },
   text: {
     fontFamily: 'Georgia',
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
+
   },
   conter: {
     width: '100%',

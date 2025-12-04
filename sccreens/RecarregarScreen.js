@@ -82,11 +82,11 @@ export default function RecarregarScreen({ navigation, route }) {
       
       <View style={styles.botoesContainer}>
       <TouchableOpacity style={styles.botaoRecarregar} onPress={handleRecarregar}>
-        <Text style={styles.recarregarTexto}>Recarregar</Text>
+        <Text style={styles.textoBotao}>Recarregar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.botaoCancelar]} onPress={() => navigation.goBack()}>
-        <Text style={styles.cancelarTexto}>Cancelar</Text>
+        <Text style={styles.textoBotao}>Cancelar</Text>
       </TouchableOpacity>
     </View>
     </View>
@@ -206,11 +206,13 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 2,
     
+    
   },
 
-  buttonText: {
-    color: '#fff',
-    fontWeight: '600'
+  textoBotao: {
+    color: '#000000ff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 
   conter: {

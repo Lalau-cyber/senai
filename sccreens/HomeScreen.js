@@ -15,13 +15,13 @@ export default function HomeScreen({ navigation, route }) {
           <View style={styles.buttonWrapper}>
 
             <TouchableOpacity onPress={() => navigate.navigate('Aluno')} style={styles.button}>
-              <Text style={styles.buttonText}> Sou aluno</Text>
+              <Text style={styles.textoBotao}> Sou aluno</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
-              <Text style={styles.buttonText}>Sou Administrador</Text>
+              <Text style={styles.textoBotao}>Sou Administrador</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  buttonText: {
+  textoBotao: {
     justifyContent: 'center',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -69,12 +69,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     borderColor: 'black',
     width: 140,
     padding: 5,
     margin: 10,
     backgroundColor: '#B862F2',
+    borderBottomWidth: 2,
+     padding: 10,
+    borderRadius: 5,
   },
   titulo: {
     fontFamily: 'Georgia',

@@ -1,7 +1,7 @@
-
+import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {historico} from './historico';
 
 export default function AbrirMenu({ visible = false, onClose }) {
   const navigation = useNavigation();
@@ -13,13 +13,14 @@ export default function AbrirMenu({ visible = false, onClose }) {
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.backdrop}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => {}}>
             <View style={styles.menu}>
               <Text style={styles.title}>Escolha</Text>
 
-              <TouchableOpacity style={styles.item} onPress={() => go('Historico')}>
+              <TouchableOpacity style={styles.item} onPress={() => go('historico')}>
                 <Text style={styles.itemText}>Histórico</Text>
               </TouchableOpacity>
 
@@ -35,7 +36,7 @@ export default function AbrirMenu({ visible = false, onClose }) {
                 <Text style={styles.closeText}>Fechar</Text>
               </TouchableOpacity>
             </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -57,18 +58,22 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   title: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: '700', 
     marginBottom: 12,
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
   },
   item: {
     paddingVertical: 12,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#F1DAFF',
     borderBottomWidth: 1,
   },
   itemText: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#222',
+    fontStyle: 'italic',
   },
   close: {
     marginTop: 10,
@@ -77,6 +82,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   closeText: {
-    color: '#888',
+    color: '#B862F2',
   },
 });
