@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppProvider } from './context/UserContext';
 import { StyleSheet } from 'react-native';
+
 //telas
 import HomeScreen from './screens/HomeScreen';
 import SimScreen from './screens/AlunoScreen';
@@ -12,7 +13,7 @@ import CardapioScreen from './screens/Cardapio';
 import Compras from './screens/Compras';
 import Historico from './screens/Historico';
 import Perfil from './screens/Perfil';
-import Gestao from './screens/gestao';
+import Gestao from './screens/Gestao';
 
 const Stack = createNativeStackNavigator()
 

@@ -2,54 +2,47 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
 
-
 export default function SimScreen({ navigation }) {
 
   const [matricula, setMatricula] = useState("");
   const [nome, setNome] = useState("");
-  const { userType, setUserType } = useContext(AppContext);
-
+  const { setUser, setUserType } = useContext(AppContext);
+  
   useEffect(() => {
     setUserType('aluno');
-  }, []);
-
+  }, [setUserType]);
+  
   const validaMatricula = (matricula) => {
-
     if (matricula.length != 8) {
-      alert("Matrícula inválida. Deve conter 8 caracteres.");
+      Alert.alert( "Erro de matrícula." ,"Matrícula inválida. Deve conter 8 caracteres.");
       return false;
     }
     if (nome.trim().length === 0) {
-      alert("Informe um nome válido.");
+      Alert.alert(" Erro de nome." ,"Informe um nome válido.");
       return false;
     }
     navigation.navigate('EntrarSaldo');
   };
-
-
+  
+  
   const validarNomeUsuario = (nome) => {
     const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
     if (!temCaracteresEspeciais) {
-      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+      Alert.alert("Erro de nome.","Nome de usuário inválido. Deve conter caracteres especiais.");
       return false;
     }
     return true;
   };
   function Entrar() {
-    if (validarFormulario(true)) {
+    if (validarNomeUsuario(nome) && validaMatricula(matricula)) {
+      setUser({nome,matricula});
+      
       navigation.navigate('EntrarSaldo', { nome, matricula });
     }
   }
-
-  const validarFormulario = (aluno) => {
-    if (validarNomeUsuario(nome) && validaMatricula(matricula)) {
-      aluno ? navigation.navigate('EntrarSaldoScreen', { nome, matricula }) : navigation.navigate('NaoScreen', { nome, matricula });
-    }
-  }
-
-
+  
   return (
-
+    
     <View style={styles.container}>
       <View style={styles.conter}>
       </View>

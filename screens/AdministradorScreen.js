@@ -9,6 +9,7 @@ export default function NaoScreen({ navigation }) {
   const [senha, setSenha] = useState("");
   const [nome, setNome] = useState("");
   const { userType, setUserType } = useContext(AppContext);
+  
   useEffect(() => {
     setUserType('administrador');
   }, []);

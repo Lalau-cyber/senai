@@ -1,9 +1,8 @@
 
-
-
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-// 1. Importar o UserContext (assumindo que ele está em './context/UserContext')
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import { useUserContext } from '../context/UserContext'; 
+import { AppCotext } from '../context/UserContext';
+
 
 // Função utilitária para formatar a moeda no padrão brasileiro
 const formatCurrency = (value) => {
@@ -23,7 +22,21 @@ const CompraItem = ({ item }) => (
 export default function Compras({ navigation }) {
     // 2. Acessar a lista de compras e o estado de carregamento do contexto
     const { compras, isLoading } = useUserContext(); 
+    const {user} = useContext(AppContext);
+    
+    if (!userName) {
+        Alert.alert("Erro", "Nenhum usuário logado.")
+        return;
+    }
+Alert.alert("Compra realizada",
+    `Aluno : ${userName.nome}\nMatrícula: ${userName.matricula}`
+);
 
+console.log('Compra registrada:',{
+    aluno: userName.nome,
+    matricula: userName.matricula,
+    item: item.item,
+});
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Histórico de Compras</Text>
@@ -34,7 +47,7 @@ export default function Compras({ navigation }) {
                 <FlatList
                     // 3. Usar a lista de compras que vem do contexto
                     data={compras}
-                    keyExtractor={(i) => i.id}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => <CompraItem item={item} />}
                     ListEmptyComponent={
                         <Text style={styles.emptyText}>Você ainda não fez nenhuma compra.</Text>

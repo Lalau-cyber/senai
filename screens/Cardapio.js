@@ -1,52 +1,60 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { TouchableOpacity } from 'react-native';
-
-const handleComprar = (item) => {
-  Alert.alert("Compra realizada", 'Você comprour: ${item.nome} por R$ ${item.preco.toFixed(2).replace('.', ',')}');
-  console.log('Comprar item:', item);
-}
-
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { AppContext } from '../context/UserContext';
 
 export default function CardapioScreen() {
+  const { saldo, setSaldo, historico, setHistorico, user } = useContext(AppContext);
+
   const cardapio = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
     { id: '2', nome: '🍔 Hambúrguer', preco: 7.5 },
-    { id: '4', nome: '🥟 Salgado', preco: 7.0 },
-    { id: '6', nome: '🥣 Açai 300ml', preco: 15.0 },
     { id: '3', nome: '🥤 Refrigerante 600ml', preco: 6.0 },
-    { id: '5', nome: '🥤 Refrigerante 1,5L', preco: 12.0 },
-    
   ];
+
+  const handleComprar = (item) => {
+    if (saldo < item.preco) {
+      Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
+      return;
+    }
+
+    // Atualiza saldo
+    setSaldo(saldo - item.preco);
+
+    // Adiciona transação ao histórico
+    const novaTransacao = {
+      id: Date.now().toString(),
+      tipo: 'Compra',
+      valor: -item.preco,
+      data: new Date().toISOString().split('T')[0],
+      item: item.nome,
+      aluno: user?.nome,
+    };
+    setHistorico([...historico, novaTransacao])
+
+    Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.conter}/>
       <Text style={styles.titulo}>Cardápio</Text>
       <FlatList
         data={cardapio}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Text style={styles.itens}>{item.nome}</Text>
-            <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
-           </View>
-      )}
-    />
-
-    <TouchableOpacity style={styles.botaoComprar} onPress={() => console.log('Comprar')}>
-      <Text style={styles.textoBotao}>Comprar</Text>
-    </TouchableOpacity>
-  </View>
-   
-  
+            <Text>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
+            <TouchableOpacity onPress={() => handleComprar(item)}>
+              <Text>Comprar</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  container: { flex: 1, backgroundColor: '#fff' },
   titulo: {
     textAlign: 'center',
     fontFamily: 'Georgia',
@@ -56,41 +64,25 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 25,
     width: '80%',
-    alingSelf: 'center',
+    alignSelf: 'center',
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  itens: {
-    fontSize: 18,
-  },
-  precos: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2a9d8f',
-  },
-  conter: {
-    width: '100%',
-    height: 20,
-    backgroundColor: '#B862F2',
-  },
+  itens: { fontSize: 18 },
+  precos: { fontSize: 18, fontWeight: '600', color: '#2a9d8f' },
+  conter: { width: '100%', height: 20, backgroundColor: '#B862F2' },
   botaoComprar: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
     backgroundColor: '#B862F2',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
   },
-  textoBotao: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold,'
-  },
+  textoBotao: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
 });
+

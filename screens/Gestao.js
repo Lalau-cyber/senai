@@ -10,7 +10,7 @@ const mockAlunos = [
 
 export default function Gestao({ navigation }) {
  const [alunos, setAlunos] = useState(mockAlunos);
-
+const {user} = useContext(AppContext);
  const verHistorico = (aluno) => { // MELHORIA: Navegação Real para a tela 'historico' (supondo que ela esteja no seu Stack)
 navigation.navigate('historico', { 
         alunoId: aluno.id,
