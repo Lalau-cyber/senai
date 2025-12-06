@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { AppContext } from '../context/UserContext';
 
 // Dados de alunos fictícios para simular a lista
 const mockAlunos = [
@@ -39,10 +40,10 @@ style: 'destructive',
  );
 };
 
-  // Item a ser renderizado na FlatList
-  const renderAlunoItem = ({ item }) => (
-    <View style={styles.alunoItem}>
-      <View style={styles.alunoInfo}>
+ // Item a ser renderizado na FlatList
+ const renderAlunoItem = ({ item }) => (
+   <View style={styles.alunoItem}>
+   <View style={styles.alunoInfo}>
  {/* CORREÇÃO: Aplicação do Negrito via estilo aninhado */}
  <Text style={styles.alunoNome}>
  <Text style={styles.labelBold}>Nome:</Text> {item.nome}

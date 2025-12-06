@@ -28,9 +28,9 @@ export default function App() {
         <Stack.Screen name="EntrarSaldo" component={EntrarSaldoScreen} />
         <Stack.Screen name="Recarregar" component={RecarregarScreen} />
         <Stack.Screen name = "Cardapio" component={CardapioScreen} />
-        <Stack.Screen name="historico" component={Historico} />
+        <Stack.Screen name="Historico" component={Historico} />
         <Stack.Screen name="Perfil" component={Perfil} />
-        <Stack.Screen name="compras" component={Compras} />
+        <Stack.Screen name="Compras" component={Compras} />
        <Stack.Screen name="Gestao" component={Gestao} />
       </Stack.Navigator>
     </NavigationContainer>

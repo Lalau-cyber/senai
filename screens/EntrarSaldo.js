@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import AbrirMenu from './abrirMenu';
+import AbrirMenu from './Configuracoes';
 import { AppContext } from '../context/UserContext';
 
 export default function EntrarSaldoScreen({ navigation, route }) {
-  const { user } = useContext(AppContext);
+  const { user, saldo } = useContext(AppContext);
   const saldoParam = route?.params?.saldo ?? 0;
-  const [saldo, setSaldo] = useState(Number(saldoParam) || 0);
   const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
@@ -26,14 +25,20 @@ export default function EntrarSaldoScreen({ navigation, route }) {
         {user && (
           <Text style={styles.userInfo}>Aluno: {user.nome} | Matrícula: {user.matricula}</Text>
         )}
-        <Text style={styles.balance}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+        <Text style={styles.balance}>R$ {(saldo ?? 0).toFixed(2)}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>
 
-        <TouchableOpacity style={styles.botoes} onPress={() => navigation.navigate('Recarregar', { saldo })}>
+        <TouchableOpacity
+          style={styles.botoes}
+          onPress={() => navigation.navigate('Recarregar')}
+        >
           <Text style={styles.textbotoes}>Recarregar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.botoes, { marginTop: 10 }]} onPress={() => navigation.navigate('Cardapio')}>
+        <TouchableOpacity
+          style={[styles.botoes, { marginTop: 10 }]}
+          onPress={() => navigation.navigate('Cardapio')}
+        >
           <Text style={styles.textbotoes}>Comprar</Text>
         </TouchableOpacity>
       </View>
@@ -42,6 +47,7 @@ export default function EntrarSaldoScreen({ navigation, route }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },

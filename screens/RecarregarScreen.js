@@ -1,37 +1,58 @@
 // ...existing code...
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
+import { AppContext } from '../context/UserContext';
 
 export default function RecarregarScreen({ navigation, route }) {
-  const saldoParam = route?.params?.saldo ?? 0;
   const [valor, setValor] = useState('');
-  const saldo = Number(saldoParam) || 0;
-
+  const {user, saldo, setSaldo, historico, setHistorico} = useContext(AppContext)
+ 
   // novo estado para formas de pagamento / accordion
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null); // 'pix' | 'card' | 'boleto'
 
-  const handleRecarregar = () => {
-    if (!paymentMethod) {
-      Alert.alert('Forma de pagamento', 'Escolha uma forma de pagamento.');
-      return;
-    }
+ const handleRecarregar = () => {
+  if (!paymentMethod) {
+    Alert.alert('Forma de pagamento', 'Escolha uma forma de pagamento.');
+    return;
+  }
 
-    const v = parseFloat(String(valor).replace(',', '.').trim());
-    if (isNaN(v) || v <= 0) {
-      Alert.alert('Valor inválido', 'Informe um valor numérico maior que 0.');
-      return;
-    }
-    const novoSaldo = Number((saldo + v).toFixed(2));
-    setValor('');
-    navigation.navigate('EntrarSaldo', { saldo: novoSaldo });
+  const v = parseFloat(String(valor).replace(',', '.').trim());
+  if (isNaN(v) || v <= 0) {
+    Alert.alert('Valor inválido', 'Informe um valor numérico maior que 0.');
+    return;
+  }
+
+  const novoSaldo = Number((saldo + v).toFixed(2));
+
+  // 🔹 Criar transação de recarga
+  const novaRecarga = {
+    id: Date.now().toString(),
+    item: 'Recarga',
+    tipo: 'Crédito',
+    data: new Date().toISOString().split('T')[0],
+    valor: v,
+    aluno: user?.nome,
   };
+  setHistorico([...historico, novaRecarga]);
+  setSaldo(novoSaldo);
+
+
+  // Feedback e navegação
+  setValor('');
+  Alert.alert('Recarga realizada', `Você recarregou R$ ${v.toFixed(2).replace('.', ',')}`);
+  navigation.navigate('EntrarSaldo');
+};
+
 
   const methods = [
     { key: 'pix', label: 'Pix', subtitle: '' },
     { key: 'card', label: 'Cartão de Débito/Crédito', subtitle: '' },
     { key: 'boleto', label: 'Boleto', subtitle: '' },
   ];
+
+
+
 
   return (
     <View style={styles.container}>
@@ -166,7 +187,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999',
     justifyContent: 'center',
-    zalignItems: 'center',
+    alignItems: 'center',
     marginRight: 12
   },
 

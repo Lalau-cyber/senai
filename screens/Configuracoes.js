@@ -6,14 +6,13 @@ import { AppContext } from '../context/UserContext';
 export default function AbrirMenu({ visible = false, onClose }) {
   const navigation = useNavigation();
   const { user } = useContext(AppContext);
-
   const go = (route) => {
     onClose && onClose();
     navigation.navigate(route);
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.backdrop}>
           <View style={styles.menu}>
@@ -59,6 +58,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     elevation: 8,
+     borderTopWidth: 2,
+  borderTopColor: '#B862F2',
   },
   title: {
     fontSize: 16,

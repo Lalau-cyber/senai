@@ -1,59 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { AppContext } from '../context/UserContext';
+import React, { useState, useContext, useEffect } from 'react';
+import { Text, View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { AppContext } from "../context/UserContext";
 
-// Dados simulados de histórico de transações
-const mockHistorico = {
-  '1': [
-    { id: 't1', tipo: 'Crédito', valor: 100.00, data: '2025-10-01' },
-    { id: 't2', tipo: 'Compra', valor: -15.50, data: '2025-10-02', item: 'Café Expresso' },
-    { id: 't3', tipo: 'Compra', valor: -34.00, data: '2025-10-05', item: 'Almoço Completo' },
-  ],
-  '2': [
-    { id: 't4', tipo: 'Crédito', valor: 50.00, data: '2025-10-10' },
-    { id: 't5', tipo: 'Compra', valor: -25.00, data: '2025-10-11', item: 'Lanche da Tarde' },
-  ],
-};
-
-export default function Historico({ route, navigation }) {
+export default function Historico({ navigation }) {
   const { user, historico } = useContext(AppContext);
-  const { alunoId, alunoNome } = route.params || {}; 
 
   const [transacoes, setTransacoes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  navigation.setOptions({
-    title: alunoNome 
-      ? `Histórico de ${alunoNome}` 
-      : user 
-        ? `Histórico de ${user.nome}` 
-        : 'Histórico de Transações',
-  });
+    navigation.setOptions({
+      title: user ? `Histórico de ${user.nome}` : 'Histórico de Transações',
+    });
 
-  if (alunoId) {
-    setLoading(true);
-    setTimeout(() => {
-      const dados = mockHistorico[alunoId] || [];
-      setTransacoes(dados);
-      setLoading(false);
-    }, 800);
-  } else {
+    // Usa sempre o histórico global do contexto
     const dados = Array.isArray(historico) ? [...historico] : [];
-    if (dados.length === 0) {
-      dados.push({
-        id: Date.now().toString(),
-        tipo: 'Crédito',
-        valor: 50,
-        data: new Date().toISOString().split('T')[0],
-        item: 'Recarga de teste',
-      });
-    }
-    setTransacoes(dados);
-    setLoading(false);
-  }
-}, [alunoId, alunoNome, user, historico, navigation]);
 
+    // Ordena por data mais recente primeiro
+    const ordenado = dados.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+    setTransacoes(ordenado);
+    setLoading(false);
+  }, [user, navigation, historico]);
 
   const renderTransacaoItem = ({ item }) => (
     <View style={styles.transacaoItem}>
@@ -61,7 +29,10 @@ export default function Historico({ route, navigation }) {
       <Text style={styles.transacaoDetalhe}>
         {item.tipo} {item.item ? `(${item.item})` : ''}
       </Text>
-      <Text style={[styles.transacaoValor, { color: item.valor > 0 ? '#108930' : '#CC3300' }]}>
+      <Text style={[
+        styles.transacaoValor,
+        { color: item.valor > 0 ? '#108930' : '#CC3300' }
+      ]}>
         {item.valor > 0 ? '+' : '-'} R$ {Math.abs(item.valor).toFixed(2)}
       </Text>
     </View>

@@ -5,23 +5,18 @@ import { AppContext } from '../context/UserContext';
 
 export default function Perfil() {
   const navigation = useNavigation();
-  const { user} = useContext(AppContext);
+  const { user, setUser} = useContext(AppContext);
 
   // Estado local para edição
   const [nome, setNome] = useState(user?.nome || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [tipo, setTipo] = useState(user?.tipo || "");
+  const [turma, setTurma] = useState(user?.turma|| "");
 
   const handleSave = () => {
-    // Atualiza no contexto
-    setUser({ ...user, nome, matricula });
+   if(!user) return;
+   
+    setUser({ ...user, email, turma});
     Alert.alert("Sucesso", "Dados atualizados com sucesso!");
-  };
-
-  const handleLogout = () => {
-    // Limpa usuário do contexto
-    setUser(null);
-    navigation.navigate('Koado'); 
   };
 
   return (
@@ -32,12 +27,8 @@ export default function Perfil() {
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Nome:</Text>
-        <TextInput
-          style={styles.input}
-          value={nome}
-          onChangeText={setNome}
-        />
-
+        <Text style={styles.label}>{user?.nome}</Text>
+        
         <Text style={styles.label}>Matrícula:</Text>
         <Text style={styles.value}>{user?.matricula}</Text> {/* Somente leitura */}
 
@@ -49,11 +40,11 @@ export default function Perfil() {
           keyboardType="email-address"
         />
 
-        <Text style={styles.label}>Tipo de Conta:</Text>
+        <Text style={styles.label}>Turma:</Text>
         <TextInput
           style={styles.input}
-          value={tipo}
-          onChangeText={setTipo}
+          value={turma}
+          onChangeText={setTurma}
         />
       </View>
 
@@ -61,16 +52,8 @@ export default function Perfil() {
       <TouchableOpacity 
         style={styles.editButton} 
         onPress={handleSave}
-      >
+        >
         <Text style={styles.editButtonText}>Salvar Alterações</Text>
-      </TouchableOpacity>
-
-      {/* Botão de Logout */}
-      <TouchableOpacity 
-        style={styles.logoutButton} 
-        onPress={handleLogout}
-      >
-        <Text style={styles.logoutButtonText}>Sair (Logout)</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

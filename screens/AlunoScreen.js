@@ -17,17 +17,17 @@ export default function SimScreen({ navigation }) {
       Alert.alert( "Erro de matrícula." ,"Matrícula inválida. Deve conter 8 caracteres.");
       return false;
     }
-    if (nome.trim().length === 0) {
-      Alert.alert(" Erro de nome." ,"Informe um nome válido.");
+    if (matricula.trim().length === 0) {
+      Alert.alert(" Erro de matrícula ." ,"Informe uma matrícula.");
       return false;
     }
-    navigation.navigate('EntrarSaldo');
-  };
+    return true;
+  }
   
   
   const validarNomeUsuario = (nome) => {
-    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
-    if (!temCaracteresEspeciais) {
+    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('!');
+    if (!temCaracteresEspeciais && nome.trim().lenght === 0) {
       Alert.alert("Erro de nome.","Nome de usuário inválido. Deve conter caracteres especiais.");
       return false;
     }
@@ -53,7 +53,6 @@ export default function SimScreen({ navigation }) {
         placeholder="Matrícula"
         value={matricula}
         onChangeText={setMatricula}
-        secureTextEntry={true} 
       />
       <TextInput
         style={styles.nome}
