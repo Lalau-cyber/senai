@@ -33,7 +33,16 @@ export default function Compras({ navigation }) {
       </SafeAreaView>
     );
   }
-
+  const adicionarCompra = (item) => { 
+const novaTransacao = {
+  id: `${Date.now()}-${item.id}`,
+  tipo: 'Compra',
+  item: item.nome,
+  data: new Date().toISOString().split('T')[0],
+  valor: -item.preco,
+};
+ setHistorico((prev) => [...prev, novaTransacao]); // ✅
+};
   // ✅ filtra apenas transações do tipo "Compra"
   const compras = Array.isArray(historico) ? historico.filter(h => h.tipo === 'Compra') : [];
 
@@ -43,7 +52,7 @@ export default function Compras({ navigation }) {
       
       <FlatList
         data={compras}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <CompraItem item={item} />}
         ListEmptyComponent={
           <Text style={styles.emptyText}>Você ainda não fez nenhuma compra.</Text>

@@ -16,20 +16,25 @@ export default function RecarregarScreen({ navigation }) {
       Alert.alert('Valor inválido', 'Informe um valor numérico maior que 0.');
       return;
     }
-
+           setSaldo(saldo + v);
     const novoSaldo = Number((saldo + v).toFixed(2));
 
     // Criar transação de recarga
     const novaRecarga = {
-      id: Date.now().toString(),
-      item: 'Recarga',
+      id:`${Date.now()}-${Math.random()}`,
       tipo: 'Recarga',
       data: new Date().toISOString().split('T')[0],
       valor: v,
       aluno: user?.nome,
     };
-
-    setHistorico((prev) => [...prev, novaRecarga]); // ✅ adiciona ao global
+const novaTransacao = {
+    id:`${Date.now()}-${Math.random()}`,
+    tipo: 'Recarga',
+    data: new Date().toISOString().split('T')[0],
+    valor: v,
+  };
+    setHistorico((prev) => [...prev, novaTransacao]); // ✅ adiciona ao global
+    setHistorico((prev) => [...prev, novaRecarga])
     setSaldo(novoSaldo);
 
     // Feedback e navegação

@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react
 import { AppContext } from '../context/UserContext';
 
 export default function CardapioScreen() {
-  const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext); // ✅ useContext no topo
-
+  const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext);
+  
   const Salgados = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
     { id: '2', nome: '🍔 Hambúrguer', preco: 7.5 },
@@ -30,28 +30,33 @@ export default function CardapioScreen() {
     { id: '16', nome: '🍎 Maçã', preco: 4.50 },
   ];
 
-  const handleComprar = (item) => {
-    if (saldo < item.preco) {
-      Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
-      return;
-    }
+ const handleComprar = (item) => {
+  if (saldo < item.preco) {
+    Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
+    return;
+  }
 
-    // Atualiza saldo
-    setSaldo(saldo - item.preco);
+  setSaldo(saldo - item.preco);
 
-    // Adiciona transação ao histórico
-    const novaTransacao = {
-      id: Date.now().toString(),
-      tipo: 'Compra',
-      item: item.nome,
-      data: new Date().toISOString().split('T')[0],
-      valor: -item.preco,
-    };
-
-    setHistorico((prev) => [...prev, novaTransacao]); // ✅ atualiza global
-
-    Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
+  const novaTransacao = {
+    id:`${Date.now()}-${item.id}`,
+    tipo: 'Compra',
+    item: item.nome,
+    data: new Date().toISOString().split('T')[0],
+    valor: -item.preco,
   };
+
+ setHistorico((prev) => {
+  const novo = [...prev, novaTransacao];
+  console.log("Histórico atualizado:", novo);
+  return novo;
+});
+
+
+  Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
+};
+
+  
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
@@ -67,16 +72,16 @@ export default function CardapioScreen() {
       <Text style={styles.titulo}>Cardápio</Text>
 
       <Text style={styles.subtitulo}>🍴 Salgados</Text>
-      <FlatList data={Salgados} keyExtractor={(item) => item.id} renderItem={renderItem} />
+      <FlatList data={Salgados} keyExtractor={(item) => item.id.toString} renderItem={renderItem} />
 
       <Text style={styles.subtitulo}>🍬 Doces</Text>
-      <FlatList data={Doces} keyExtractor={(item) => item.id} renderItem={renderItem} />
+      <FlatList data={Doces} keyExtractor={(item) => item.id.toString} renderItem={renderItem}  />
 
       <Text style={styles.subtitulo}>🥤 Sucos</Text>
-      <FlatList data={Sucos} keyExtractor={(item) => item.id} renderItem={renderItem} />
+      <FlatList data={Sucos} keyExtractor={(item) => item.id.toString} renderItem={renderItem} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },

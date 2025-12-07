@@ -18,7 +18,9 @@ export default function Historico({ navigation }) {
     const dados = Array.isArray(historico) ? [...historico] : [];
 
     // Ordena por data mais recente primeiro
-  const ordenado = [...dados].sort((a, b) => new Date(b.data) - new Date(a.data));
+  // Ordena por data mais antiga primeiro (mais recente no final)
+const ordenado = [...dados].sort((a, b) => new Date(a.data) - new Date(b.data));
+
 
     setTransacoes(ordenado);
     setLoading(false);
@@ -47,7 +49,7 @@ export default function Historico({ navigation }) {
       ) : transacoes.length > 0 ? (
         <FlatList
           data={transacoes}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={renderTransacaoItem}
           contentContainerStyle={styles.listContainer}
         />

@@ -35,7 +35,7 @@ export default function NaoScreen({ navigation }) {
     return true;
   };
   function Entrar() {
-      if (!validarNomeUsuario(nome) || !validaSenha(senha)){
+      if (!validarNomeUsuario(nome) && !validaSenha(senha)){
       return;
 } 
     navigation.navigate('Gestao')

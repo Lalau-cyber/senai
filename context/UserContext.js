@@ -32,12 +32,11 @@ export const AppProvider = ({ children }) => {
     AsyncStorage.setItem('@saldo', saldo.toString());
   }, [saldo]);
 
-  return (
-    <AppContext.Provider value={{
-       user, setUser,
-        saldo, setSaldo, 
-        historico, setHistorico,
-        userType, setUserType}}>
+    return (
+    <AppContext.Provider value={{ user, setUser, 
+    saldo, setSaldo, 
+    historico, setHistorico,
+    userType, setUserType }}>
       {children}
     </AppContext.Provider>
   );

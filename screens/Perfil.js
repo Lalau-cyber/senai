@@ -1,21 +1,43 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Alert, Image } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native'; 
 import { AppContext } from '../context/UserContext';
 
 export default function Perfil() {
   const navigation = useNavigation();
-  const { user, setUser} = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
 
   // Estado local para edição
   const [nome, setNome] = useState(user?.nome || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [turma, setTurma] = useState(user?.turma|| "");
+  const [turma, setTurma] = useState(user?.turma || "");
+  const [foto, setFoto] = useState(user?.foto || null);
+
+  // Função para escolher imagem
+ const escolherFoto = () => {
+  const options = {
+    mediaType: 'photo',
+    quality: 1,
+  };
+
+  launchImageLibrary(options, (response) => {
+    if (response.didCancel) {
+      return;
+    }
+    if (response.errorCode) {
+      Alert.alert("Erro", response.errorMessage);
+      return;
+    }
+    if (response.assets && response.assets.length > 0) {
+      setFoto(response.assets[0].uri);
+    }
+  });
+};
 
   const handleSave = () => {
-   if(!user) return;
-   npm
-    setUser({ ...user, email, turma});
+    if (!user) return;
+    setUser({ ...user, email, turma, foto }); // ✅ salva foto junto
     Alert.alert("Sucesso", "Dados atualizados com sucesso!");
   };
 
@@ -26,6 +48,17 @@ export default function Perfil() {
       </View>
 
       <View style={styles.infoContainer}>
+        {/* Foto de perfil */}
+        <TouchableOpacity onPress={escolherFoto}>
+          {foto ? (
+            <Image source={{ uri: foto }} style={styles.foto} />
+          ) : (
+            <View style={styles.fotoPlaceholder}>
+              <Text style={{ color: '#666' }}>Selecionar Foto</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+
         <Text style={styles.label}>Nome:</Text>
         <Text style={styles.label}>{user?.nome}</Text>
         
@@ -52,7 +85,7 @@ export default function Perfil() {
       <TouchableOpacity 
         style={styles.editButton} 
         onPress={handleSave}
-        >
+      >
         <Text style={styles.editButtonText}>Salvar Alterações</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -60,69 +93,37 @@ export default function Perfil() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  container: { flex: 1, backgroundColor: '#fff' },
   header: {
     backgroundColor: '#B862F2',
     padding: 20,
     alignItems: 'center',
     marginBottom: 20,
   },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  infoContainer: {
-    paddingHorizontal: 20,
-    marginBottom: 30,
-  },
-  label: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 15,
-    fontWeight: '500',
-  },
+  headerTitle: { fontSize: 24, fontWeight: 'bold', color: '#fff' },
+  infoContainer: { paddingHorizontal: 20, marginBottom: 30 },
+  label: { fontSize: 14, color: '#666', marginTop: 15, fontWeight: '500' },
   value: {
-    fontSize: 18,
-    color: '#222',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: 5,
+    fontSize: 18, color: '#222', borderBottomWidth: 1,
+    borderBottomColor: '#eee', paddingBottom: 5,
   },
   input: {
-    fontSize: 18,
-    color: '#222',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingBottom: 5,
+    fontSize: 18, color: '#222', borderBottomWidth: 1,
+    borderBottomColor: '#ccc', paddingBottom: 5,
+  },
+  foto: {
+    width: 120, height: 120, borderRadius: 60,
+    alignSelf: 'center', marginBottom: 20,
+  },
+  fotoPlaceholder: {
+    width: 120, height: 120, borderRadius: 60,
+    backgroundColor: '#eee', alignSelf: 'center',
+    justifyContent: 'center', alignItems: 'center',
+    marginBottom: 20,
   },
   editButton: {
-    backgroundColor: '#2a9d8f',
-    padding: 15,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginBottom: 10,
-    alignItems: 'center',
+    backgroundColor: '#2a9d8f', padding: 15, borderRadius: 8,
+    marginHorizontal: 20, marginBottom: 10, alignItems: 'center',
   },
-  editButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  logoutButton: {
-    backgroundColor: '#f44336',
-    padding: 15,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  logoutButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  editButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
 });

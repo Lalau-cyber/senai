@@ -25,39 +25,48 @@ export default function Gestao() {
   const navigation = useNavigation();
 
   const verHistorico = (aluno) => {
-    navigation.navigate('HistoricoAluno', { aluno }); // ✅ passa o objeto aluno
+    navigation.navigate('HistoricoAluno', { aluno });
   };
 
- useEffect(() => {
-    if (user) {
-      const existe = alunos.find(a => a.matricula === user.matricula);
-      if (!existe) {
-        setAlunos(prev => [
-          ...prev,
-          { id: Date.now().toString(), nome: user.nome, matricula: user.matricula, saldo: 0, historico: [] }
-        ]);
-      }
-    }
-  }, [user]);
+useEffect(() => {
+  if (user) {
+    setAlunos((prev) => {
+      const existe = prev.some(a => a.matricula === user.matricula);
+      if (existe) return prev;
+      return [
+        ...prev,
+        {
+          id: `${Date.now()}-${Math.random()}`, // id único
+          nome: user.nome,
+          matricula: user.matricula,
+          saldo: user.saldo || 0,
+          historico: user.historico || []
+        }
+      ];
+    });
+  }
+}, [user]);
+
 
   const excluirAluno = (alunoId) => {
-    Alert.alert(
-      'Confirmação de Exclusão',
-      `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`,
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Excluir',
-          onPress: () => {
-            const novaLista = alunos.filter(aluno => aluno.id !== alunoId);
-            setAlunos(novaLista);
-            Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
-          },
-          style: 'destructive',
+  Alert.alert(
+    'Confirmação de Exclusão',
+    `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`,
+    [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Excluir',
+        style: 'destructive',
+        onPress: () => {
+          setAlunos((prev) => prev.filter(aluno => aluno.id !== alunoId));
+          Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
         },
-      ]
-    );
-  };
+      },
+    ]
+  );
+};
+
+
 
   const renderAlunoItem = ({ item }) => (
     <View style={styles.alunoItem}>
@@ -69,16 +78,22 @@ export default function Gestao() {
           <Text style={styles.labelBold}>Matrícula:</Text> {item.matricula}
         </Text>
         <Text style={styles.alunoDetalhe}>
-          <Text style={styles.labelBold}>Saldo:</Text> R$ {item.saldo.toFixed(2)}
+          <Text style={styles.labelBold}>Saldo: </Text>
+           <Text>R$ {item.saldo.toFixed(2)}
         </Text>
+          </Text>
       </View>
       <View style={styles.botoesContainer}>
         <TouchableOpacity style={styles.botaoHistorico} onPress={() => verHistorico(item)}>
           <Text style={styles.textoBotao}>Histórico</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botaoExcluir} onPress={() => excluirAluno(item.id)}>
-          <Text style={styles.textoBotao}>Excluir</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+  style={styles.botaoExcluir}
+  onPress={() => {
+    excluirAluno(item.id);
+  }}>  
+    <Text style={styles.textoBotao}>Excluir</Text>
+</TouchableOpacity> 
       </View>
     </View>
   );
@@ -91,7 +106,7 @@ export default function Gestao() {
       ) : (
         <FlatList
           data={alunos}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => String(item.id)}
           renderItem={renderAlunoItem}
           contentContainerStyle={[styles.listContainer, { marginTop: 10 }]}
         />
