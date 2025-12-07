@@ -1,3 +1,4 @@
+// context/UserContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -5,39 +6,38 @@ export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState(null);
   const [saldo, setSaldo] = useState(0);
-  
   const [historico, setHistorico] = useState([]);
-  // Carrega histórico salvo ao iniciar
+  const [userType, setUserType] = useState (null)
+
+  // Carregar histórico e saldo salvos
   useEffect(() => {
-    const carregarHistorico = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('@historico');
-        if (jsonValue != null) {
-          setHistorico(JSON.parse(jsonValue));
-        }
-      } catch (e) {
-        console.log("Erro ao carregar histórico", e);
-      }
+    const carregarDados = async () => {
+      const historicoSalvo = await AsyncStorage.getItem('@historico');
+      const saldoSalvo = await AsyncStorage.getItem('@saldo');
+
+      if (historicoSalvo) setHistorico(JSON.parse(historicoSalvo));
+      if (saldoSalvo) setSaldo(Number(saldoSalvo));
     };
-    carregarHistorico();
+    carregarDados();
   }, []);
 
-  // Salva histórico sempre que mudar
+  // Salvar histórico sempre que mudar
   useEffect(() => {
-    const salvarHistorico = async () => {
-      try {
-        await AsyncStorage.setItem('@historico', JSON.stringify(historico));
-      } catch (e) {
-        console.log("Erro ao salvar histórico", e);
-      }
-    };
-    salvarHistorico();
+    AsyncStorage.setItem('@historico', JSON.stringify(historico));
   }, [historico]);
 
+  // Salvar saldo sempre que mudar
+  useEffect(() => {
+    AsyncStorage.setItem('@saldo', saldo.toString());
+  }, [saldo]);
+
   return (
-    <AppContext.Provider value={{ user, setUser, historico, setHistorico, userType, setUserType, saldo, setSaldo}}>
+    <AppContext.Provider value={{
+       user, setUser,
+        saldo, setSaldo, 
+        historico, setHistorico,
+        userType, setUserType}}>
       {children}
     </AppContext.Provider>
   );

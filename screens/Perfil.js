@@ -14,7 +14,7 @@ export default function Perfil() {
 
   const handleSave = () => {
    if(!user) return;
-   
+   npm
     setUser({ ...user, email, turma});
     Alert.alert("Sucesso", "Dados atualizados com sucesso!");
   };

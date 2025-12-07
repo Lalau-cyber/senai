@@ -4,14 +4,16 @@ import AbrirMenu from './Configuracoes';
 import { AppContext } from '../context/UserContext';
 
 export default function EntrarSaldoScreen({ navigation, route }) {
-  const { user, saldo } = useContext(AppContext);
+  const { user, saldo, setSaldo } = useContext(AppContext);
   const saldoParam = route?.params?.saldo ?? 0;
   const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
     const novoSaldo = route?.params?.saldo;
-    if (novoSaldo !== undefined) setSaldo(Number(novoSaldo));
-  }, [route?.params?.saldo]);
+    if (novoSaldo !== undefined && novoSaldo != null) {
+      setSaldo((prev) => + Number(novoSaldo));
+  }
+}, [route?.params?.saldo]);
 
   return (
     <View style={styles.container}>
@@ -23,7 +25,8 @@ export default function EntrarSaldoScreen({ navigation, route }) {
 
         <Text style={styles.title}>Saldo do Ticket</Text>
         {user && (
-          <Text style={styles.userInfo}>Aluno: {user.nome} | Matrícula: {user.matricula}</Text>
+          <Text style={styles.userInfo}>
+            Aluno: {user.nome} | Matrícula: {user.matricula}</Text>
         )}
         <Text style={styles.balance}>R$ {(saldo ?? 0).toFixed(2)}</Text>
         <Text style={styles.note}>Última atualização: agora</Text>

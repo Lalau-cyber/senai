@@ -27,7 +27,7 @@ export default function SimScreen({ navigation }) {
   
   const validarNomeUsuario = (nome) => {
     const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('!');
-    if (!temCaracteresEspeciais && nome.trim().lenght === 0) {
+    if (!temCaracteresEspeciais && nome.trim().length === 0) {
       Alert.alert("Erro de nome.","Nome de usuário inválido. Deve conter caracteres especiais.");
       return false;
     }

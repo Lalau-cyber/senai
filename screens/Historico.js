@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, FlatList, ActivityIndicator } from 'react-nativ
 import { AppContext } from "../context/UserContext";
 
 export default function Historico({ navigation }) {
+
   const { user, historico } = useContext(AppContext);
 
   const [transacoes, setTransacoes] = useState([]);
@@ -17,7 +18,7 @@ export default function Historico({ navigation }) {
     const dados = Array.isArray(historico) ? [...historico] : [];
 
     // Ordena por data mais recente primeiro
-    const ordenado = dados.sort((a, b) => new Date(b.data) - new Date(a.data));
+  const ordenado = [...dados].sort((a, b) => new Date(b.data) - new Date(a.data));
 
     setTransacoes(ordenado);
     setLoading(false);

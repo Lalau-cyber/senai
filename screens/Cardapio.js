@@ -3,32 +3,32 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react
 import { AppContext } from '../context/UserContext';
 
 export default function CardapioScreen() {
-  const { saldo, setSaldo, historico, setHistorico, user } = useContext(AppContext);
-  
+  const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext); // ✅ useContext no topo
 
   const Salgados = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
     { id: '2', nome: '🍔 Hambúrguer', preco: 7.5 },
-    { id: '3', nome: '🥟Pastel', preco: 6.0 },
+    { id: '3', nome: '🥟 Pastel', preco: 6.0 },
     { id: '4', nome: '🍟 Batata Frita', preco: 5.0 },
     { id: '5', nome: '🍗 Coxinha', preco: 4.0 },
-    { id: '6', nome: '🥪Sanduiche', preco: 3.5 },
+    { id: '6', nome: '🥪 Sanduíche', preco: 3.5 },
   ];
-  const Doces = [
 
-    {id : '7', nome: '🧁 açaí',preco: 15.00},
-    {id : '8', nome: '🍰 Bolo',preco: 3.50},
-    {id : '9', nome: '🍪 Cooke', preco: 2.00},
-    {id : '10', nome: '🍭 Pirulito', preco:0.50},
-    {id : '11', nome: '🍫 Chocolate', preco:3.50},
+  const Doces = [
+    { id: '7', nome: '🧁 Açaí', preco: 15.00 },
+    { id: '8', nome: '🍰 Bolo', preco: 3.50 },
+    { id: '9', nome: '🍪 Cookie', preco: 2.00 },
+    { id: '10', nome: '🍭 Pirulito', preco: 0.50 },
+    { id: '11', nome: '🍫 Chocolate', preco: 3.50 },
   ];
+
   const Sucos = [
-    {id : '12', nome: '🍋Maracuja',preco: 4.50},
-    {id : '13', nome: '🍍Abacaxi',preco: 4.50},
-    {id : '14', nome: '🥤MilkShake',preco: 4.50},
-    {id : '15', nome: '🍇Uva',preco: 4.50},
-    {id : '16', nome: '🍎Maça',preco: 4.50},
-  ]
+    { id: '12', nome: '🍋 Maracujá', preco: 4.50 },
+    { id: '13', nome: '🍍 Abacaxi', preco: 4.50 },
+    { id: '14', nome: '🥤 MilkShake', preco: 4.50 },
+    { id: '15', nome: '🍇 Uva', preco: 4.50 },
+    { id: '16', nome: '🍎 Maçã', preco: 4.50 },
+  ];
 
   const handleComprar = (item) => {
     if (saldo < item.preco) {
@@ -40,24 +40,24 @@ export default function CardapioScreen() {
     setSaldo(saldo - item.preco);
 
     // Adiciona transação ao histórico
-   
-   const novaTransacao = {
-  id: Date.now().toString(),
-  tipo: 'Compra',
-  item: item.nome,
-  data: new Date().toISOString().split('T')[0],
-  valor: -item.preco
-};
+    const novaTransacao = {
+      id: Date.now().toString(),
+      tipo: 'Compra',
+      item: item.nome,
+      data: new Date().toISOString().split('T')[0],
+      valor: -item.preco,
+    };
 
-setHistorico([...historico, novaTransacao]);
+    setHistorico((prev) => [...prev, novaTransacao]); // ✅ atualiza global
+
     Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
   };
 
- const renderItem = ({ item }) => (
+  const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
-      <TouchableOpacity onPress={() => handleComprar(item)}>
-        <Text style={styles.compra}>Comprar</Text>
+      <TouchableOpacity style={styles.botaoComprar} onPress={() => handleComprar(item)}>
+        <Text style={styles.textoBotao}>Comprar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -77,6 +77,7 @@ setHistorico([...historico, novaTransacao]);
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   titulo: {
@@ -90,6 +91,13 @@ const styles = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
   },
+  subtitulo: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 15,
+    marginBottom: 10,
+    color: '#333',
+  },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -98,19 +106,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  itens: {
-     fontSize: 18
-   },
-  precos: { 
-    fontSize: 18, 
-    fontWeight: '600',
-     color: '#2a9d8f' 
-    },
-  conter: {
-     width: '100%', 
-     height: 20, 
-     backgroundColor: '#B862F2' 
-    },
   botaoComprar: {
     backgroundColor: '#B862F2',
     paddingVertical: 8,
@@ -118,12 +113,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   textoBotao: {
-     color: '#fff', 
-     fontSize: 16, 
-     fontWeight: 'bold'
-     },
-     compra:{
-     backgroundColor:' #B862F2',
-     },
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
-

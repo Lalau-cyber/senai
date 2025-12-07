@@ -1,5 +1,5 @@
 
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
 
@@ -35,12 +35,9 @@ export default function NaoScreen({ navigation }) {
     return true;
   };
   function Entrar() {
-      if (!validarNomeUsuario(nome)){
+      if (!validarNomeUsuario(nome) || !validaSenha(senha)){
       return;
 } 
-      if (!validaSenha(senha)){
-       return;
-   }
     navigation.navigate('Gestao')
   }
 
