@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
 import { AppContext } from '../context/UserContext';
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,79 +21,86 @@ const mockAlunos = [
 
 export default function Gestao() {
   const [alunos, setAlunos] = useState(mockAlunos);
-  const { user } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
   const navigation = useNavigation();
 
   const verHistorico = (aluno) => {
     navigation.navigate('HistoricoAluno', { aluno });
   };
 
-useEffect(() => {
-  if (user) {
-    setAlunos((prev) => {
-      const existe = prev.some(a => a.matricula === user.matricula);
-      if (existe) return prev;
-      return [
-        ...prev,
-        {
-          id: `${Date.now()}-${Math.random()}`, // id único
-          nome: user.nome,
-          matricula: user.matricula,
-          saldo: user.saldo || 0,
-          historico: user.historico || []
+  useEffect(() => {
+    if (user) {
+      setAlunos((prev) => {
+        const existe = prev.find(a => a.matricula === user.matricula);
+        if (existe) {
+          return prev.map(a =>
+            a.matricula === user.matricula
+              ? { ...a, saldo: user.saldo || 0, historico: user.historico || [] }
+              : a
+          );
         }
-      ];
-    });
+        return [
+          ...prev,
+          {
+            id: `${Date.now()}-${Math.random()}`,
+            nome: user.nome,
+            matricula: user.matricula,
+            saldo: user.saldo ??0,
+            historico: user.historico ?? [] 
+          }
+        ];
+      });
+    }
+  }, [user]);
+
+const excluirAluno = (alunoId) => {
+  const confirmarTexto = `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`;
+
+  const remover = () => {
+    setAlunos((prev) => prev.filter(aluno => aluno.id !== alunoId));
+
+    // Se o aluno excluído for o usuário logado, limpa do contexto
+    if (user && user.id === alunoId || user.matricula ===alunoId) {
+      setUser(null);
+    }
+
+    Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
+  };
+
+  if (Platform.OS === 'web') {
+    if (window.confirm(confirmarTexto)) remover();
+  } else {
+    Alert.alert(
+      'Confirmação de Exclusão',
+      confirmarTexto,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Excluir', style: 'destructive', onPress: remover },
+      ]
+    );
   }
-}, [user]);
-
-
-  const excluirAluno = (alunoId) => {
-  Alert.alert(
-    'Confirmação de Exclusão',
-    `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`,
-    [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Excluir',
-        style: 'destructive',
-        onPress: () => {
-          setAlunos((prev) => prev.filter(aluno => aluno.id !== alunoId));
-          Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
-        },
-      },
-    ]
-  );
 };
-
-
 
   const renderAlunoItem = ({ item }) => (
     <View style={styles.alunoItem}>
       <View style={styles.alunoInfo}>
         <Text style={styles.alunoNome}>
-          <Text style={styles.labelBold}>Nome:</Text> {item.nome}
+          <Text style={styles.labelBold}>Nome: </Text>{item.nome}
         </Text>
         <Text style={styles.alunoDetalhe}>
-          <Text style={styles.labelBold}>Matrícula:</Text> {item.matricula}
+          <Text style={styles.labelBold}>Matrícula: </Text>{item.matricula}
         </Text>
         <Text style={styles.alunoDetalhe}>
-          <Text style={styles.labelBold}>Saldo: </Text>
-           <Text>R$ {item.saldo.toFixed(2)}
+          <Text style={styles.labelBold}>Saldo: </Text>R$ {(item.saldo ?? 0).toFixed(2)}
         </Text>
-          </Text>
       </View>
       <View style={styles.botoesContainer}>
         <TouchableOpacity style={styles.botaoHistorico} onPress={() => verHistorico(item)}>
           <Text style={styles.textoBotao}>Histórico</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-  style={styles.botaoExcluir}
-  onPress={() => {
-    excluirAluno(item.id);
-  }}>  
-    <Text style={styles.textoBotao}>Excluir</Text>
-</TouchableOpacity> 
+        <TouchableOpacity style={styles.botaoExcluir} onPress={() => excluirAluno(item.id)}>
+          <Text style={styles.textoBotao}>Excluir</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

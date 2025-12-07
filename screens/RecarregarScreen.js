@@ -7,7 +7,8 @@ export default function RecarregarScreen({ navigation }) {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
-  const { user, saldo, setSaldo, historico, setHistorico } = useContext(AppContext);
+  // ✅ pega user e função recargaSaldo do contexto
+  const { user, recargaSaldo } = useContext(AppContext);
 
   const handleRecarregar = () => {
     const v = parseFloat(String(valor).replace(',', '.').trim());
@@ -16,26 +17,9 @@ export default function RecarregarScreen({ navigation }) {
       Alert.alert('Valor inválido', 'Informe um valor numérico maior que 0.');
       return;
     }
-           setSaldo(saldo + v);
-    const novoSaldo = Number((saldo + v).toFixed(2));
 
-    // Criar transação de recarga
-    const novaRecarga = {
-      id:`${Date.now()}-${Math.random()}`,
-      tipo: 'Recarga',
-      data: new Date().toISOString().split('T')[0],
-      valor: v,
-      aluno: user?.nome,
-    };
-const novaTransacao = {
-    id:`${Date.now()}-${Math.random()}`,
-    tipo: 'Recarga',
-    data: new Date().toISOString().split('T')[0],
-    valor: v,
-  };
-    setHistorico((prev) => [...prev, novaTransacao]); // ✅ adiciona ao global
-    setHistorico((prev) => [...prev, novaRecarga])
-    setSaldo(novoSaldo);
+    // ✅ usa a função do contexto para atualizar saldo e histórico
+    recargaSaldo(v);
 
     // Feedback e navegação
     setValor('');
@@ -52,7 +36,8 @@ const novaTransacao = {
   return (
     <View style={styles.container}>
       <View style={styles.conter} />
-      <Text style={styles.R$}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+      {/* ✅ mostra saldo do user */}
+      <Text style={styles.R$}>R$ {(user.saldo ?? 0).toFixed(2).replace('.', ',')}</Text>
 
       <TextInput
         style={styles.recarregar}
