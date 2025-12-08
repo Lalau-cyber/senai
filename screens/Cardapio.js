@@ -42,7 +42,7 @@ export default function CardapioScreen() {
       id:`${Date.now()}-${item.id}`,
       tipo: 'Compra',
       item: item.nome,
-      data: new Date().toLocaleString(), // agora mostra data e hora
+      data: new Date().toLocaleString(),
       valor: -item.preco,
     };
 
@@ -52,7 +52,7 @@ export default function CardapioScreen() {
 
   const renderItem = ({ item }) => (
     <View style={commonStyles.item}>
-      <Text style={themedStyles.text}>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
+      <Text style={styles.text}>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
       <TouchableOpacity style={commonStyles.botaoComprar} onPress={() => handleComprar(item)}>
         <Text style={commonStyles.textoBotao}>Comprar</Text>
       </TouchableOpacity>
@@ -60,29 +60,24 @@ export default function CardapioScreen() {
   );
 
   return (
-    <View style={themedStyles.container}>
-      <Text style={[commonStyles.titulo, themedStyles.text]}>Cardápio</Text>
+    <View style={styles.container}>
+      <Text style={[commonStyles.titulo, styles.text]}>Cardápio</Text>
 
-      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍴 Salgados</Text>
+      <Text style={[commonStyles.subtitulo, styles.text]}>🍴 Salgados</Text>
       <FlatList data={Salgados} keyExtractor={(item) => item.id} renderItem={renderItem} />
 
-      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍬 Doces</Text>
+      <Text style={[commonStyles.subtitulo, styles.text]}>🍬 Doces</Text>
       <FlatList data={Doces} keyExtractor={(item) => item.id} renderItem={renderItem} />
 
-      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🥤 Sucos</Text>
+      <Text style={[commonStyles.subtitulo, styles.text]}>🥤 Sucos</Text>
       <FlatList data={Sucos} keyExtractor={(item) => item.id} renderItem={renderItem} />
     </View>
   );
-};
+}
 
-const lightStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', padding: 16 },
   text: { color: '#000' },
-});
-
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000' },
-  text: { color: '#fff' },
 });
 
 const commonStyles = StyleSheet.create({

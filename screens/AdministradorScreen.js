@@ -5,6 +5,7 @@ import { AppContext } from '../context/UserContext';
 export default function AdministradorScreen({ navigation }) {
   const [matricula, setMatricula] = useState("");
   const [nome, setNome] = useState("");
+  const [senha, setSenha] = useState("");
   const { setUserType } = useContext(AppContext);
 
   useEffect(() => {
@@ -41,47 +42,40 @@ export default function AdministradorScreen({ navigation }) {
   }
 
   return (
-    <View style={themedStyles.container}>
+    <View style={styles.container}>
       <View style={commonStyles.conter} />
-      <Text style={[commonStyles.text, themedStyles.text]}>Complete os campos abaixo:</Text>
+      <Text style={[commonStyles.text, styles.text]}>Complete os campos abaixo:</Text>
 
       <TextInput
-        style={[commonStyles.inputBase, themedStyles.input]}
+        style={[commonStyles.inputBase, styles.input]}
         placeholder="Senha"
         value={senha}
         onChangeText={setSenha}
         secureTextEntry={true}
         keyboardType="numeric"
         maxLength={4}
-        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
+        placeholderTextColor="#555"
       />
       <TextInput
-        style={[commonStyles.inputBase, themedStyles.input]}
+        style={[commonStyles.inputBase, styles.input]}
         placeholder="Nome"
         value={nome}
         onChangeText={setNome}
-        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
+        placeholderTextColor="#555"
       />
 
-      <TouchableOpacity style={styles.entrar} onPress={Entrar}>
-        <Text style={styles.textoBotao}>Entrar</Text>
+      <TouchableOpacity style={[commonStyles.entrarBase, styles.entrar]} onPress={Entrar}>
+        <Text style={commonStyles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-const lightStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
   text: { color: '#000' },
   input: { backgroundColor: '#F1DAFF', color: '#000' },
   entrar: { backgroundColor: '#B862F2' },
-});
-
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#fff' },
-  input: { backgroundColor: '#333', color: '#fff' },
-  entrar: { backgroundColor: '#7A2BBF' },
 });
 
 const commonStyles = StyleSheet.create({
@@ -110,6 +104,7 @@ const commonStyles = StyleSheet.create({
     width: '80%',
   },
   textoBotao: {
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
