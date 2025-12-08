@@ -14,7 +14,7 @@ import CardapioScreen from './screens/Cardapio';
 import Compras from './screens/Compras';
 import Historico from './screens/historico';
 import Perfil from './screens/Perfil';
-import Gestao from './screens/Gestao';
+import Gestao from './screens/gestao';
 import HistoricoAdm from './screens/HistoricoAdm';
 
 const Stack = createNativeStackNavigator();
