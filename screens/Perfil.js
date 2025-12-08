@@ -3,15 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Aler
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native'; 
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function Perfil() {
   const navigation = useNavigation();
   const { user, setUser } = useContext(AppContext);
-  const { theme } = useContext(ThemeContext);
-
-  // ✅ agora usamos themedStyles para tema claro/escuro
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   // Estado local para edição
   const [nome, setNome] = useState(user?.nome || "");
@@ -42,7 +37,7 @@ export default function Perfil() {
   };
 
   return (
-    <View style={themedStyles.container}>
+    <View style={styleSheet.container}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Meu Perfil</Text>
@@ -95,16 +90,11 @@ export default function Perfil() {
   );
 }
 
-// Estilos de tema
-const lightStyles = StyleSheet.create({
+// Estilos
+const styleSheet = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
 });
 
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000' },
-});
-
-// Estilos fixos da tela
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {

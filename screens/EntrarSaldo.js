@@ -2,11 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import AbrirMenu from './Configuracoes';
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function EntrarSaldoScreen({ navigation }) {
   const { user, historico } = useContext(AppContext) || {};
-  const { theme } = useContext(ThemeContext) || {};
   const [menuVisible, setMenuVisible] = useState(false);
   const [saldo, setSaldo] = useState(Number(user?.saldo ?? 0));
 
@@ -14,10 +12,8 @@ export default function EntrarSaldoScreen({ navigation }) {
     setSaldo(Number(user?.saldo ?? 0));
   }, [user?.saldo]);
 
-  const themed = theme === 'dark' ? darkStyles : lightStyles;
-
   return (
-    <View style={[styles.container, themed.container]}> 
+    <View style={styles.container}>
       <View style={styles.conter} />
 
       <TouchableOpacity style={styles.menu} onPress={() => setMenuVisible(true)}>
@@ -25,37 +21,37 @@ export default function EntrarSaldoScreen({ navigation }) {
       </TouchableOpacity>
 
       <View style={styles.content}>
-        <Text style={[styles.title, themed.text]}>Saldo do Ticket</Text>
-        <Text style={[styles.balance, themed.text]}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
-        <Text style={[styles.note, themed.text]}>Última atualização: agora</Text>
+        <Text style={[styles.title, styles.text]}>Saldo do Ticket</Text>
+        <Text style={[styles.balance, styles.text]}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
+        <Text style={[styles.note, styles.text]}>Última atualização: agora</Text>
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity
-            style={[styles.botao, themed.botao]}
+            style={[styles.botao]}
             onPress={() => navigation.navigate('Recarregar', { saldo })}
           >
             <Text style={styles.textbotoes}>Recarregar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.botao, themed.botao, { marginLeft: 12 }]}
+            style={[styles.botao, { marginLeft: 12 }]}
             onPress={() => navigation.navigate('Cardapio')}
           >
             <Text style={styles.textbotoes}>Comprar</Text>
           </TouchableOpacity>
         </View>
 
-        <Text style={[styles.subtitle, themed.text]}>Histórico</Text>
+        <Text style={[styles.subtitle, styles.text]}>Histórico</Text>
         <FlatList
           data={historico || []}
           keyExtractor={(item, idx) => (item?.id ?? idx).toString()}
           renderItem={({ item }) => (
             <View style={styles.item}>
-              <Text style={[styles.itemText, themed.text]}>{item?.descricao ?? item?.item ?? 'Item'}</Text>
-              <Text style={[styles.itemSub, themed.text]}>R$ {Number(item?.valor ?? 0).toFixed(2)}</Text>
+              <Text style={[styles.itemText, styles.text]}>{item?.descricao ?? item?.item ?? 'Item'}</Text>
+              <Text style={[styles.itemSub, styles.text]}>R$ {Number(item?.valor ?? 0).toFixed(2)}</Text>
             </View>
           )}
-          ListEmptyComponent={<Text style={[styles.note, themed.text]}>Nenhuma movimentação</Text>}
+          ListEmptyComponent={<Text style={[styles.note, styles.text]}>Nenhuma movimentação</Text>}
         />
       </View>
 
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: '#fff' 
   },
-
+  text: { color: '#000' },
   conter: { 
     width: '100%', 
     height: 20, 
@@ -96,7 +92,8 @@ const styles = StyleSheet.create({
     fontSize: 26, 
     fontWeight: '600', 
     textAlign: 'center', 
-    marginBottom: 6 },
+    marginBottom: 6 
+  },
   balance: { 
     fontSize: 36, 
     fontWeight: '700',
@@ -153,15 +150,4 @@ const styles = StyleSheet.create({
     fontWeight: '600' 
   },
   
-});
-
-const lightStyles = StyleSheet.create({
-  container: { backgroundColor: '#fff' },
-  text: { color: '#000' },
-  botao: { backgroundColor: '#B862F2' },
-});
-const darkStyles = StyleSheet.create({
-  container: { backgroundColor: '#111' },
-  text: { color: '#fff' },
-  botao: { backgroundColor: '#7A2BBF' },
 });

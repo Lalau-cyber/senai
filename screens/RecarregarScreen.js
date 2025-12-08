@@ -1,11 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function RecarregarScreen({ navigation }) {
-  const { theme } = useContext(ThemeContext);
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
   const [valor, setValor] = useState('');
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -37,7 +34,7 @@ if (!paymentMethod) {
   ];
 
   return (
-    <View style = {themedStyles.container}>
+    <View style={styles.container}>
     <View style={commonStyles.container}>
       <View style={commonStyles.conter} />
       {/* ✅ mostra saldo do user */}
@@ -94,15 +91,11 @@ if (!paymentMethod) {
     </View>
   );
 }
-const lightStyles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#000' },
 });
 
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#fff' },
-});
 const commonStyles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: '#fff' },
   R$: { marginTop: 32, marginBottom: 32, fontSize: 36, fontWeight: '700', color: '#2a9d8f' },

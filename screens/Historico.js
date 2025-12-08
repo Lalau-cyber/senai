@@ -1,15 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { AppContext } from "../context/UserContext";
-import { ThemeContext } from '../context/TemaContext';
 
 export default function Historico({ navigation }) {
   const { user, historico } = useContext(AppContext);
   const [transacoes, setTransacoes] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const { theme } = useContext(ThemeContext);
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,8 +23,8 @@ export default function Historico({ navigation }) {
 
   const renderTransacaoItem = ({ item }) => (
     <View style={commonStyles.transacaoItem}>
-      <Text style={[commonStyles.transacaoData, themedStyles.text]}>{item.data}</Text>
-      <Text style={[commonStyles.transacaoDetalhe, themedStyles.text]}>
+      <Text style={[commonStyles.transacaoData, styles.text]}>{item.data}</Text>
+      <Text style={[commonStyles.transacaoDetalhe, styles.text]}>
         {item.tipo} {item.item ? `(${item.item})` : ''}
       </Text>
       <Text style={[
@@ -41,8 +37,8 @@ export default function Historico({ navigation }) {
   );
 
   return (
-    <View style={[commonStyles.container, themedStyles.container]}>
-      <Text style={[commonStyles.titleText, themedStyles.text]}>Transações Recentes</Text>
+    <View style={[commonStyles.container, styles.container]}>
+      <Text style={[commonStyles.titleText, styles.text]}>Transações Recentes</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#B862F2" style={commonStyles.loading} />
       ) : transacoes.length > 0 ? (
@@ -53,22 +49,16 @@ export default function Historico({ navigation }) {
           contentContainerStyle={commonStyles.listContainer}
         />
       ) : (
-        <Text style={[commonStyles.noDataText, themedStyles.text]}>Nenhuma transação registrada.</Text>
+        <Text style={[commonStyles.noDataText, styles.text]}>Nenhuma transação registrada.</Text>
       )}
     </View>
   );
 }
 
-// Tema claro
-const lightStyles = StyleSheet.create({
+// Estilos
+const styles = StyleSheet.create({
   container: { backgroundColor: '#fff' },
   text: { color: '#000' },
-});
-
-// Tema escuro
-const darkStyles = StyleSheet.create({
-  container: { backgroundColor: '#000' },
-  text: { color: '#fff' },
 });
 
 // Estilos fixos

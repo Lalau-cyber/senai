@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function CardapioScreen() {
   const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext);
-  const { theme } = useContext(ThemeContext);
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   const Salgados = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },

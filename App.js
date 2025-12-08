@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import React from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { ThemeProvider, ThemeContext } from './context/TemaContext';
 import { AppProvider } from './context/UserContext';
 
 // telas
@@ -21,10 +20,8 @@ import HistoricoAdm from './screens/HistoricoAdm';
 const Stack = createNativeStackNavigator();
 
 function AppNavigator() {
-  const { theme } = useContext(ThemeContext);
-
   return (
-    <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={DefaultTheme}>
       <Stack.Navigator initialRouteName="Koado">
         <Stack.Screen name="Koado" component={Koado} options={{ title: 'Tela Inicial' }} />
         <Stack.Screen name="Aluno" component={SimScreen} />
@@ -44,10 +41,8 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppProvider>
-        <AppNavigator />
-      </AppProvider>
-    </ThemeProvider>
+    <AppProvider>
+      <AppNavigator />
+    </AppProvider>
   );
 }

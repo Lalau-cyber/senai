@@ -1,15 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
-export default function NaoScreen({ navigation }) {
-  const [senha, setSenha] = useState("");
+export default function AdministradorScreen({ navigation }) {
+  const [matricula, setMatricula] = useState("");
   const [nome, setNome] = useState("");
   const { setUserType } = useContext(AppContext);
-  const { theme } = useContext(ThemeContext);
-
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   useEffect(() => {
     setUserType('administrador');

@@ -1,15 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function NaoScreen({ navigation }) {
   const [matricula, setMatricula] = useState("");
   const [nome, setNome] = useState("");
   const { setUserType } = useContext(AppContext);
-  const { theme } = useContext(ThemeContext);
-
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   useEffect(() => {
     setUserType('administrador');
@@ -45,46 +41,39 @@ export default function NaoScreen({ navigation }) {
   }
 
   return (
-    <View style={themedStyles.container}>
+    <View style={styles.container}>
       <View style={commonStyles.conter} />
-      <Text style={[commonStyles.text, themedStyles.text]}>Complete os campos abaixo:</Text>
+      <Text style={[commonStyles.text, styles.text]}>Complete os campos abaixo:</Text>
 
       <TextInput
-        style={[commonStyles.inputBase, themedStyles.input]}
+        style={[commonStyles.inputBase, styles.input]}
         placeholder="Matrícula"
         value={matricula}
         onChangeText={setMatricula}
         keyboardType="numeric"
         maxLength={8}
-        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
+        placeholderTextColor="#555"
       />
       <TextInput
-        style={[commonStyles.inputBase, themedStyles.input]}
+        style={[commonStyles.inputBase, styles.input]}
         placeholder="Nome"
         value={nome}
         onChangeText={setNome}
-        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
+        placeholderTextColor="#555"
       />
 
-      <TouchableOpacity style={[commonStyles.entrarBase, themedStyles.entrar]} onPress={Entrar}>
+      <TouchableOpacity style={[commonStyles.entrarBase, styles.entrar]} onPress={Entrar}>
         <Text style={commonStyles.textoBotao}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-const lightStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
   text: { color: '#000' },
   input: { backgroundColor: '#F1DAFF', color: '#000' },
   entrar: { backgroundColor: '#B862F2' },
-});
-
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#fff' },
-  input: { backgroundColor: '#333', color: '#fff' },
-  entrar: { backgroundColor: '#7A2BBF' },
 });
 
 const commonStyles = StyleSheet.create({

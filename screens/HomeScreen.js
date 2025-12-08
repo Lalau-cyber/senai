@@ -1,31 +1,27 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { ThemeContext } from '../context/TemaContext';
 
 export default function Koado({ navigation }) {
-  const { theme } = useContext(ThemeContext);
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
-
   return (
-    <View style={[themedStyles.container, commonStyles.container]}>
+    <View style={[styles.container, commonStyles.container]}>
       <View style={commonStyles.topBar} />
       <View style={commonStyles.centro}>
-        <Text style={[commonStyles.titulo, themedStyles.text]}>Bem vindo(a)!</Text>
-        <Text style={[commonStyles.texto, themedStyles.text]}>Você é aluno ou administrador?</Text>
+        <Text style={[commonStyles.titulo, styles.text]}>Bem vindo(a)!</Text>
+        <Text style={[commonStyles.texto, styles.text]}>Você é aluno ou administrador?</Text>
 
         <View style={commonStyles.rowContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Aluno')}
-            style={[commonStyles.buttonWrapper, themedStyles.button]}
+            style={[commonStyles.buttonWrapper, styles.button]}
           >
-            <Text style={[commonStyles.buttonText, themedStyles.text]}>Sou aluno</Text>
+            <Text style={[commonStyles.buttonText, styles.text]}>Sou aluno</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Administrador')}
-            style={[commonStyles.buttonWrapper, themedStyles.button]}
+            style={[commonStyles.buttonWrapper, styles.button]}
           >
-            <Text style={[commonStyles.buttonText, themedStyles.text]}>Sou Administrador</Text>
+            <Text style={[commonStyles.buttonText, styles.text]}>Sou Administrador</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -33,16 +29,10 @@ export default function Koado({ navigation }) {
   );
 }
 
-const lightStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
   text: { color: '#000' },
   button: { borderColor: '#000' },
-});
-
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#fff' },
-  button: { borderColor: '#fff' },
 });
 
 const commonStyles = StyleSheet.create({

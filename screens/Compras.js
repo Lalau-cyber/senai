@@ -1,17 +1,16 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useContext } from 'react'; 
 import { AppContext } from '../context/UserContext';
-import { ThemeContext } from '../context/TemaContext';
 
 const formatCurrency = (value) => `R$ ${value.toFixed(2).replace('.', ',')}`;
 
-const CompraItem = ({ item, themedStyles }) => (
+const CompraItem = ({ item }) => (
   <View style={commonStyles.item}>
-    <Text style={[commonStyles.itemTitle, themedStyles.text]}>{item.item}</Text>
+    <Text style={[commonStyles.itemTitle, styles.text]}>{item.item}</Text>
     <Text
       style={[
         commonStyles.itemSub,
-        themedStyles.text,
+        styles.text,
         { color: item.valor > 0 ? '#108930' : '#CC3300' }
       ]}
     >
@@ -22,8 +21,6 @@ const CompraItem = ({ item, themedStyles }) => (
 
 export default function Compras({ navigation }) {
   const { user, historico } = useContext(AppContext);
-  const { theme } = useContext(ThemeContext);
-  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   if (!user) {
     return (
@@ -36,13 +33,13 @@ export default function Compras({ navigation }) {
   const compras = Array.isArray(historico) ? historico.filter(h => h.tipo === 'Compra') : [];
 
   return (
-    <SafeAreaView style={themedStyles.container}>
-      <Text style={[commonStyles.title, themedStyles.text]}>Histórico de Compras</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={[commonStyles.title, styles.text]}>Histórico de Compras</Text>
       
       <FlatList
         data={compras}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <CompraItem item={item} themedStyles={themedStyles} />}
+        renderItem={({ item }) => <CompraItem item={item} />}
         ListEmptyComponent={
           <Text style={commonStyles.emptyText}>Você ainda não fez nenhuma compra.</Text>
         }
@@ -55,14 +52,9 @@ export default function Compras({ navigation }) {
   );
 }
 
-const lightStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', padding: 16 },
   text: { color: '#000' },
-});
-
-const darkStyles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', padding: 16 },
-  text: { color: '#fff' },
 });
 
 const commonStyles = StyleSheet.create({
