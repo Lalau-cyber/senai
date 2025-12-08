@@ -1,19 +1,24 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AbrirMenu from './abaDeConfiguração';
+=======
+import { useContext, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import AbrirMenu from './Configuracoes';
+import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
 
-export default function EntrarSaldoScreen({ navigation, route }) {
-  const saldoParam = route?.params?.saldo ?? 0;
-  const [saldo, setSaldo] = useState(Number(saldoParam) || 0);
+export default function EntrarSaldoScreen({ navigation }) {
+  const { user, historico } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
+
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
   const [menuVisible, setMenuVisible] = useState(false);
 
-
-  useEffect(() => {
-    const novoSaldo = route?.params?.saldo;
-    if (novoSaldo !== undefined) setSaldo(Number(novoSaldo));
-  }, [route?.params?.saldo]);
-
   return (
+<<<<<<< HEAD
     <View style={styles.container}>
       <View style={styles.conter} />
       <View style={styles.histo}>
@@ -37,81 +42,98 @@ export default function EntrarSaldoScreen({ navigation, route }) {
         </View>
 
       <AbrirMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
+=======
+    <View style={themedStyles.container}>
+      <View style={commonStyles.container}>
+        <View style={commonStyles.conter} />
+        <View style={commonStyles.histo}>
+          {/* Botão de configurações */}
+          <TouchableOpacity style={commonStyles.menu} onPress={() => setMenuVisible(true)}>
+            <Text style={commonStyles.tmenu}>⚙️</Text>
+          </TouchableOpacity>
+
+          {/* Informações do aluno */}
+          <Text style={[commonStyles.title, themedStyles.text]}>Saldo do Ticket</Text>
+          {user && (
+            <Text style={[commonStyles.userInfo, themedStyles.text]}>
+              Aluno: {user.nome} | Matrícula: {user.matricula}
+            </Text>
+          )}
+          <Text style={commonStyles.balance}>R$ {(user?.saldo ?? 0).toFixed(2)}</Text>
+          <Text style={[commonStyles.note, themedStyles.text]}>Última atualização: agora</Text>
+
+          {/* Botões de ação */}
+          <TouchableOpacity
+            style={[commonStyles.botaoBase, themedStyles.botao]}
+            onPress={() => navigation.navigate('Recarregar')}
+          >
+            <Text style={commonStyles.textbotoes}>Recarregar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[commonStyles.botaoBase, themedStyles.botao, { marginTop: 10 }]}
+            onPress={() => navigation.navigate('Cardapio')}
+          >
+            <Text style={commonStyles.textbotoes}>Comprar</Text>
+          </TouchableOpacity>
+
+          {/* Histórico de transações */}
+          <Text style={[commonStyles.title, themedStyles.text, { fontSize: 22, marginTop: 20 }]}>
+            Histórico
+          </Text>
+          <FlatList
+            data={historico}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={commonStyles.item}>
+                <Text style={themedStyles.text}>{item.data} - {item.item}</Text>
+                <Text style={{ color: item.valor > 0 ? 'green' : 'red' }}>
+                  R$ {item.valor.toFixed(2)}
+                </Text>
+              </View>
+            )}
+            ListEmptyComponent={
+              <Text style={[commonStyles.note, themedStyles.text]}>Nenhuma transação encontrada.</Text>
+            }
+          />
+        </View>
+
+        {/* Menu lateral */}
+        <AbrirMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
+      </View>
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
     </View>
     </View>
   );
 }
-const styles = StyleSheet.create({
 
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    contentContainer: {
-        alignItems: 'center',
-        // O padding top lida com o espaço da StatusBar (se necessário)
-        paddingTop: 40, 
-    },
-    title: {
-        fontSize: 24, // Tamanho ligeiramente reduzido para melhor equilíbrio
-        marginBottom: 12,
-        fontWeight: '600',
-        fontStyle: 'italic',
-        color: '#333',
-    },
-    balance: {
-        fontSize: 48, // Tamanho aumentado para destaque
-        fontWeight: '800',
-        color: '#2a9d8f', // Cor verde-água vibrante
-        marginBottom: 20,
-    },
-    note: {
-        fontStyle: 'italic',
-        marginTop: 10,
-        marginBottom: 30, // Adicionando margem inferior antes dos botões
-        color: '#666',
-    },
-    
-    // Estilo dos Botões de Ação (Recarregar/Comprar)
-    actionButton: {
-        backgroundColor: '#B862F2',
-        width: '80%', // Definindo uma largura padrão
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#9B50D8', // Borda sutilmente mais escura
-        marginVertical: 10, // Espaçamento vertical entre os botões
-        elevation: 3, // Sombra Android
-        shadowColor: '#000', // Sombra iOS
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    },
-    actionButtonText: {
-        color: 'white', // Texto branco para contraste
-        fontWeight: 'bold',
-        fontSize: 16,
-        textAlign: 'center',
-    },
+/* Tema claro */
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center' },
+  text: { color: '#000' },
+  botao: { backgroundColor: '#B862F2', borderColor: '#000' },
+});
 
+/* Tema escuro */
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center' },
+  text: { color: '#fff' },
+  botao: { backgroundColor: '#7A2BBF', borderColor: '#fff' },
+});
 
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  histo: {
-    alignItems: 'center',
-    
-  },
+/* Estilos comuns */
+const commonStyles = StyleSheet.create({
+  container: { flex: 1 },
+  histo: { alignItems: 'center' },
   title: {
     marginTop: 30,  
     fontSize: 30,
     marginBottom: 12,
     fontWeight: '600',
-    fontFamily: 'geoegia',
+    fontFamily: 'Georgia',
     fontStyle: 'italic',
   },
+<<<<<<< HEAD
   balance: {
     fontSize: 36,
     fontWeight: '700',
@@ -147,7 +169,20 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: 14,
+=======
+  userInfo: { fontSize: 14, marginBottom: 8 },
+  balance: { fontSize: 36, fontWeight: '700', color: '#2a9d8f', marginBottom: 20 },
+  note: { fontStyle: 'italic', marginTop: 10, marginBottom: 30 },
+  botaoBase: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    paddingVertical: 10,
+    borderWidth: 1,
+    flexDirection: 'row',
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
   },
+  textbotoes: { color: 'white', fontWeight: 'bold', fontSize: 14 },
   menu: {
     position: 'absolute',
     top: 8,
@@ -155,8 +190,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     padding: 8,
     zIndex: 10,
-    bordeRadius: 5,
+    borderRadius: 5,
   },
+<<<<<<< HEAD
   configu: {
     fontSize: 35,
 
@@ -177,3 +213,9 @@ const styles = StyleSheet.create({
   },
   
 });
+=======
+  tmenu: { fontSize: 24, color: '#fff', backgroundColor: '#B862F2' },
+  conter: { width: '100%', height: 20, backgroundColor: '#B862F2' },
+  item: { flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginVertical: 5 },
+});
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795

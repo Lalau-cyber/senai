@@ -1,21 +1,23 @@
-
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
-
+import { ThemeContext } from '../context/TemaContext';
 
 export default function NaoScreen({ navigation }) {
-
   const [senha, setSenha] = useState("");
   const [nome, setNome] = useState("");
-  const { userType, setUserType } = useContext(AppContext);
+  const { setUserType } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
+
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
+
   useEffect(() => {
     setUserType('administrador');
   }, []);
 
   const validaSenha = (senha) => {
     if (senha.length !== 4) {
-      Alert.alert("Erro de Senha" ,"Senha inválida. Deve conter 4 caracteres.");
+      Alert.alert("Erro de Senha", "Senha inválida. Deve conter 4 caracteres.");
       return false;
     }
     return true;
@@ -23,65 +25,76 @@ export default function NaoScreen({ navigation }) {
 
   const validarNomeUsuario = (nome) => {
     if (!nome.trim()) {
-      Alert.alert("Erro de Nome" ,"informe um nome válido");
+      Alert.alert("Erro de Nome", "Informe um nome válido");
       return false;
     }
-    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
-    if (!temCaracteresEspeciais) {
-      Alert.alert("Erro de Nome" ,"Nome de usuário inválido. Deve conter caracteres especiais.");
+    // Exemplo: proibir caracteres especiais
+    const temCaracteresEspeciais = /[@#$%&*!]/.test(nome);
+    if (temCaracteresEspeciais) {
+      Alert.alert("Erro de Nome", "Nome inválido. Não deve conter caracteres especiais.");
       return false;
-    };
+    }
     return true;
   };
+
   function Entrar() {
-      if (!validarNomeUsuario(nome)){
+    if (!validarNomeUsuario(nome) || !validaSenha(senha)) {
       return;
-} 
-      if (!validaSenha(senha)){
-       return;
-   }
-    navigation.navigate('Gestao')
+    }
+    navigation.navigate('Gestao');
   }
 
-
   return (
+    <View style={themedStyles.container}>
+      <View style={commonStyles.conter} />
+      <Text style={[commonStyles.text, themedStyles.text]}>Complete os campos abaixo:</Text>
 
-    <View style={styles.container}>
-      <View style={styles.conter}>
-      </View>
-      <Text style={styles.text}>Complete os campos abaixo:</Text>
       <TextInput
-        style={styles.senha}
+        style={[commonStyles.inputBase, themedStyles.input]}
         placeholder="Senha"
         value={senha}
         onChangeText={setSenha}
-        secureTextEntry={true} 
-        keyboardType="numeric" // Adicionado para senhas numéricas 
-        maxLength={4} // Limita a 4
+        secureTextEntry={true}
+        keyboardType="numeric"
+        maxLength={4}
+        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
       />
       <TextInput
-        style={styles.nome}
+        style={[commonStyles.inputBase, themedStyles.input]}
         placeholder="Nome"
         value={nome}
         onChangeText={setNome}
+        placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
       />
 
+<<<<<<< HEAD
       <TouchableOpacity style={styles.entrar} onPress={Entrar}>
         <Text style={styles.textoBotao}>Entrar</Text>
+=======
+      <TouchableOpacity style={[commonStyles.entrarBase, themedStyles.entrar]} onPress={Entrar}>
+        <Text style={[commonStyles.textoBotao, themedStyles.text]}>Entrar</Text>
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
       </TouchableOpacity>
     </View>
   );
-
 }
 
-const styles = StyleSheet.create({
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#000' },
+  input: { backgroundColor: '#F1DAFF', color: '#000' },
+  entrar: { backgroundColor: '#B862F2' },
+});
 
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  senha: {
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#fff' },
+  input: { backgroundColor: '#333', color: '#fff' },
+  entrar: { backgroundColor: '#7A2BBF' },
+});
+
+const commonStyles = StyleSheet.create({
+  inputBase: {
     height: 60,
     borderColor: 'gray',
     borderWidth: 1,
@@ -89,21 +102,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '80%',
     borderRadius: 5,
-    backgroundColor: '#F1DAFF',
-
   },
-  nome: {
-    height: 60,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    width: '80%',
-    borderRadius: 5,
-    backgroundColor: '#F1DAFF',
-  },
-  entrar: {
-    backgroundColor: '#B862F2',
+  entrarBase: {
     padding: 10,
     borderRadius: 5,
     borderColor: 'black',
@@ -119,10 +119,13 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   textoBotao: {
-    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
+<<<<<<< HEAD
 
+=======
+    textAlign: 'center',
+>>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
   },
   conter: {
     width: '100%',

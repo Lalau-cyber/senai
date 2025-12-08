@@ -1,52 +1,94 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { TouchableOpacity } from 'react-native';
-
-const handleComprar = (item) => {
-  Alert.alert("Compra realizada", 'Você comprour: ${item.nome} por R$ ${item.preco.toFixed(2).replace('.', ',')}');
-  console.log('Comprar item:', item);
-}
-
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
 
 export default function CardapioScreen() {
-  const cardapio = [
+  const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
+
+  const Salgados = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
     { id: '2', nome: '🍔 Hambúrguer', preco: 7.5 },
-    { id: '4', nome: '🥟 Salgado', preco: 7.0 },
-    { id: '6', nome: '🥣 Açai 300ml', preco: 15.0 },
-    { id: '3', nome: '🥤 Refrigerante 600ml', preco: 6.0 },
-    { id: '5', nome: '🥤 Refrigerante 1,5L', preco: 12.0 },
-    
+    { id: '3', nome: '🥟 Pastel', preco: 6.0 },
+    { id: '4', nome: '🍟 Batata Frita', preco: 5.0 },
+    { id: '5', nome: '🍗 Coxinha', preco: 4.0 },
+    { id: '6', nome: '🥪 Sanduíche', preco: 3.5 },
   ];
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.conter}/>
-      <Text style={styles.titulo}>Cardápio</Text>
-      <FlatList
-        data={cardapio}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.itens}>{item.nome}</Text>
-            <Text style={styles.precos}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
-           </View>
-      )}
-    />
+  const Doces = [
+    { id: '7', nome: '🧁 Açaí', preco: 15.00 },
+    { id: '8', nome: '🍰 Bolo', preco: 3.50 },
+    { id: '9', nome: '🍪 Cookie', preco: 2.00 },
+    { id: '10', nome: '🍭 Pirulito', preco: 0.50 },
+    { id: '11', nome: '🍫 Chocolate', preco: 3.50 },
+  ];
 
-    <TouchableOpacity style={styles.botaoComprar} onPress={() => console.log('Comprar')}>
-      <Text style={styles.textoBotao}>Comprar</Text>
-    </TouchableOpacity>
-  </View>
-   
-  
+  const Sucos = [
+    { id: '12', nome: '🍋 Maracujá', preco: 4.50 },
+    { id: '13', nome: '🍍 Abacaxi', preco: 4.50 },
+    { id: '14', nome: '🥤 MilkShake', preco: 4.50 },
+    { id: '15', nome: '🍇 Uva', preco: 4.50 },
+    { id: '16', nome: '🍎 Maçã', preco: 4.50 },
+  ];
+
+  const handleComprar = (item) => {
+    if (saldo < item.preco) {
+      Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
+      return;
+    }
+
+    setSaldo(saldo - item.preco);
+
+    const novaTransacao = {
+      id:`${Date.now()}-${item.id}`,
+      tipo: 'Compra',
+      item: item.nome,
+      data: new Date().toLocaleString(), // agora mostra data e hora
+      valor: -item.preco,
+    };
+
+    setHistorico((prev) => [...prev, novaTransacao]);
+    Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={commonStyles.item}>
+      <Text style={themedStyles.text}>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
+      <TouchableOpacity style={commonStyles.botaoComprar} onPress={() => handleComprar(item)}>
+        <Text style={commonStyles.textoBotao}>Comprar</Text>
+      </TouchableOpacity>
+    </View>
   );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  return (
+    <View style={themedStyles.container}>
+      <Text style={[commonStyles.titulo, themedStyles.text]}>Cardápio</Text>
+
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍴 Salgados</Text>
+      <FlatList data={Salgados} keyExtractor={(item) => item.id} renderItem={renderItem} />
+
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍬 Doces</Text>
+      <FlatList data={Doces} keyExtractor={(item) => item.id} renderItem={renderItem} />
+
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🥤 Sucos</Text>
+      <FlatList data={Sucos} keyExtractor={(item) => item.id} renderItem={renderItem} />
+    </View>
+  );
+};
+
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+  text: { color: '#000' },
+});
+
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000' },
+  text: { color: '#fff' },
+});
+
+const commonStyles = StyleSheet.create({
   titulo: {
     textAlign: 'center',
     fontFamily: 'Georgia',
@@ -56,41 +98,31 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 25,
     width: '80%',
-    alingSelf: 'center',
+    alignSelf: 'center',
+  },
+  subtitulo: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 15,
+    marginBottom: 10,
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  itens: {
-    fontSize: 18,
-  },
-  precos: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2a9d8f',
-  },
-  conter: {
-    width: '100%',
-    height: 20,
-    backgroundColor: '#B862F2',
-  },
   botaoComprar: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
     backgroundColor: '#B862F2',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
   },
   textoBotao: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold,'
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
