@@ -67,13 +67,8 @@ export default function NaoScreen({ navigation }) {
         placeholderTextColor={theme === 'dark' ? '#ccc' : '#555'}
       />
 
-<<<<<<< HEAD
       <TouchableOpacity style={styles.entrar} onPress={Entrar}>
         <Text style={styles.textoBotao}>Entrar</Text>
-=======
-      <TouchableOpacity style={[commonStyles.entrarBase, themedStyles.entrar]} onPress={Entrar}>
-        <Text style={[commonStyles.textoBotao, themedStyles.text]}>Entrar</Text>
->>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
       </TouchableOpacity>
     </View>
   );
@@ -121,11 +116,7 @@ const commonStyles = StyleSheet.create({
   textoBotao: {
     fontWeight: 'bold',
     fontSize: 16,
-<<<<<<< HEAD
-
-=======
     textAlign: 'center',
->>>>>>> d7fcd81e831e1ba7fc2ab9e21c1b743170c1a795
   },
   conter: {
     width: '100%',
