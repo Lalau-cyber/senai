@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
 import { AppContext } from '../context/UserContext';
 import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../context/TemaContext';
 
 const mockAlunos = [
   { id: '1', nome: 'João Silva', matricula: '2023001', saldo: 150.50, historico: [
@@ -22,6 +23,8 @@ const mockAlunos = [
 export default function Gestao() {
   const [alunos, setAlunos] = useState(mockAlunos);
   const { user, setUser } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
   const navigation = useNavigation();
 
   const verHistorico = (aluno) => {
@@ -45,7 +48,7 @@ export default function Gestao() {
             id: `${Date.now()}-${Math.random()}`,
             nome: user.nome,
             matricula: user.matricula,
-            saldo: user.saldo ??0,
+            saldo: user.saldo ?? 0,
             historico: user.historico ?? [] 
           }
         ];
@@ -53,77 +56,86 @@ export default function Gestao() {
     }
   }, [user]);
 
-const excluirAluno = (alunoId) => {
-  const confirmarTexto = `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`;
+  const excluirAluno = (alunoId) => {
+    const confirmarTexto = `Tem certeza que deseja excluir o cadastro do aluno ID ${alunoId}?`;
 
-  const remover = () => {
-    setAlunos((prev) => prev.filter(aluno => aluno.id !== alunoId));
+    const remover = () => {
+      setAlunos((prev) => prev.filter(aluno => aluno.id !== alunoId));
 
-    // Se o aluno excluído for o usuário logado, limpa do contexto
-    if (user && user.id === alunoId || user.matricula ===alunoId) {
-      setUser(null);
+      if (user && (user.id === alunoId || user.matricula === alunoId)) {
+        setUser(null);
+      }
+
+      Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
+    };
+
+    if (Platform.OS === 'web') {
+      if (window.confirm(confirmarTexto)) remover();
+    } else {
+      Alert.alert(
+        'Confirmação de Exclusão',
+        confirmarTexto,
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          { text: 'Excluir', style: 'destructive', onPress: remover },
+        ]
+      );
     }
-
-    Alert.alert('Sucesso', 'Aluno excluído com sucesso.');
   };
 
-  if (Platform.OS === 'web') {
-    if (window.confirm(confirmarTexto)) remover();
-  } else {
-    Alert.alert(
-      'Confirmação de Exclusão',
-      confirmarTexto,
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Excluir', style: 'destructive', onPress: remover },
-      ]
-    );
-  }
-};
-
   const renderAlunoItem = ({ item }) => (
-    <View style={styles.alunoItem}>
-      <View style={styles.alunoInfo}>
-        <Text style={styles.alunoNome}>
-          <Text style={styles.labelBold}>Nome: </Text>{item.nome}
+    <View style={commonStyles.alunoItem}>
+      <View style={commonStyles.alunoInfo}>
+        <Text style={[commonStyles.alunoNome, themedStyles.text]}>
+          <Text style={commonStyles.labelBold}>Nome: </Text>{item.nome}
         </Text>
-        <Text style={styles.alunoDetalhe}>
-          <Text style={styles.labelBold}>Matrícula: </Text>{item.matricula}
+        <Text style={[commonStyles.alunoDetalhe, themedStyles.text]}>
+          <Text style={commonStyles.labelBold}>Matrícula: </Text>{item.matricula}
         </Text>
-        <Text style={styles.alunoDetalhe}>
-          <Text style={styles.labelBold}>Saldo: </Text>R$ {(item.saldo ?? 0).toFixed(2)}
+        <Text style={[commonStyles.alunoDetalhe, themedStyles.text]}>
+          <Text style={commonStyles.labelBold}>Saldo: </Text>R$ {(item.saldo ?? 0).toFixed(2)}
         </Text>
       </View>
-      <View style={styles.botoesContainer}>
-        <TouchableOpacity style={styles.botaoHistorico} onPress={() => verHistorico(item)}>
-          <Text style={styles.textoBotao}>Histórico</Text>
+      <View style={commonStyles.botoesContainer}>
+        <TouchableOpacity style={commonStyles.botaoHistorico} onPress={() => verHistorico(item)}>
+          <Text style={commonStyles.textoBotao}>Histórico</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botaoExcluir} onPress={() => excluirAluno(item.id)}>
-          <Text style={styles.textoBotao}>Excluir</Text>
+        <TouchableOpacity style={commonStyles.botaoExcluir} onPress={() => excluirAluno(item.id)}>
+          <Text style={commonStyles.textoBotao}>Excluir</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Gestão de Alunos (Administrador)</Text>
+    <View style={[commonStyles.container, themedStyles.container]}>
+      <Text style={[commonStyles.headerText, themedStyles.text]}>Gestão de Alunos (Administrador)</Text>
       {alunos.length === 0 ? (
-        <Text style={styles.noDataText}>Nenhum aluno cadastrado.</Text>
+        <Text style={[commonStyles.noDataText, themedStyles.text]}>Nenhum aluno cadastrado.</Text>
       ) : (
         <FlatList
           data={alunos}
           keyExtractor={(item) => String(item.id)}
           renderItem={renderAlunoItem}
-          contentContainerStyle={[styles.listContainer, { marginTop: 10 }]}
+          contentContainerStyle={[commonStyles.listContainer, { marginTop: 10 }]}
         />
       )}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+const lightStyles = StyleSheet.create({
+  container: { backgroundColor: '#fff' },
+  text: { color: '#000' },
+});
+
+const darkStyles = StyleSheet.create({
+  container: { backgroundColor: '#000' },
+  text: { color: '#fff' },
+});
+
+const commonStyles = StyleSheet.create({
+  container: { flex: 1 },
   headerText: {
     fontFamily: 'Georgia',
     fontStyle: 'italic',
@@ -132,7 +144,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 20,
     textAlign: 'center',
-    color: '#333',
   },
   alunoItem: {
     flexDirection: 'row',
@@ -147,7 +158,7 @@ const styles = StyleSheet.create({
   },
   alunoInfo: { flex: 1 },
   alunoNome: { fontSize: 16, marginBottom: 5 },
-  alunoDetalhe: { fontSize: 14, color: '#555' },
+  alunoDetalhe: { fontSize: 14 },
   labelBold: { fontWeight: 'bold' },
   botoesContainer: { flexDirection: 'row', marginLeft: 10 },
   botaoHistorico: {
@@ -166,5 +177,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   textoBotao: { color: 'white', fontWeight: 'bold', fontSize: 12 },
-  noDataText: { fontSize: 16, color: '#888', marginTop: 50 },
+  noDataText: { fontSize: 16, marginTop: 50 },
+  listContainer: { paddingBottom: 20 },
 });

@@ -1,105 +1,66 @@
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ThemeContext } from '../context/TemaContext';
 
-export default function HomeScreen({ navigation, route }) {
-  const navigate = navigation;
+export default function Koado({ navigation }) {
+  const { theme } = useContext(ThemeContext);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
+
   return (
-    <View style={styles.container}>
-      <View style={styles.coner}>
-      </View>
-      <View style={styles.centro}>
-        <Text style={styles.titulo}>Bem vindo(a)!</Text>
-        <Text style={styles.texto}>Você é aluno ou administrador?</Text>
+    <View style={themedStyles.container}>
+      <View style={commonStyles.topBar} />
+      <View style={commonStyles.centro}>
+        <Text style={[commonStyles.titulo, themedStyles.text]}>Bem vindo(a)!</Text>
+        <Text style={[commonStyles.texto, themedStyles.text]}>Você é aluno ou administrador?</Text>
 
-        <View style={styles.rowContainer}>
+        <View style={commonStyles.rowContainer}>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('Aluno')} 
+            style={[commonStyles.buttonWrapper, themedStyles.button]}
+          >
+            <Text style={[commonStyles.buttonText, themedStyles.text]}>Sou aluno</Text>
+          </TouchableOpacity>
 
-          <View style={styles.buttonWrapper}>
-
-            <TouchableOpacity onPress={() => navigate.navigate('Aluno')} style={styles.button}>
-              <Text style={styles.buttonText}> Sou aluno</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.buttonWrapper}>
-            <TouchableOpacity onPress={() => navigate.navigate('Administrador')} style={styles.button}>
-              <Text style={styles.buttonText}>Sou Administrador</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('Administrador')} 
+            style={[commonStyles.buttonWrapper, themedStyles.button]}
+          >
+            <Text style={[commonStyles.buttonText, themedStyles.text]}>Sou Administrador</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-};
-const styles = StyleSheet.create({
+}
 
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#000' },
+  button: { borderColor: '#000' }, // borda preta no tema claro
+});
 
-  centro: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    width: '80%',
-    borderRadius: 5,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    width: 300,
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#fff' },
+  button: { borderColor: '#fff' }, // borda branca no tema escuro
+});
 
-  },
+const commonStyles = StyleSheet.create({
+  centro: { alignItems: 'center', justifyContent: 'center' },
+  rowContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 },
+  buttonText: { textAlign: 'center', fontWeight: 'bold' },
   buttonWrapper: {
     marginVertical: 10,
-    width: '12%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'black',
     width: 140,
     padding: 5,
     margin: 10,
     backgroundColor: '#B862F2',
-  },
-  titulo: {
-    fontFamily: 'Georgia',
-    fontStyle: 'italic',
-    margin: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 30,
-    fontWeight: 'bold',
+    borderRadius: 6,
   },
-  texto: {
-    fontFamily: 'Georgia',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 18,
-  },
-  conter: {
-    width: '100%',
-    height: 150,
-    backgroundColor: 'black',
-  },
-  coner: {
-    width: '100%',
-    height: 20,
-    backgroundColor: '#B862F2',
-  },
-
+  titulo: { fontSize: 30, fontWeight: 'bold', margin: 15 },
+  texto: { fontSize: 18 },
+  topBar: { width: '100%', height: 20, backgroundColor: '#B862F2' }, // renomeado de "coner"
 });

@@ -1,79 +1,136 @@
-// context/UserContext.js
-import React, { createContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useContext, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import AbrirMenu from './Configuracoes';
+import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
 
-export const AppContext = createContext();
+export default function EntrarSaldoScreen({ navigation }) {
+  const { user, historico } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
 
-export const AppProvider = ({ children }) => {
-  const [userType, setUserType] = useState(null);
-
-  const [user, setUser] = useState({
-    id: null,
-    nome: "",
-    matricula: "",
-    saldo: 0,
-    historico: []
-  });
-
-  const registrarCompra = (item, preco) => {
-    setUser((prev) => {
-      const novoUser = {
-        ...prev,
-        saldo: (prev.saldo ?? 0) - preco,
-        historico: [
-          ...(prev.historico ?? []),
-          { data: new Date().toISOString().split('T')[0], item, valor: -preco }
-        ]
-      };
-      salvarDados(novoUser);
-      return novoUser;
-    });
-  };
-
-  const recargaSaldo = (valor) => {
-    setUser((prev) => {
-      const novoUser = {
-        ...prev,
-        saldo: (prev.saldo ?? 0) + valor,
-        historico: [
-          ...(prev.historico ?? []),
-          { data: new Date().toISOString().split('T')[0], item: 'Recarga', valor }
-        ]
-      };
-      salvarDados(novoUser);
-      return novoUser;
-    });
-  };
-
-  // ✅ Função auxiliar para salvar com defaults
-  const salvarDados = async (dadosUser) => {
-    const userComDefaults = {
-      ...dadosUser,
-      saldo: dadosUser.saldo ?? 0,
-      historico: dadosUser.historico ?? []
-    };
-    await AsyncStorage.setItem('@user', JSON.stringify(userComDefaults));
-  };
-
-  // ✅ Carregar dados salvos e normalizar
-  useEffect(() => {
-    const carregarDados = async () => {
-      const userSalvo = await AsyncStorage.getItem('@user');
-      if (userSalvo) {
-        const parsed = JSON.parse(userSalvo);
-        setUser({
-          ...parsed,
-          saldo: parsed.saldo ?? 0,
-          historico: parsed.historico ?? []
-        });
-      }
-    };
-    carregarDados();
-  }, []);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
+  const [menuVisible, setMenuVisible] = useState(false);
 
   return (
-    <AppContext.Provider value={{ user, setUser, userType, setUserType, recargaSaldo, registrarCompra }}>
-      {children}
-    </AppContext.Provider>
+    <View style={themedStyles.container} key={user?.matricula || 'no-user'}>
+      <View style={commonStyles.container}>
+        <View style={commonStyles.conter} />
+        <View style={commonStyles.histo}>
+          {/* Botão de configurações */}
+          <TouchableOpacity style={commonStyles.menu} onPress={() => setMenuVisible(true)}>
+            <Text style={commonStyles.tmenu}>⚙️</Text>
+          </TouchableOpacity>
+
+          {/* Informações do aluno */}
+          <Text style={[commonStyles.title, themedStyles.text]}>Saldo do Ticket</Text>
+          {user ? (
+            <>
+              <Text style={[commonStyles.userInfo, themedStyles.text]}>
+                Aluno: {user.nome} | Matrícula: {user.matricula}
+              </Text>
+              <Text style={commonStyles.balance}>
+                R$ {(user.saldo ?? 0).toFixed(2)}
+              </Text>
+            </>
+          ) : (
+            <Text style={[commonStyles.note, themedStyles.text]}>Nenhum aluno logado.</Text>
+          )}
+
+          <Text style={[commonStyles.note, themedStyles.text]}>Última atualização: agora</Text>
+
+          {/* Botões de ação */}
+          <TouchableOpacity
+            style={[commonStyles.botoes, themedStyles.botoes]}
+            onPress={() => navigation.navigate('Recarregar')}
+          >
+            <Text style={commonStyles.textbotoes}>Recarregar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[commonStyles.botoes, themedStyles.botoes, { marginTop: 10 }]}
+            onPress={() => navigation.navigate('Cardapio')}
+          >
+            <Text style={commonStyles.textbotoes}>Comprar</Text>
+          </TouchableOpacity>
+
+          {/* Histórico de transações */}
+          <Text style={[commonStyles.title, themedStyles.text, { fontSize: 22, marginTop: 20 }]}>
+            Histórico
+          </Text>
+          <FlatList
+            data={historico}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={commonStyles.item}>
+                <Text style={themedStyles.text}>{item.data} - {item.item}</Text>
+                <Text style={{ color: item.valor > 0 ? 'green' : 'red' }}>
+                  R$ {item.valor.toFixed(2)}
+                </Text>
+              </View>
+            )}
+            ListEmptyComponent={
+              <Text style={[commonStyles.note, themedStyles.text]}>
+                Nenhuma transação encontrada.
+              </Text>
+            }
+          />
+        </View>
+
+        {/* Menu lateral */}
+        <AbrirMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
+      </View>
+    </View>
   );
-};
+}
+
+/* Tema claro */
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center' },
+  text: { color: '#000' },
+  botoes: { backgroundColor: '#B862F2' }, // roxo claro
+});
+
+/* Tema escuro */
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center' },
+  text: { color: '#fff' },
+  botoes: { backgroundColor: '#7A2BBF' }, // roxo escuro
+});
+
+/* Estilos comuns */
+const commonStyles = StyleSheet.create({
+  container: { flex: 1 },
+  histo: { alignItems: 'center' },
+  title: {
+    fontSize: 30,
+    marginBottom: 12,
+    fontWeight: '600',
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
+  },
+  userInfo: { fontSize: 14, marginBottom: 8 },
+  balance: { fontSize: 36, fontWeight: '700', color: '#2a9d8f', marginBottom: 20 },
+  note: { fontStyle: 'italic', marginTop: 10, marginBottom: 30 },
+  botoes: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#000',
+    flexDirection: 'row',
+  },
+  textbotoes: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  menu: {
+    position: 'absolute',
+    top: 8,
+    right: 12,
+    backgroundColor: 'transparent',
+    padding: 8,
+    zIndex: 10,
+    borderRadius: 5,
+  },
+  tmenu: { fontSize: 24, color: '#fff', backgroundColor: '#B862F2' },
+  conter: { width: '100%', height: 20, backgroundColor: '#B862F2' },
+  item: { flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginVertical: 5 },
+});

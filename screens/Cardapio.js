@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
 
 export default function CardapioScreen() {
   const { saldo, setSaldo, historico, setHistorico } = useContext(AppContext);
-  
+  const { theme } = useContext(ThemeContext);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
+
   const Salgados = [
     { id: '1', nome: '🍕 Pizza', preco: 7.5 },
     { id: '2', nome: '🍔 Hambúrguer', preco: 7.5 },
@@ -30,61 +33,62 @@ export default function CardapioScreen() {
     { id: '16', nome: '🍎 Maçã', preco: 4.50 },
   ];
 
- const handleComprar = (item) => {
-  if (saldo < item.preco) {
-    Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
-    return;
-  }
+  const handleComprar = (item) => {
+    if (saldo < item.preco) {
+      Alert.alert("Saldo insuficiente", "Você não tem saldo suficiente.");
+      return;
+    }
 
-  setSaldo(saldo - item.preco);
+    setSaldo(saldo - item.preco);
 
-  const novaTransacao = {
-    id:`${Date.now()}-${item.id}`,
-    tipo: 'Compra',
-    item: item.nome,
-    data: new Date().toISOString().split('T')[0],
-    valor: -item.preco,
+    const novaTransacao = {
+      id:`${Date.now()}-${item.id}`,
+      tipo: 'Compra',
+      item: item.nome,
+      data: new Date().toLocaleString(), // agora mostra data e hora
+      valor: -item.preco,
+    };
+
+    setHistorico((prev) => [...prev, novaTransacao]);
+    Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
   };
 
- setHistorico((prev) => {
-  const novo = [...prev, novaTransacao];
-  console.log("Histórico atualizado:", novo);
-  return novo;
-});
-
-
-  Alert.alert("Compra realizada", `Você comprou: ${item.nome}`);
-};
-
-  
-
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
-      <TouchableOpacity style={styles.botaoComprar} onPress={() => handleComprar(item)}>
-        <Text style={styles.textoBotao}>Comprar</Text>
+    <View style={commonStyles.item}>
+      <Text style={themedStyles.text}>{item.nome} - R$ {item.preco.toFixed(2)}</Text>
+      <TouchableOpacity style={commonStyles.botaoComprar} onPress={() => handleComprar(item)}>
+        <Text style={commonStyles.textoBotao}>Comprar</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Cardápio</Text>
+    <View style={themedStyles.container}>
+      <Text style={[commonStyles.titulo, themedStyles.text]}>Cardápio</Text>
 
-      <Text style={styles.subtitulo}>🍴 Salgados</Text>
-      <FlatList data={Salgados} keyExtractor={(item) => item.id.toString} renderItem={renderItem} />
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍴 Salgados</Text>
+      <FlatList data={Salgados} keyExtractor={(item) => item.id} renderItem={renderItem} />
 
-      <Text style={styles.subtitulo}>🍬 Doces</Text>
-      <FlatList data={Doces} keyExtractor={(item) => item.id.toString} renderItem={renderItem}  />
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🍬 Doces</Text>
+      <FlatList data={Doces} keyExtractor={(item) => item.id} renderItem={renderItem} />
 
-      <Text style={styles.subtitulo}>🥤 Sucos</Text>
-      <FlatList data={Sucos} keyExtractor={(item) => item.id.toString} renderItem={renderItem} />
+      <Text style={[commonStyles.subtitulo, themedStyles.text]}>🥤 Sucos</Text>
+      <FlatList data={Sucos} keyExtractor={(item) => item.id} renderItem={renderItem} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const lightStyles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
+  text: { color: '#000' },
+});
+
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000' },
+  text: { color: '#fff' },
+});
+
+const commonStyles = StyleSheet.create({
   titulo: {
     textAlign: 'center',
     fontFamily: 'Georgia',
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 15,
     marginBottom: 10,
-    color: '#333',
   },
   item: {
     flexDirection: 'row',

@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Alert, Image } from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native'; 
 import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
 
 export default function Perfil() {
   const navigation = useNavigation();
   const { user, setUser } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
+
+  // ✅ agora usamos themedStyles para tema claro/escuro
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   // Estado local para edição
   const [nome, setNome] = useState(user?.nome || "");
@@ -15,83 +20,91 @@ export default function Perfil() {
   const [foto, setFoto] = useState(user?.foto || null);
 
   // Função para escolher imagem
- const escolherFoto = () => {
-  const options = {
-    mediaType: 'photo',
-    quality: 1,
+  const escolherFoto = () => {
+    const options = { mediaType: 'photo', quality: 1 };
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) return;
+      if (response.errorCode) {
+        Alert.alert("Erro", response.errorMessage);
+        return;
+      }
+      if (response.assets && response.assets.length > 0) {
+        setFoto(response.assets[0].uri);
+      }
+    });
   };
-
-  launchImageLibrary(options, (response) => {
-    if (response.didCancel) {
-      return;
-    }
-    if (response.errorCode) {
-      Alert.alert("Erro", response.errorMessage);
-      return;
-    }
-    if (response.assets && response.assets.length > 0) {
-      setFoto(response.assets[0].uri);
-    }
-  });
-};
 
   const handleSave = () => {
     if (!user) return;
-    setUser({ ...user, email, turma, foto }); // ✅ salva foto junto
+    // ✅ salva nome também
+    setUser({ ...user, nome, email, turma, foto });
     Alert.alert("Sucesso", "Dados atualizados com sucesso!");
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Meu Perfil</Text>
-      </View>
+    <View style={themedStyles.container}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Meu Perfil</Text>
+        </View>
 
-      <View style={styles.infoContainer}>
-        {/* Foto de perfil */}
-        <TouchableOpacity onPress={escolherFoto}>
-          {foto ? (
-            <Image source={{ uri: foto }} style={styles.foto} />
-          ) : (
-            <View style={styles.fotoPlaceholder}>
-              <Text style={{ color: '#666' }}>Selecionar Foto</Text>
-            </View>
-          )}
+        <View style={styles.infoContainer}>
+          {/* Foto de perfil */}
+          <TouchableOpacity onPress={escolherFoto}>
+            {foto ? (
+              <Image source={{ uri: foto }} style={styles.foto} />
+            ) : (
+              <View style={styles.fotoPlaceholder}>
+                <Text style={{ color: '#666' }}>Selecionar Foto</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          <Text style={styles.label}>Nome:</Text>
+          <TextInput
+            style={styles.input}
+            value={nome}
+            onChangeText={setNome}
+          />
+
+          <Text style={styles.label}>Matrícula:</Text>
+          <Text style={styles.value}>{user?.matricula}</Text> {/* somente leitura */}
+
+          <Text style={styles.label}>Email:</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+
+          <Text style={styles.label}>Turma:</Text>
+          <TextInput
+            style={styles.input}
+            value={turma}
+            onChangeText={setTurma}
+          />
+        </View>
+
+        {/* Botão de salvar */}
+        <TouchableOpacity style={styles.editButton} onPress={handleSave}>
+          <Text style={styles.editButtonText}>Salvar Alterações</Text>
         </TouchableOpacity>
-
-        <Text style={styles.label}>Nome:</Text>
-        <Text style={styles.label}>{user?.nome}</Text>
-        
-        <Text style={styles.label}>Matrícula:</Text>
-        <Text style={styles.value}>{user?.matricula}</Text> {/* Somente leitura */}
-
-        <Text style={styles.label}>Email:</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-
-        <Text style={styles.label}>Turma:</Text>
-        <TextInput
-          style={styles.input}
-          value={turma}
-          onChangeText={setTurma}
-        />
-      </View>
-
-      {/* Botão de Salvar */}
-      <TouchableOpacity 
-        style={styles.editButton} 
-        onPress={handleSave}
-      >
-        <Text style={styles.editButtonText}>Salvar Alterações</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
+// Estilos de tema
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+});
+
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000' },
+});
+
+// Estilos fixos da tela
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {

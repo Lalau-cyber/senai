@@ -1,22 +1,26 @@
-
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { ThemeContext } from '../context/TemaContext';
 
 export default function HistoricoAluno({ route }) {
   const { aluno } = route.params;
+  const { theme } = useContext(ThemeContext);
+
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
 
   const renderItem = ({ item }) => (
-    <View style={styles.transacaoItem}>
-      <Text style={styles.data}>{item.data}</Text>
-      <Text style={styles.valor}>
+    <View style={commonStyles.transacaoItem}>
+      <Text style={commonStyles.data}>{item.data}</Text>
+      <Text style={commonStyles.valor}>
         {item.valor < 0 ? 'Gasto' : 'Crédito'}: R$ {Math.abs(item.valor).toFixed(2)}
       </Text>
-      <Text style={styles.item}>{item.item}</Text>
+      <Text style={commonStyles.item}>{item.item}</Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Histórico de {aluno.nome}</Text>
+    <View style={[commonStyles.container, themedStyles.container]}>
+      <Text style={[commonStyles.titulo, themedStyles.text]}>Histórico de {aluno.nome}</Text>
       {aluno.historico?.length > 0 ? (
         <FlatList
           data={aluno.historico}
@@ -24,14 +28,27 @@ export default function HistoricoAluno({ route }) {
           renderItem={renderItem}
         />
       ) : (
-        <Text style={styles.noData}>Nenhuma transação registrada.</Text>
+        <Text style={[commonStyles.noData, themedStyles.text]}>Nenhuma transação registrada.</Text>
       )}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 16 },
+// Tema claro
+const lightStyles = StyleSheet.create({
+  container: { backgroundColor: '#fff' },
+  text: { color: '#000' },
+});
+
+// Tema escuro
+const darkStyles = StyleSheet.create({
+  container: { backgroundColor: '#000' },
+  text: { color: '#fff' },
+});
+
+// Estilos fixos
+const commonStyles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
   titulo: { fontSize: 20, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
   transacaoItem: {
     padding: 12,

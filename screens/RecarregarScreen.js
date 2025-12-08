@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
+import { ThemeContext } from '../context/TemaContext';
 
 export default function RecarregarScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
+  const themedStyles = theme === 'dark' ? darkStyles : lightStyles;
   const [valor, setValor] = useState('');
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
-  // ✅ pega user e função recargaSaldo do contexto
   const { user, recargaSaldo } = useContext(AppContext);
 
   const handleRecarregar = () => {
@@ -17,11 +19,12 @@ export default function RecarregarScreen({ navigation }) {
       Alert.alert('Valor inválido', 'Informe um valor numérico maior que 0.');
       return;
     }
-
-    // ✅ usa a função do contexto para atualizar saldo e histórico
+if (!paymentMethod) {
+      Alert.alert('Forma de pagamento', 'Escolha uma forma de pagamento antes de recarregar.');
+      return;
+    }
+    
     recargaSaldo(v);
-
-    // Feedback e navegação
     setValor('');
     Alert.alert('Recarga realizada', `Você recarregou R$ ${v.toFixed(2).replace('.', ',')}`);
     navigation.navigate('EntrarSaldo');
@@ -34,13 +37,14 @@ export default function RecarregarScreen({ navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.conter} />
+    <View style = {themedStyles.container}>
+    <View style={commonStyles.container}>
+      <View style={commonStyles.conter} />
       {/* ✅ mostra saldo do user */}
-      <Text style={styles.R$}>R$ {(user.saldo ?? 0).toFixed(2).replace('.', ',')}</Text>
+      <Text style={commonStyles.R$}>R$ {(user.saldo ?? 0).toFixed(2).replace('.', ',')}</Text>
 
       <TextInput
-        style={styles.recarregar}
+        style={commonStyles.recarregar}
         placeholder="Digite o valor para recarregar (ex: 10,50)"
         keyboardType="numeric"
         value={valor}
@@ -48,28 +52,28 @@ export default function RecarregarScreen({ navigation }) {
       />
 
       <TouchableOpacity
-        style={styles.formaPagamento}
+        style={commonStyles.formaPagamento}
         onPress={() => setPaymentOpen(!paymentOpen)}
         activeOpacity={0.8}
       >
-        <Text style={styles.textoEscolherPagamento}>Escolha a forma de pagamento</Text>
-        <Text style={styles.setinha}>{paymentOpen ? '▲' : '▼'}</Text>
+        <Text style={commonStyles.textoEscolherPagamento}>Escolha a forma de pagamento</Text>
+        <Text style={commonStyles.setinha}>{paymentOpen ? '▲' : '▼'}</Text>
       </TouchableOpacity>
 
       {paymentOpen && (
-        <View style={styles.tabela}>
+        <View style={commonStyles.tabela}>
           {methods.map((m) => {
             const selected = paymentMethod === m.key;
             return (
               <TouchableOpacity
                 key={m.key}
-                style={[styles.alinhar, selected && styles.selecionar]}
+                style={[commonStyles.alinhar, selected && commonStyles.selecionar]}
                 onPress={() => setPaymentMethod(m.key)}
                 activeOpacity={0.8}
               >
-                <View style={[styles.quadrado, selected && styles.quadradoSelecionado]} />
+                <View style={[commonStyles.quadrado, selected && commonStyles.quadradoSelecionado]} />
                 <View>
-                  <Text style={styles.paymentLabel}>{m.label}</Text>
+                  <Text style={commonStyles.paymentLabel}>{m.label}</Text>
                 </View>
               </TouchableOpacity>
             );
@@ -77,20 +81,29 @@ export default function RecarregarScreen({ navigation }) {
         </View>
       )}
 
-      <View style={styles.botoesContainer}>
-        <TouchableOpacity style={styles.botaoRecarregar} onPress={handleRecarregar}>
-          <Text style={styles.recarregarTexto}>Recarregar</Text>
+      <View style={commonStyles.botoesContainer}>
+        <TouchableOpacity style={commonStyles.botaoRecarregar} onPress={handleRecarregar}>
+          <Text style={commonStyles.recarregarTexto}>Recarregar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botaoCancelar} onPress={() => navigation.goBack()}>
-          <Text style={styles.cancelarTexto}>Cancelar</Text>
+        <TouchableOpacity style={commonStyles.botaoCancelar} onPress={() => navigation.goBack()}>
+          <Text style={commonStyles.cancelarTexto}>Cancelar</Text>
         </TouchableOpacity>
       </View>
     </View>
+    </View>
   );
 }
+const lightStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#000' },
+});
 
-const styles = StyleSheet.create({
+const darkStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
+  text: { color: '#fff' },
+});
+const commonStyles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: '#fff' },
   R$: { marginTop: 32, marginBottom: 32, fontSize: 36, fontWeight: '700', color: '#2a9d8f' },
   recarregar: {
