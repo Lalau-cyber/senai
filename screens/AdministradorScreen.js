@@ -1,50 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppContext } from '../context/UserContext';
 
 
-export default function SimScreen({ navigation }) {
+export default function NaoScreen({ navigation }) {
 
-  const [matricula, setMatricula] = useState("");
+  const [senha, setSenha] = useState("");
   const [nome, setNome] = useState("");
   const { userType, setUserType } = useContext(AppContext);
-
   useEffect(() => {
-    setUserType('aluno');
+    setUserType('administrador');
   }, []);
 
-  const validaMatricula = (matricula) => {
-
-    if (matricula.length != 8) {
-      alert("Matrícula inválida. Deve conter 8 caracteres.");
-      return false;
-    }
-    if (nome.trim().length === 0) {
-      alert("Informe um nome válido.");
-      return false;
-    }
-    navigation.navigate('EntrarSaldo');
-  };
-
-
-  const validarNomeUsuario = (nome) => {
-    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
-    if (!temCaracteresEspeciais) {
-      alert("Nome de usuário inválido. Deve conter caracteres especiais.");
+  const validaSenha = (senha) => {
+    if (senha.length !== 4) {
+      Alert.alert("Erro de Senha" ,"Senha inválida. Deve conter 4 caracteres.");
       return false;
     }
     return true;
   };
-  function Entrar() {
-    if (validarFormulario(true)) {
-      navigation.navigate('EntrarSaldo', { nome, matricula });
-    }
-  }
 
-  const validarFormulario = (aluno) => {
-    if (validarNomeUsuario(nome) && validaMatricula(matricula)) {
-      aluno ? navigation.navigate('EntrarSaldoScreen', { nome, matricula }) : navigation.navigate('NaoScreen', { nome, matricula });
+  const validarNomeUsuario = (nome) => {
+    if (!nome.trim()) {
+      Alert.alert("Erro de Nome" ,"informe um nome válido");
+      return false;
     }
+    const temCaracteresEspeciais = nome.includes('@') || nome.includes('#') || nome.includes('$') || nome.includes('%') || nome.includes('&') || nome.includes('*') || nome.includes('!');
+    if (!temCaracteresEspeciais) {
+      Alert.alert("Erro de Nome" ,"Nome de usuário inválido. Deve conter caracteres especiais.");
+      return false;
+    };
+    return true;
+  };
+  function Entrar() {
+      if (!validarNomeUsuario(nome)){
+      return;
+} 
+      if (!validaSenha(senha)){
+       return;
+   }
+    navigation.navigate('Gestao')
   }
 
 
@@ -54,12 +50,14 @@ export default function SimScreen({ navigation }) {
       <View style={styles.conter}>
       </View>
       <Text style={styles.text}>Complete os campos abaixo:</Text>
-
       <TextInput
-        style={styles.matri}
-        placeholder="Matrícula"
-        value={matricula}
-        onChangeText={setMatricula}
+        style={styles.senha}
+        placeholder="Senha"
+        value={senha}
+        onChangeText={setSenha}
+        secureTextEntry={true} 
+        keyboardType="numeric" // Adicionado para senhas numéricas 
+        maxLength={4} // Limita a 4
       />
       <TextInput
         style={styles.nome}
@@ -73,14 +71,17 @@ export default function SimScreen({ navigation }) {
       </TouchableOpacity>
     </View>
   );
+
 }
+
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: '#fff'
   },
-  matri: {
+  senha: {
     height: 60,
     borderColor: 'gray',
     borderWidth: 1,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#B862F2',
     padding: 10,
     borderRadius: 5,
-    borderBottomColor: 'black',
+    borderColor: 'black',
     borderBottomWidth: 2,
   },
   text: {
@@ -114,19 +115,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
     fontSize: 26,
-    marginBottom: 25,
+    marginBottom: 20,
     width: '80%',
   },
   textoBotao: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
+
   },
   conter: {
     width: '100%',
     height: 20,
     backgroundColor: '#B862F2',
   },
-
-
 });
