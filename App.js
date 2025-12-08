@@ -12,7 +12,7 @@ import EntrarSaldoScreen from './screens/EntrarSaldo';
 import RecarregarScreen from './screens/RecarregarScreen';
 import CardapioScreen from './screens/Cardapio';
 import Compras from './screens/Compras';
-import Historico from './screens/Historico';
+import Historico from './screens/historico';
 import Perfil from './screens/Perfil';
 import Gestao from './screens/Gestao';
 import HistoricoAdm from './screens/HistoricoAdm';
