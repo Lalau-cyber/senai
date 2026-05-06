@@ -1,0 +1,132 @@
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+font-family: system-ui, -apple-system, sans-serif;
+background: #1a1a2e;
+color: #eaeaea;
+line-height: 1.5;
+}
+
+.app {
+max-width: 1100px;
+margin: 0 auto;
+padding: 24px;
+}
+
+.app-header {
+text-align: center;
+padding: 32px 0;
+border-bottom: 2px solid #2d2d44;
+margin-bottom: 32px;
+}
+
+.app-header h1 {
+font-size: 2rem;
+margin-bottom: 8px;
+}
+
+.app-header p {
+color: #9999b3;
+font-size: 0.9rem;
+}
+
+.filme-lista h2 {
+margin-bottom: 16px;
+font-size: 1.3rem;
+}
+
+.grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+gap: 16px;
+}
+
+.filme-card {
+background: #2d2d44;
+border-radius: 8px;
+padding: 16px;
+border: 1px solid #3d3d5c;
+transition: transform 0.15s;
+}
+
+.filme-card:hover {
+transform: translateY(-2px);
+border-color: #6c63ff;
+}
+
+.filme-card h3 {
+font-size: 1.1rem;
+margin-bottom: 8px;
+}
+
+.filme-card .diretor {
+color: #9999b3;
+font-size: 0.85rem;
+margin-bottom: 12px;
+}
+
+.filme-card .meta {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+font-size: 0.8rem;
+}
+
+.filme-card .meta span {
+background: #1a1a2e;
+padding: 4px 10px;
+border-radius: 12px;
+}
+
+.filme-card .nota {
+color: #ffd166;
+}
+
+.loading {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 48px;
+color: #9999b3;
+}
+
+.spinner {
+width: 32px;
+height: 32px;
+border: 3px solid #3d3d5c;
+border-top-color: #6c63ff;
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+margin-bottom: 12px;
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+.erro {
+background: #3d1a2e;
+border: 1px solid #ff6b6b;
+color: #ff9999;
+padding: 16px;
+border-radius: 8px;
+text-align: center;
+}
+
+.erro button {
+margin-top: 12px;
+background: #ff6b6b;
+color: white;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.erro button:hover {
+background: #ff4d4d;
+}
