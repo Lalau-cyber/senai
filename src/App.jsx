@@ -1,79 +1,61 @@
-import { useState } from 'react';
-import axios from 'axios';
+import {useState} from 'react'
+import CardPerfil from './components/1PerfilCard.jsx'
+import FormularioNome from './components/FormularioNome'
+import Contador from './components/Contador'
 import './App.css'
 
-{/*Em vez de escrever a palavra function e usar
- chaves para tudo, você resume a escrita. */}
-const AppUsuarios = () => {
 
-  const [usuarios, setUsuarios] = useState([]);
-  const [carregando, setCarregando] = useState(false);
-  const [erro, setErro] = useState(null);
+function App() {
+   const [count, setCount] = useState(0)
+   const[nome, setNome] = useState('')
 
-  {/* ASYNC faz o site nao travar enquanto
-   espera busvcar os dados, declara funções*/}
-  const buscarDados = async () => {
-    setCarregando(true)
-    setErro(null);
+   const limparFormulario = () => {
+    setNomeUsuario(''); // Reseta o texto para vazio
+  };
+ 
+  return (
+   <div className="app-container">
+    <h1>Card de Perfils de personagens de livros</h1>
 
-  {/*o try tenta fazer funcionar o que eu pedi, a const resposta armazena
-   a espera do axios pegar as coisas desse link 
-   e guarda em setUsuarios*/}
-    try{
-       const resposta = await axios.get('https://jsonplaceholder.typicode.com/users');
+<div className="conteiner-cards">
+       <CardPerfil
+       nome = 'Paedyn Gray'
+       profissao = 'Ladra'
+       bio = 'Comun, Ladra que vive na rua.'
+       foto = 'https://i.pravatar.cc/150?img=10'
+       />
+       <CardPerfil
+       nome= 'Kai Azwer'
+       profissao='Executor'
+       bio= 'Futuro Executor do rei, Portador.'
+       foto = 'https://i.pravatar.cc/150?img=8'
+       />
+       <CardPerfil
+       nome= 'Adena'
+       profissao='Costureira'
+       bio= 'Costureira e melhor amiga de Paedyn, Comun.'
+       foto = 'https://i.pravatar.cc/150?img=26'
+       />
 
-        setUsuarios(resposta.data);
-    } 
-    catch(err){
-
-      {/*se der erro vai aparecer essa
-       mensagem que esta em setErro */}
-
-      setErro("doOcorreu um erro ao buscar os dados.")
-      console.log(err);
-    }
-    finally{
-      setCarregando(false)
-    }
-    {/* Finally=finalmente o carregamento 
-    acaba, mesmo se der eerado ou certo, se terminar de
-   buscar os dados o carregamento acaba e se der errado o carregamento acaba*/}
-    };
-   return(
-    <div className= "todo">
-      <h1>lista de Usuarios</h1>
-    
-    {/* disable é para o botao ficar cinza 
-    e travado temporariamente a pessoa não ficar
-     clicando varias e vaias vezes*/}
-
-      <button onClick= {buscarDados} disabled={carregando}>
-        {carregando ? 'carregando...' : 'Buscar Usuarios'}
-      </button>
-      {/* se tiver erro  a mensagem escrita em erro vai aparecer 
-      se não o codigo ignora esa linha */}
-       
-      {erro && <p className="erro">{erro}</p>}
-
-{/*   MAP le os usuarios um por um.
- KEY.. id para cada item se algo mudar ele, precisa*/}
-
-      <div className="usuarios">
-        {usuarios.map(usuario => (
-          <div key={usuario.id} className="card-usuario">
-            <h3>{usuario.name}</h3>
-            <p><strong>Email:</strong> {usuario.email}</p>
-            <p><strong>Cidade:</strong> {usuario.address.city}</p>
-          </div>
-          ))
-          }
-          {/*se deu certo o MAP coloca vaios cards na tela com os usuarios.
-          se der errado o && mostra mensagem de erro */}
-      </div>
     </div>
 
+    <div className="botoes-container">
+          <button className="botao-limpar" onClick={limparFormulario}>
+            Limpar Tudo 🗑️
+          </button>
+        </div>
+      {nomeUsuario.trim() && (
+        <h2 className="saudacao-texto">
+          Olá, {nomeUsuario}! 👋
+        </h2>
+      )}
 
-   )   
- 
-  }
-export default AppUsuarios
+    <Contador/>
+    <FormularioNome/>
+   </div>
+   
+
+  )
+}
+
+export default App

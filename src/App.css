@@ -1,41 +1,75 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
+input-container {
+  margin-bottom: 30px; /* Afasta o input dos cards */
   font-family: sans-serif;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.usuarios {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-.card-usuario {
-  border: 1px solid #ddd;
-  padding: 15px;
+.input-container input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  text-align: left;
+  margin-left: 10px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
-.erro {
-  color: red;
-  font-weight: bold;
+.input-container input:focus {
+  border-color: #007bff; /* Muda de cor quando clica para digitar */
+}
+
+.app-conteiner{
+    background-color: black;
+    color: aliceblue;
+    border-radius: 15px;
+    border:solid  rgb(172, 96, 243) 2px;
+}
+
+h1{
+    color: aliceblue;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    }
+
+.container-cards {
+  display: flex;
+  flex-wrap: wrap;         /* Quebra a linha se não couber na tela */
+  gap: 50px;               /* Cria um espaço de 20px entre cada card */
+  justify-content: center; /* Centraliza os cards na tela */
+  padding: 20px;           /* Margem interna para os cards não colarem nas bordas da tela */
+  margin: 0 auto;          /* Ajuda a alinhar o bloco inteiro no centro */
+  max-width: 1200px;
+}
+.perfil-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;        /* Cantos arredondados */
+  padding: 20px;
+  width: 250px;               /* Largura fixa para todos os cards ficarem iguais */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve no fundo */
+  text-align: center;           /* Texto alinhado à esquerda dentro do card */
+  display: flex;
+  align-items: center;   
+  justify-content: center;     /* Centraliza a foto e os textos internamente */
+  flex-direction: column;     /* Alinha os itens de cima para baixo */
+}
+
+/* Estilo para a foto ficar redonda e certinha */
+.perfil-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;         /* Deixa a foto redonda */
+  object-fit: cover;          /* Não deixa a foto distorcer */
+  margin-bottom: 15px;
+  border: 3px solid #eee;
+}
+
+/* Estilo para os parágrafos */
+.perfil-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+  width: 100%;                /* Garante que o texto ocupe o espaço correto */
 }
